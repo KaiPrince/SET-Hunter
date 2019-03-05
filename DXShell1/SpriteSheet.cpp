@@ -69,11 +69,32 @@ SpriteSheet::SpriteSheet(wchar_t* filename, Graphics* gfx)
 	if (wicDecoder) wicDecoder->Release();
 	if (wicConverter) wicConverter->Release();
 	if (wicFrame) wicFrame->Release();
+
+
+	ID2D1Effect *chromakeyEffect = NULL;
+
+	D2D1_VECTOR_3F vector{ 0.0f, 0.0f, 1.0f };
+	gfx->GetDeviceContext()->CreateEffect(CLSID_D2D1ChromaKey, &chromakeyEffect);
+
+	chromakeyEffect->SetInput(0, bmp);
+	chromakeyEffect->SetValue(D2D1_CHROMAKEY_PROP_COLOR, vector);
+	chromakeyEffect->SetValue(D2D1_CHROMAKEY_PROP_TOLERANCE, 0.8f);
+	chromakeyEffect->SetValue(D2D1_CHROMAKEY_PROP_INVERT_ALPHA, false);
+	chromakeyEffect->SetValue(D2D1_CHROMAKEY_PROP_FEATHER, false);
+
+	gfx->GetDeviceContext()->CreateEffect(CLSID_D2D1Scale, &scaleEffect);
+
+	ID2D1Image* chromakeyOutput = NULL;
+	chromakeyEffect->GetOutput(&chromakeyOutput);
+	scaleEffect->SetInput(0, chromakeyOutput);
+
+	if (chromakeyEffect) chromakeyEffect->Release();
 }
 
 SpriteSheet::~SpriteSheet()
 {
 	if (bmp) bmp->Release();
+	if (scaleEffect) scaleEffect->Release();
 }
 
 void SpriteSheet::Draw()
@@ -92,36 +113,16 @@ void SpriteSheet::Draw()
 
 void SpriteSheet::Draw(float x, float y, float width, float height)
 {
-	ID2D1Effect *chromakeyEffect = NULL;
-
-	D2D1_VECTOR_3F vector{ 0.0f, 0.0f, 1.0f };
-	gfx->GetDeviceContext()->CreateEffect(CLSID_D2D1ChromaKey, &chromakeyEffect);
-
-	chromakeyEffect->SetInput(0, bmp);
-	chromakeyEffect->SetValue(D2D1_CHROMAKEY_PROP_COLOR, vector);
-	chromakeyEffect->SetValue(D2D1_CHROMAKEY_PROP_TOLERANCE, 0.8f);
-	chromakeyEffect->SetValue(D2D1_CHROMAKEY_PROP_INVERT_ALPHA, false);
-	chromakeyEffect->SetValue(D2D1_CHROMAKEY_PROP_FEATHER, false);
-
-	ID2D1Effect* scaleEffect = NULL;
-	gfx->GetDeviceContext()->CreateEffect(CLSID_D2D1Scale, &scaleEffect);
-
-	ID2D1Image* chromakeyOutput = NULL;
-	chromakeyEffect->GetOutput(&chromakeyOutput);
-	scaleEffect->SetInput(0, chromakeyOutput);
 
 	float scaleX = width / bmp->GetSize().width;
 	float scaleY = height / bmp->GetSize().height;
 	scaleEffect->SetValue(D2D1_SCALE_PROP_SCALE, D2D1::Vector2F(scaleX, scaleY));
 
-	//gfx->GetDeviceContext()->DrawImage(chromakeyEffect);
 	gfx->GetDeviceContext()->DrawImage(
 		scaleEffect,
 		D2D1::Point2F(x, y)
 		);
 
-	if (chromakeyEffect) chromakeyEffect->Release();
-	if (scaleEffect) scaleEffect->Release();
 
 	//gfx->GetRenderTarget()->DrawBitmap(
 	//	bmp, //Bitmap we built from WIC

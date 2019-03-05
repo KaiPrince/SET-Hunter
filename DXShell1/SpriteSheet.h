@@ -8,6 +8,7 @@ class SpriteSheet
 {
 	Graphics* gfx; //Reference to the Graphics class
 	ID2D1Bitmap* bmp; //This will hold our loaded and converted Bitmap file
+	ID2D1Effect* scaleEffect = NULL; //This will hold the result of our chromakey & scale effect
 
 public:
 	//Constructor

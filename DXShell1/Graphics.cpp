@@ -47,11 +47,11 @@ bool Graphics::Init(HWND windowHandle)
 
 	res = DWriteCreateFactory(
 		DWRITE_FACTORY_TYPE_SHARED,
-		__uuidof(fuckingFactory),
-		reinterpret_cast<IUnknown **>(&fuckingFactory)
+		__uuidof(textFactory),
+		reinterpret_cast<IUnknown **>(&textFactory)
 	);
 
-	res = fuckingFactory->CreateTextFormat(
+	res = textFactory->CreateTextFormat(
 		L"Verdana",
 		NULL,
 		DWRITE_FONT_WEIGHT_NORMAL,
@@ -84,10 +84,14 @@ void Graphics::DrawRect(float x, float y, float width, float height, float r, fl
 void Graphics::FillRect(float x, float y, float width, float height, float r, float g, float b, float a)
 {
 	brush->SetColor(D2D1::ColorF(r, g, b, a));
-	rendertarget->FillRectangle(D2D1::RectF(x, y, x + width, y + height), brush);
+
+	float smudgeX = 3; //temp fix for gapping problem where a few pixels between squares are unfilled.
+	float smudgeY = 3; //TODO: replace with screen size dynamic solution.
+
+	rendertarget->FillRectangle(D2D1::RectF(x, y, x + width + smudgeX, y + height + smudgeY), brush);
 }
 
-void Graphics::WriteDebugText(char* text, size_t length) {
+void Graphics::WriteDebugText(char* text, int length) {
 	brush->SetColor(D2D1::ColorF(1.0f, 1.0f, 1.0f, 1.0f));
 	char *p = text; //just for proper syntax highlighting ..."
 	const WCHAR *pwcsName;

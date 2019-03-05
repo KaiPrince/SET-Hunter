@@ -8,7 +8,7 @@ public:
 	}
 	virtual ~TerrainAsset();
 
-	virtual void Draw(float x, float y, float width, float height) = 0; //TODO: change to pure virtual?
+	virtual void Draw(float x, float y, float width, float height) {}; //TODO: change to pure virtual?
 
 };
 

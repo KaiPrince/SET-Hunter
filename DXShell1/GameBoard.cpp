@@ -29,7 +29,7 @@ void GameBoard::Init()
 	{
 		for (int row = 0; row < boardHeight; row++)
 		{
-			squares[column][row] = _squareFactory->CreateSquare((float)column, (float)row, (float)squareWidth, (float)squareHeight);
+			squares[column][row] = _squareFactory->CreateSquare(column, row, squareWidth, squareHeight);
 			//Square* thisSquare = squares[column][row];
 			
 		}

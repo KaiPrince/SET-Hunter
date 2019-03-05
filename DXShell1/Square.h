@@ -8,8 +8,8 @@ class Square
 	TerrainAsset* terrain;
 	DrawableAsset* assets;
 
-	float x;
-	float y;
+	int x;
+	int y;
 	float width;
 	float height;
 public:
@@ -22,10 +22,10 @@ public:
 	void SetAssets(DrawableAsset * assets);
 	DrawableAsset* GetAssets();
 
-	void SetRectBoundary(float x, float y, float width, float height);
+	void SetRectBoundary(int x, int y, float width, float height);
 
-	float GetX() { return x; }
-	float GetY() { return y; }
+	int GetX() { return x; }
+	int GetY() { return y; }
 	float GetXPos() { return x * width; }
 	float GetYPos() { return y * height; }
 	float GetWidth() { return width; }

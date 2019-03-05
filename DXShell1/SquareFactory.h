@@ -7,6 +7,6 @@ public:
 	SquareFactory();
 	~SquareFactory();
 	Square* CreateSquare();
-	Square * CreateSquare(float x, float y, float width, float height);
+	Square * CreateSquare(int x, int y, float width, float height);
 };
 

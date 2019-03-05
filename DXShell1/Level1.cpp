@@ -116,10 +116,7 @@ void Level1::Update()
 
 void Level1::Render()
 {
-	gfx->ClearScreen(1.0f, 1.0f, 1.0f);
-
-	int Window_Width = gfx->Window_Width;
-	int Window_Height = gfx->Window_Width;
+	gfx->ClearScreen(0.0f, 0.0f, 1.0f); //TODO: change to white or black
 
 	for (int column = 0; column < gb->boardWidth; column++)
 	{

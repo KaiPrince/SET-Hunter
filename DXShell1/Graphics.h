@@ -26,7 +26,7 @@ class Graphics
 	ID2D1HwndRenderTarget* rendertarget; //this is typically an area in our GPU memory.. like a back buffer 
 	ID2D1SolidColorBrush* brush; //Note this COM interface! Remember to release it!
 
-	IDWriteFactory* fuckingFactory;
+	IDWriteFactory* textFactory;
 	IDWriteTextFormat* textFormat;
 
 	
@@ -62,5 +62,5 @@ public:
 	void DrawCircle(float x, float y, float radius, float r, float g, float b, float a);
 	void DrawRect(float x, float y, float width, float height, float r, float g, float b, float a);
 	void FillRect(float x, float y, float width, float height, float r, float g, float b, float a);
-	void WriteDebugText(char * text, size_t length);
+	void WriteDebugText(char * text, int length);
 };

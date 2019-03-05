@@ -26,7 +26,7 @@ public:
 		gb->Init();
 
 		//TODO: create #defines for player width and height
-		player = new Player((float) gb->boardWidth * gb->squareWidth / 2, (float) gb->boardHeight * gb->squareHeight, //Bottom middle
+		player = new Player((float) ((gb->boardWidth * gb->squareWidth / 2) - gb->squareWidth), (float) gb->boardHeight * gb->squareHeight, //Bottom middle
 			gb->squareWidth, gb->squareHeight, _assetFactory->CreateDrawableAsset(DrawableAsset::CAR_SPRITE));
 	}
 

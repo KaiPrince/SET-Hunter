@@ -17,7 +17,7 @@ Square* SquareFactory::CreateSquare()
 	return square;
 }
 
-Square* SquareFactory::CreateSquare(float x, float y, float width, float height)
+Square* SquareFactory::CreateSquare(int x, int y, float width, float height)
 {
 	Square* square = new Square();
 	square->SetRectBoundary(x, y, width, height);

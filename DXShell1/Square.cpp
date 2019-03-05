@@ -34,7 +34,7 @@ DrawableAsset * Square::GetAssets()
 }
 
 
-void Square::SetRectBoundary(float x, float y, float width, float height) {
+void Square::SetRectBoundary(int x, int y, float width, float height) {
 	this->x = x;
 	this->y = y;
 	this->width = width;

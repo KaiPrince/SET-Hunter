@@ -51,14 +51,14 @@ int WINAPI wWinMain(
 	RegisterClassEx(&windowclass);
 	
 	//TODO: move these
-#define WINDOW_WIDTH 800
-#define WINDOW_HEIGHT 600
+#define WINDOW_WIDTH 1024
+#define WINDOW_HEIGHT 768
 	RECT rect = { 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT };//Do these numbers look significant to you? What are they?
-	AdjustWindowRectEx(&rect, WS_OVERLAPPED, false, WS_EX_OVERLAPPEDWINDOW);
+	AdjustWindowRectEx(&rect, WS_OVERLAPPEDWINDOW, false, WS_EX_OVERLAPPEDWINDOW);
 
 	//Below is another important process to understand... what are we doing?
 	//Why is this connected to rect we just defined above?
-	HWND windowhandle = CreateWindowEx(WS_EX_OVERLAPPEDWINDOW, "MainWindow", "DirectXShell1", WS_OVERLAPPEDWINDOW, 100, 100,
+	HWND windowhandle = CreateWindowEx(WS_EX_OVERLAPPEDWINDOW, "MainWindow", "SET Hunter", WS_OVERLAPPEDWINDOW, 100, 100,
 		rect.right - rect.left, rect.bottom - rect.top, NULL, NULL, hInstance, 0);
 	if (!windowhandle) return -1;
 
