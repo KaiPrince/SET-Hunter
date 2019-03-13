@@ -105,7 +105,7 @@ void Level1::Unload()
 void Level1::Update()
 {
 
-	player->SetYPos(player->GetYPos() - (gb->squareHeight / 20));
+	player->Update();
 
 	if (player->GetYPos() <= 0) {
 		player->SetYPos(gfx->Window_Height - player->GetHeight());
@@ -116,7 +116,7 @@ void Level1::Update()
 
 void Level1::Render()
 {
-	gfx->ClearScreen(0.0f, 0.0f, 1.0f); //TODO: change to white or black
+	gfx->ClearScreen(0.0f, 0.0f, 0.0f);
 
 	for (int column = 0; column < gb->boardWidth; column++)
 	{
@@ -127,15 +127,15 @@ void Level1::Render()
 			thisSquare->Draw();
 
 			//DEBUG
-			//gfx->DrawRect((float)column * gb->squareWidth, (float)row * gb->squareHeight, (float)gb->squareWidth, (float)gb->squareHeight, 0.0f, 0.0f, 0.0f, 1.0f);
+			gfx->DrawRect((float)column * gb->squareWidth, (float)row * gb->squareHeight, (float)gb->squareWidth, (float)gb->squareHeight, 0.0f, 0.0f, 0.0f, 1.0f);
 		}
 	}
 
 	player->Draw();
 
 	//DEBUG
-	/*char msg[50] = "";
+	char msg[50] = "";
 	gfx->WriteDebugText(msg, sprintf_s(msg, 50, "x: %d\n"
-		"y : %d\n", gfx->MouseX, gfx->MouseY));*/
+		"y : %d\n", (int) player->GetXPos(), (int) player->GetYPos()));
 
 }

@@ -19,5 +19,5 @@ public:
 	static void SwitchLevel(GameLevel* lev);
 	static void Render();
 	static void Update();
-
+	static void HandleInput();
 };

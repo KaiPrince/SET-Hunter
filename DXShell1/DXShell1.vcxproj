@@ -132,6 +132,7 @@
     <ClCompile Include="Level1.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerState.cpp" />
     <ClCompile Include="RoadTerrain.cpp" />
     <ClCompile Include="SpriteSheet.cpp" />
     <ClCompile Include="SpriteSheetAsset.cpp" />
@@ -150,6 +151,7 @@
     <ClInclude Include="GrassTerrain.h" />
     <ClInclude Include="Level1.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerState.h" />
     <ClInclude Include="RoadTerrain.h" />
     <ClInclude Include="SpriteSheet.h" />
     <ClInclude Include="SpriteSheetAsset.h" />

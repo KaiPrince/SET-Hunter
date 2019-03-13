@@ -42,14 +42,14 @@ int WINAPI wWinMain(
 	WNDCLASSEX windowclass;
 	ZeroMemory(&windowclass, sizeof(WNDCLASSEX));
 	windowclass.cbSize = sizeof(WNDCLASSEX);
-	windowclass.hbrBackground = (HBRUSH) COLOR_WINDOW;
+	windowclass.hbrBackground = (HBRUSH)COLOR_WINDOW;
 	windowclass.hInstance = hInstance;
 	windowclass.lpfnWndProc = WindowProc;
 	windowclass.lpszClassName = "MainWindow";
 	windowclass.style = CS_HREDRAW | CS_VREDRAW; //Alert - This is useful here... what does it do?
 
 	RegisterClassEx(&windowclass);
-	
+
 	//TODO: move these
 #define WINDOW_WIDTH 1024
 #define WINDOW_HEIGHT 768
@@ -93,7 +93,7 @@ int WINAPI wWinMain(
 	{
 		if (PeekMessage(&message, NULL, 0, 0, PM_REMOVE))
 		{
-			if (message.message == WM_MOUSEMOVE) 
+			if (message.message == WM_MOUSEMOVE)
 			{
 				//DEBUG TODO: REMOVE
 				int xPos = GET_X_LPARAM(message.lParam);
@@ -106,6 +106,9 @@ int WINAPI wWinMain(
 		}
 		else
 		{
+			//Process Input
+			GameController::HandleInput();
+
 			//Update Routine... we've moved the code for handling updates to GameController
 			GameController::Update();
 

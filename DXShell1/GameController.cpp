@@ -39,3 +39,8 @@ void GameController::Update()
 	if (Loading) return; //nice! Do not update or render if the scene is loading.
 	currentLevel->Update();
 }
+
+void GameController::HandleInput()
+{
+	currentLevel->handleInput();
+}

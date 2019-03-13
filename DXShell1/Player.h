@@ -1,36 +1,73 @@
 #pragma once
 #include "AssetFactory.h"
+#include "GameBoard.h"
+
+class PlayerState;
 
 class Player
 {
+private:
 	DrawableAsset* sprite;
+	GameBoard* gb;
+
+	PlayerState* _state;
 
 	float x;
 	float y;
 	float width;
 	float height;
+
+	float xVelocity;
+	float yVelocity;
 public:
-	Player(float x, float y, float width, float height, DrawableAsset* sprite) {
-		this->x = x;
-		this->y = y;
-		this->width = width;
-		this->height = height;
-		this->sprite = sprite;
-	}
+	Player(float x, float y, float width, float height, DrawableAsset* sprite, GameBoard* gameboard, float xVelocity = 0.0f, float yVelocity = 0.0f);
 	~Player();
 
 	float GetXPos() { return x; }
 	float GetYPos() { return y; }
 	float GetWidth() { return width; }
 	float GetHeight() { return height; }
+	float GetXVelocity() { return xVelocity; }
+	float GetYVelocity() { return yVelocity; }
+	GameBoard* GetGameBoard() { return gb; }
 
-	void SetXPos(float x) { this->x = x; }
-	void SetYPos(float y) { this->y = y; }
+	void SetXPos(float x) { 
+		//Check Bounds
+		if (x <= (this->gb->boardWidth * this->gb->squareWidth) - this->width && x >= 0) {
+			this->x = x;
+		}
+	
+	}
+
+	void SetYPos(float y) { 
+		//Check Bounds
+		const float maxheight = (this->gb->boardHeight * this->gb->squareHeight) - (this->height * 2);
+		const float minheight = 0;
+
+		if (y <= maxheight && y >= minheight) {
+			this->y = y; 
+		}
+		else if (y > maxheight) {
+			this->y = maxheight;
+		}
+		else if (y < minheight)
+		{
+			this->y = minheight;
+		}
+		else
+		{
+			//Out of bounds. Refuse to set.
+		}
+	}
 	void SetWidth(float width) { this->width = width; }
 	void SetHeight(float height) { this->height = height; }
+	void SetXVelocity(float xVelocity) { this->xVelocity = xVelocity; }
+	void SetYVelocity(float yVelocity) { this->yVelocity = yVelocity; }
+	void SetGameBoard(GameBoard* gb) { this->gb = gb; }
 
-	void Draw() {
-		sprite->Draw(x, y, width, height);
-	}
+	void Update();
+
+	void Draw();
+
+	void handleInput();
 };
-
