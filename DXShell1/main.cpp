@@ -6,6 +6,8 @@
 #include "GameController.h"
 #include <string.h>
 #include <stdio.h>
+#include <ctime>
+#include <chrono>
 
 Graphics* graphics;
 
@@ -84,6 +86,10 @@ int WINAPI wWinMain(
 	//As many people will tell you, most Windows you see are just infinite loops waiting for some kind of work-flow or 
 	//system-based interuption.
 
+	//clock_t previousTime = clock();
+	auto previousTime = std::chrono::high_resolution_clock::now();
+	double lag = 0.0;
+
 	//Note - Our message handling has changed from the first demo code.
 	//Here, we use a PeekMessage to avoid locking the graphics/windoProc
 	//when a message has to be dispatched.
@@ -106,16 +112,30 @@ int WINAPI wWinMain(
 		}
 		else
 		{
+			//clock_t currentTime = clock();
+			auto currentTime = std::chrono::high_resolution_clock::now();
+
+			double elapsedTimeInMS = std::chrono::duration<double, std::milli>(currentTime - previousTime).count();
+
+			previousTime = currentTime;
+			lag += elapsedTimeInMS;
+
 			//Process Input
 			GameController::HandleInput();
 
-			//Update Routine... we've moved the code for handling updates to GameController
-			GameController::Update();
+#define MS_PER_UPDATE (1000 / 60) //60 / sec
+			while (lag >= MS_PER_UPDATE)
+			{
+				//Update Routine... we've moved the code for handling updates to GameController
+				GameController::Update();
+				lag -= MS_PER_UPDATE;
+			}
 
 			//Render Routine... This is very modular. GameController now handles the rendering
 			graphics->BeginDraw();
 			GameController::Render();
 			graphics->EndDraw();
+
 
 		}
 	}

@@ -13,7 +13,6 @@ protected:
 
 	static Player* player;
 
-
 public:
 	static void Init(Graphics* graphics)
 	{

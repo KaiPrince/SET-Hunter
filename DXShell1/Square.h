@@ -31,6 +31,9 @@ public:
 	float GetWidth() { return width; }
 	float GetHeight() { return height; }
 
+	void SetX(int x) { this->x = x; }
+	void SetY(int y) { this->y = y; }
+
 	void Draw();
 };
 

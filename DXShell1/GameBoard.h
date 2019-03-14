@@ -13,16 +13,20 @@ public:
 	~GameBoard();
 	void Init();
 
-	//Square** GetSquares();
 	//TODO: make this private
 	static const int boardWidth = 10;
 	static const int boardHeight = 10;
+	static const int roadWidth = 4;
 	float squareWidth;
 	float squareHeight;
 	Square* squares[boardWidth][boardHeight];
 
+	Square** GetSquares() { return *squares; }
+
 	void SetAssetFactory(AssetFactory* assetFactory);
 	TerrainAsset* _grassTerrain;
 	TerrainAsset* _roadTerrain;
+
+	Square* CreateSquare(int column, int row);
 };
 

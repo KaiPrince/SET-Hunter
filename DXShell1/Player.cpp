@@ -16,7 +16,6 @@ Player::Player(float x, float y, float width, float height, DrawableAsset * spri
 	this->xVelocity = xVelocity;
 	this->yVelocity = yVelocity;
 
-	_state = new NoMoveState(this);
 }
 
 Player::~Player()
@@ -48,25 +47,25 @@ void Player::handleInput()
 	if (GetKeyState(VK_UP) & 0x8000)
 	{
 		// UP arrow key is down.
-		this->yVelocity += this->gb->squareHeight / 20;
+		this->yVelocity += this->gb->squareHeight / 10;
 	}
 
 	if (GetKeyState(VK_DOWN) & 0x8000)
 	{
 		// DOWN arrow key is down.
-		this->yVelocity += -(this->gb->squareHeight / 20);
+		this->yVelocity += -(this->gb->squareHeight / 10);
 	}
 
 	if (GetKeyState(VK_RIGHT) & 0x8000)
 	{
 		// RIGHT arrow key is down.
-		this->xVelocity += -(this->gb->squareWidth / 20);
+		this->xVelocity += -(this->gb->squareWidth / 10);
 	}
 
 	if (GetKeyState(VK_LEFT) & 0x8000)
 	{
 		// LEFT arrow key is down.
-		this->xVelocity += this->gb->squareWidth / 20;
+		this->xVelocity += this->gb->squareWidth / 10;
 	}
 
 	//PlayerState* state = _state->handleInput(key);

@@ -10,7 +10,7 @@ private:
 	DrawableAsset* sprite;
 	GameBoard* gb;
 
-	PlayerState* _state;
+	//PlayerState* _state;
 
 	float x;
 	float y;
@@ -42,7 +42,7 @@ public:
 	void SetYPos(float y) { 
 		//Check Bounds
 		const float maxheight = (this->gb->boardHeight * this->gb->squareHeight) - (this->height * 2);
-		const float minheight = 0;
+		const float minheight = (this->gb->boardHeight * this->gb->squareHeight) / 2;
 
 		if (y <= maxheight && y >= minheight) {
 			this->y = y; 

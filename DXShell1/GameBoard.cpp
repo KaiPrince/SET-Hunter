@@ -41,4 +41,23 @@ void GameBoard::SetAssetFactory(AssetFactory * assetFactory)
 	_assetFactory = assetFactory;
 }
 
+Square * GameBoard::CreateSquare(int column, int row)
+{
+	Square* output = nullptr;
+
+	//input validation
+	if (column >= 0 && column <= this->boardWidth &&
+		row >= 0 && row <= this->boardHeight) {
+
+		//Create square from factory
+		output = this->_squareFactory->CreateSquare(column, row, squareWidth, squareHeight);
+
+		//Give the square default assets
+		output->SetTerrain((TerrainAsset*) this->_assetFactory->CreateDrawableAsset(DrawableAsset::GRASS_TERRAIN));
+
+	}
+
+	return output;
+}
+
 
