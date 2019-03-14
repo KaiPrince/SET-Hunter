@@ -145,7 +145,7 @@ void Level1::Update()
 
 				//Clear squares on top row
 				if (row == 0) {
-					//gb->squares[column][row] = nullptr;
+					gb->squares[column][row] = nullptr; //Warning: this may cause errors elsewhere.
 				}
 			}
 		}
@@ -220,9 +220,10 @@ void Level1::Update()
 				thisSquare->SetTerrain(gb->_roadTerrain);
 			}
 
-			//Generate new terrain on top row
-			//placePlants(gb, row);
 		}
+
+		//Generate new terrain on top row
+		placePlants(gb, 0);
 	}
 }
 
