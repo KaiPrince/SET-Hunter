@@ -26,12 +26,28 @@ void Player::Update()
 {
 	//_state->update(); //Update velocities
 
-	//TODO: collision detection.
-	//..
+	float newXPos = this->GetXPos() - this->GetXVelocity();
+	float newYPos = this->GetYPos() - this->GetYVelocity();
+
+	//Collision detection
+	Square* nextSquare = gb->FindSquare(newXPos + (this->GetWidth() / 2), newYPos);
+	if (nextSquare != nullptr && nextSquare->GetAssets() != nullptr) {
+		switch (nextSquare->GetAssets()->GetType())
+		{
+			//intentional fall-through
+		case DrawableAsset::TREE_SPRITE:
+		case DrawableAsset::TREE2_SPRITE:
+		case DrawableAsset::SHRUB_SPRITE:
+			//TODO: add explosion sprite
+			nextSquare->SetTerrain(gb->_roadTerrain);
+		default:
+			break;
+		}
+	}
 
 	//Advance position
-	this->SetYPos(this->GetYPos() - this->GetYVelocity());
-	this->SetXPos(this->GetXPos() - this->GetXVelocity());
+	this->SetXPos(newXPos);
+	this->SetYPos(newYPos);
 	
 }
 

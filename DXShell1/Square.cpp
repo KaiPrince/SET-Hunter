@@ -41,6 +41,18 @@ void Square::SetRectBoundary(int x, int y, float width, float height) {
 	this->height = height;
 }
 
+bool Square::ContainsPoint(float x, float y)
+{
+	if (x >= this->GetXPos() && x <= this->GetXPos() + this->GetWidth() &&
+		y >= this->GetYPos() && y <= this->GetYPos() + this->GetHeight()) {
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
 void Square::Draw()
 {
 	terrain->Draw(x * width, y * height, width, height);

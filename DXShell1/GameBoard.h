@@ -22,6 +22,7 @@ public:
 	Square* squares[boardWidth][boardHeight];
 
 	Square** GetSquares() { return *squares; }
+	Square* FindSquare(float xPos, float yPos);
 
 	void SetAssetFactory(AssetFactory* assetFactory);
 	TerrainAsset* _grassTerrain;

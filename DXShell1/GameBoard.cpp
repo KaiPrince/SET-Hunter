@@ -36,6 +36,24 @@ void GameBoard::Init()
 	}
 }
 
+Square * GameBoard::FindSquare(float xPos, float yPos)
+{
+	Square* output = nullptr;
+
+	for (int column = 0; column < boardWidth; column++)
+	{
+		for (int row = 0; row < boardHeight; row++)
+		{
+			Square* thisSquare = squares[column][row];
+			if (thisSquare->ContainsPoint(xPos, yPos)) {
+				output = thisSquare;
+			}
+		}
+	}
+
+	return output;
+}
+
 void GameBoard::SetAssetFactory(AssetFactory * assetFactory)
 {
 	_assetFactory = assetFactory;

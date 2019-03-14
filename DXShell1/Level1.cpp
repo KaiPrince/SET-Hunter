@@ -246,9 +246,17 @@ void Level1::Render()
 
 	player->Draw();
 
+	int sX = 0;
+	int sY = 0;
+	Square* test = gb->FindSquare(player->GetXPos() + (player->GetWidth() / 2), player->GetYPos());
+	if (test != nullptr) {
+		sX = test->GetX();
+		sY = test->GetY();
+	}
+
 	//DEBUG
-	/*char msg[50] = "";
-	gfx->WriteDebugText(msg, sprintf_s(msg, 50, "x: %d\n"
-		"y : %d\n", (int)player->GetXPos(), (int)player->GetYPos()));*/
+	char msg[500] = "";
+	gfx->WriteDebugText(msg, sprintf_s(msg, 500, "x: %d\n"
+		"y: %d\n sX: %d\n sY: %d\n mX: %d\n mY: %d\n", (int)player->GetXPos(), (int)player->GetYPos(), sX, sY, gfx->MouseX, gfx->MouseY));
 
 }
