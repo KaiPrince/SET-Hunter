@@ -4,6 +4,12 @@
 
 class PlayerState;
 
+/*
+Class Name: Player
+Purpose: This class is used to represent a player in the game. 
+	It will manage position and state, handle input, update its position and state, 
+	and draw itself to the screen.
+*/
 class Player
 {
 private:
@@ -20,7 +26,8 @@ private:
 	float xVelocity;
 	float yVelocity;
 public:
-	Player(float x, float y, float width, float height, DrawableAsset* sprite, GameBoard* gameboard, float xVelocity = 0.0f, float yVelocity = 0.0f);
+	Player(float x, float y, float width, float height, DrawableAsset* sprite, GameBoard* gameboard, 
+		float xVelocity = 0.0f, float yVelocity = 0.0f);
 	~Player();
 
 	float GetXPos() { return x; }

@@ -3,6 +3,12 @@
 #include "SpriteSheet.h"
 #include "DrawableAsset.h"
 
+/*
+Class Name: Square
+Purpose: This class is used to represent a single square of the game board.
+	It will manage its position and assets, and draw itself to the screen.
+	It also manages its collidability state.
+*/
 class Square
 {
 	TerrainAsset* terrain;
@@ -12,6 +18,8 @@ class Square
 	int y;
 	float width;
 	float height;
+
+	bool isCollidable;
 public:
 	Square();
 	~Square();
@@ -30,9 +38,11 @@ public:
 	float GetYPos() { return y * height; }
 	float GetWidth() { return width; }
 	float GetHeight() { return height; }
+	bool IsCollidable() { return isCollidable; }
 
 	void SetX(int x) { this->x = x; }
 	void SetY(int y) { this->y = y; }
+	void SetCollidable(bool isCollidable) { this->isCollidable = isCollidable; }
 
 	bool ContainsPoint(float x, float y);
 
