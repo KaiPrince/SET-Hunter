@@ -31,18 +31,8 @@ void Player::Update()
 
 	//Collision detection
 	Square* nextSquare = gb->FindSquare(newXPos + (this->GetWidth() / 2), newYPos);
-	if (nextSquare != nullptr && nextSquare->GetAssets() != nullptr) {
-		switch (nextSquare->GetAssets()->GetType())
-		{
-			//intentional fall-through
-		case DrawableAsset::TREE_SPRITE:
-		case DrawableAsset::TREE2_SPRITE:
-		case DrawableAsset::SHRUB_SPRITE:
-			//TODO: move this somewhere else, breaks SOLID.
-			nextSquare->SetAssets(gb->GetAssetFactory()->CreateDrawableAsset(DrawableAsset::EXPLOSION_SPRITE));
-		default:
-			break;
-		}
+	if (nextSquare != nullptr && nextSquare->IsCollidable()) {
+		//TODO: change state to dead
 	}
 
 	//Advance position

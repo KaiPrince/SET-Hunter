@@ -6,6 +6,8 @@ Square::Square()
 {
 	terrain = nullptr;
 	assets = nullptr;
+
+	isCollidable = false;
 }
 
 
