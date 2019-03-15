@@ -38,7 +38,6 @@ void Player::Update()
 		case DrawableAsset::TREE_SPRITE:
 		case DrawableAsset::TREE2_SPRITE:
 		case DrawableAsset::SHRUB_SPRITE:
-			//TODO: add explosion sprite
 			//TODO: move this somewhere else, breaks SOLID.
 			nextSquare->SetAssets(gb->GetAssetFactory()->CreateDrawableAsset(DrawableAsset::EXPLOSION_SPRITE));
 		default:
