@@ -39,7 +39,8 @@ void Player::Update()
 		case DrawableAsset::TREE2_SPRITE:
 		case DrawableAsset::SHRUB_SPRITE:
 			//TODO: add explosion sprite
-			nextSquare->SetTerrain(gb->_roadTerrain);
+			//TODO: move this somewhere else, breaks SOLID.
+			nextSquare->SetAssets(gb->GetAssetFactory()->CreateDrawableAsset(DrawableAsset::EXPLOSION_SPRITE));
 		default:
 			break;
 		}

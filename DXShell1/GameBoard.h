@@ -22,12 +22,13 @@ public:
 	Square* squares[boardWidth][boardHeight];
 
 	Square** GetSquares() { return *squares; }
-	Square* FindSquare(float xPos, float yPos);
+	AssetFactory* GetAssetFactory() { return _assetFactory; }
 
 	void SetAssetFactory(AssetFactory* assetFactory);
 	TerrainAsset* _grassTerrain;
 	TerrainAsset* _roadTerrain;
 
 	Square* CreateSquare(int column, int row);
+	Square* FindSquare(float xPos, float yPos);
 };
 

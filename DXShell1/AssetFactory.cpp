@@ -4,6 +4,7 @@ SpriteSheet* AssetFactory::_carSprite;
 SpriteSheet* AssetFactory::_treeSprite;
 SpriteSheet* AssetFactory::_tree2Sprite;
 SpriteSheet* AssetFactory::_shrubSprite;
+SpriteSheet* AssetFactory::_explosionSprite;
 
 AssetFactory::AssetFactory(Graphics* graphics)
 {
@@ -14,6 +15,7 @@ AssetFactory::AssetFactory(Graphics* graphics)
 	_treeSprite = new SpriteSheet(L"Assets\\tree1.bmp", gfx);
 	_tree2Sprite = new SpriteSheet(L"Assets\\tree2.bmp", gfx);
 	_shrubSprite = new SpriteSheet(L"Assets\\shrub1.bmp", gfx);
+	_explosionSprite = new SpriteSheet(L"Assets\\explosion.bmp", gfx);
 }
 
 AssetFactory::~AssetFactory()
@@ -44,6 +46,8 @@ DrawableAsset* AssetFactory::CreateDrawableAsset(DrawableAsset::AssetTypes asset
 	case DrawableAsset::SHRUB_SPRITE:
 		asset = new SpriteSheetAsset(_shrubSprite, assetType);
 		break;
+	case DrawableAsset::EXPLOSION_SPRITE:
+		asset = new SpriteSheetAsset(_explosionSprite, assetType);
 	default:
 		//asset = new TerrainAsset();
 		//TODO: throw error

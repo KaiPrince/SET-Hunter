@@ -17,9 +17,9 @@ public:
 		gfx = graphics;
 	}
 
-
+	//TODO: move to assetFactory?
 	enum AssetTypes {
-		GRASS_TERRAIN, ROAD_TERRAIN, CAR_SPRITE, TREE_SPRITE, TREE2_SPRITE, SHRUB_SPRITE
+		GRASS_TERRAIN, ROAD_TERRAIN, CAR_SPRITE, TREE_SPRITE, TREE2_SPRITE, SHRUB_SPRITE, EXPLOSION_SPRITE
 	};
 protected: //This is only here because the AssetTypes var must be below its definition.
 	DrawableAsset::AssetTypes type;
