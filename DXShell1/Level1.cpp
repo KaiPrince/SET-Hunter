@@ -73,6 +73,8 @@ void Level1::placePlants(GameBoard * gb, int row)
 				}
 				thisSquare->SetAssets(GameLevel::_assetFactory->CreateDrawableAsset(plantAssetType));
 				//TODO: find some way to clear only plant assets from a possible composite asset. Use public type var? (like with terrain?)
+
+				thisSquare->SetCollidable(true);
 			}
 
 		}
