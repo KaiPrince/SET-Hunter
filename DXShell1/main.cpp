@@ -123,12 +123,16 @@ int WINAPI wWinMain(
 			//Process Input
 			GameController::HandleInput();
 
+			const unsigned int maxUpdateLoopsPerFrame = 1000; //Don't let the game get stuck updating
+			unsigned int updateLoopCounter = 0;
 #define MS_PER_UPDATE (1000 / 60) //60 / sec
-			while (lag >= MS_PER_UPDATE)
+			while (lag >= MS_PER_UPDATE && updateLoopCounter < maxUpdateLoopsPerFrame)
 			{
 				//Update Routine... we've moved the code for handling updates to GameController
 				GameController::Update();
+
 				lag -= MS_PER_UPDATE;
+				++updateLoopCounter;
 			}
 
 			//Render Routine... This is very modular. GameController now handles the rendering
