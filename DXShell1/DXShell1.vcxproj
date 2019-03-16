@@ -129,9 +129,11 @@
     <ClCompile Include="GameLevel.cpp" />
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="GrassTerrain.cpp" />
+    <ClCompile Include="InputComponent.cpp" />
     <ClCompile Include="Level1.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Observer.cpp" />
+    <ClCompile Include="PhysicsComponent.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerState.cpp" />
     <ClCompile Include="RoadTerrain.cpp" />
@@ -150,7 +152,9 @@
     <ClInclude Include="GameLevel.h" />
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="GrassTerrain.h" />
+    <ClInclude Include="InputComponent.h" />
     <ClInclude Include="Level1.h" />
+    <ClInclude Include="PhysicsComponent.h" />
     <ClInclude Include="Observer.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerState.h" />
