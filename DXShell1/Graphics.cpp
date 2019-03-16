@@ -92,6 +92,10 @@ void Graphics::FillRect(float x, float y, float width, float height, float r, fl
 }
 
 void Graphics::WriteDebugText(char* text, int length) {
+	WriteText(0.0f, 0.0f, text, length);
+}
+
+void Graphics::WriteText(float xPos, float yPos, char* text, int length) {
 	brush->SetColor(D2D1::ColorF(1.0f, 1.0f, 1.0f, 1.0f));
 	char *p = text; //just for proper syntax highlighting ..."
 	const WCHAR *pwcsName;
@@ -102,7 +106,7 @@ void Graphics::WriteDebugText(char* text, int length) {
 	MultiByteToWideChar(CP_ACP, 0, p, -1, (LPWSTR)pwcsName, nChars);
 	// use it....
 
-	rendertarget->DrawText(pwcsName, length, textFormat, D2D1::RectF(0.0f, 0.0f, 50.0f, 20.0f), brush);
+	rendertarget->DrawText(pwcsName, length, textFormat, D2D1::RectF(xPos, yPos, 50.0f, 20.0f), brush);
 
 	// delete it
 	delete[] pwcsName;

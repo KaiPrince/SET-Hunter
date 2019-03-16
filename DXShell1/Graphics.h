@@ -63,4 +63,5 @@ public:
 	void DrawRect(float x, float y, float width, float height, float r, float g, float b, float a);
 	void FillRect(float x, float y, float width, float height, float r, float g, float b, float a);
 	void WriteDebugText(char * text, int length);
+	void WriteText(float xPos, float yPos, char * text, int length);
 };
