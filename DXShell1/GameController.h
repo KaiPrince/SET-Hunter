@@ -1,17 +1,20 @@
 #pragma once
-
 #include "GameLevel.h"
-#include "Graphics.h"
-#include "GameBoard.h"
-#include "AssetFactory.h"
 
-//This will be a Singleton class (constructor is private)
 
+/*
+Class Name: GameController
+Purpose: This class the man pulling the strings behind the game.
+	This singleton class is responsible for starting the game, loading the levels, executing the game loop,
+	and ending the game.
+*/
 class GameController
 {
 	GameController() {}
 	static GameLevel* currentLevel;
-	static AssetFactory* _terrainFactory;
+	static unsigned int _score;
+	static int _lives;
+
 public:
 	static bool Loading;
 	static void Init();
@@ -20,4 +23,10 @@ public:
 	static void Render();
 	static void Update();
 	static void HandleInput();
+
+	static unsigned int GetScore();
+	static void SetScore(unsigned int score);
+
+	static int GetLives();
+	static void SetLives(int lives);
 };

@@ -1,6 +1,7 @@
 #pragma once
 #include "AssetFactory.h"
 #include "GameBoard.h"
+#include "Observer.h"
 
 class PlayerState;
 
@@ -10,7 +11,7 @@ Purpose: This class is used to represent a player in the game.
 	It will manage position and state, handle input, update its position and state, 
 	and draw itself to the screen.
 */
-class Player
+class Player : public Observable
 {
 private:
 	DrawableAsset* sprite;
@@ -37,6 +38,7 @@ public:
 	float GetXVelocity() { return xVelocity; }
 	float GetYVelocity() { return yVelocity; }
 	GameBoard* GetGameBoard() { return gb; }
+	PlayerState* GetState() { return _state; }
 
 	void SetXPos(float x) { 
 		//Check Bounds

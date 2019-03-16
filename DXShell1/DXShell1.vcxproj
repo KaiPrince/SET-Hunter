@@ -131,6 +131,7 @@
     <ClCompile Include="GrassTerrain.cpp" />
     <ClCompile Include="Level1.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Observer.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerState.cpp" />
     <ClCompile Include="RoadTerrain.cpp" />
@@ -150,6 +151,7 @@
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="GrassTerrain.h" />
     <ClInclude Include="Level1.h" />
+    <ClInclude Include="Observer.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerState.h" />
     <ClInclude Include="RoadTerrain.h" />

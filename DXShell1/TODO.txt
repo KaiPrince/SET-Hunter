@@ -1,6 +1,14 @@
 TODO:
+Assignment:
+- Make score update based on time.
+- Add score lockout for 3 seconds after leaving road.
+- Stop road scolling when dead.
+
+For Fun:
 - Cleanup terrain classes by using type object pattern.
 - Separate Input, Physics, and Rendering to componenets.
 - Refactor Player into child of new Actor class.
 - Use prototypes pattern to create enemies.
 - Smooth road flow.
+- Implement Visitor or strategy pattern to player or level.
+- Implement Observer Pattern.

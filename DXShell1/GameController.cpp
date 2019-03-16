@@ -1,13 +1,16 @@
-
 #include "GameController.h"
 
 GameLevel* GameController::currentLevel;
 bool GameController::Loading;
+unsigned int GameController::_score;
+int GameController::_lives;
 
 void GameController::Init()
 {
 	Loading = true;
 	currentLevel = 0;
+	_score = 0;
+	_lives = 3;
 }
 
 void GameController::LoadInitialLevel(GameLevel* lev)
@@ -43,4 +46,24 @@ void GameController::Update()
 void GameController::HandleInput()
 {
 	currentLevel->handleInput();
+}
+
+unsigned int GameController::GetScore()
+{
+	return _score;
+}
+
+void GameController::SetScore(unsigned int score)
+{
+	_score = score;
+}
+
+int GameController::GetLives()
+{
+	return _lives;
+}
+
+void GameController::SetLives(int lives)
+{
+	_lives = lives;
 }

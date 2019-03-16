@@ -1,5 +1,6 @@
 #include "PlayerState.h"
 #include "Player.h"
+#include "GameController.h"
 
 
 
@@ -72,6 +73,11 @@ PlayerState* AliveState::update()
 	Square* nextSquare = _player->GetGameBoard()->FindSquare(newXPos + (_player->GetWidth() / 2), newYPos);
 	if (nextSquare != nullptr && nextSquare->IsCollidable()) {
 		nextState = new DeadState(_player);
+	}
+
+	//Accumulate Score
+	if (nextSquare->GetTerrain()->GetType() == DrawableAsset::ROAD_TERRAIN) {
+		GameController::SetScore(GameController::GetScore() + 1);
 	}
 
 	//Advance position
