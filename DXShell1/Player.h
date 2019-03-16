@@ -71,6 +71,7 @@ public:
 	void SetXVelocity(float xVelocity) { this->xVelocity = xVelocity; }
 	void SetYVelocity(float yVelocity) { this->yVelocity = yVelocity; }
 	void SetGameBoard(GameBoard* gb) { this->gb = gb; }
+	void SetSprite(DrawableAsset* sprite) { this->sprite = sprite; }
 
 	void Update();
 

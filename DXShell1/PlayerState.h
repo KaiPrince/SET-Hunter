@@ -1,4 +1,6 @@
 #pragma once
+#include <ctime>
+#include <chrono>
 
 class Player;
 
@@ -17,7 +19,7 @@ public:
 
 	virtual PlayerState* handleInput() = 0;
 	virtual void enter() = 0;
-	virtual void update() = 0;
+	virtual PlayerState* update() = 0;
 };
 
 /*
@@ -39,7 +41,7 @@ public:
 	virtual void enter();
 
 	//Update player properties
-	virtual void update();
+	virtual PlayerState* update();
 
 };
 
@@ -51,6 +53,7 @@ Purpose: This class represents the state of the actor being dead.
 class DeadState : public PlayerState
 {
 private:
+	std::clock_t timeOfDeath;
 public:
 	DeadState(Player* player) : PlayerState(player) {}
 	virtual ~DeadState();
@@ -62,7 +65,7 @@ public:
 	virtual void enter();
 
 	//Update player properties
-	virtual void update();
+	virtual PlayerState* update();
 
 
 };

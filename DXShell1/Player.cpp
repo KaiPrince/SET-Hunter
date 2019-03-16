@@ -25,7 +25,15 @@ Player::~Player()
 
 void Player::Update()
 {
-	_state->update(); //Update position
+	PlayerState* newState = _state->update(); //Update position
+	if (newState != nullptr) {
+		//Change state
+
+		delete _state;
+		_state = newState;
+
+		_state->enter();
+	}
 }
 
 void Player::Draw()
@@ -37,7 +45,7 @@ void Player::handleInput()
 {
 
 	PlayerState* newState = _state->handleInput();
-	if (newState != NULL) {
+	if (newState != nullptr) {
 		//Change state
 
 		delete _state;
