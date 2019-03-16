@@ -48,6 +48,7 @@ DrawableAsset* AssetFactory::CreateDrawableAsset(DrawableAsset::AssetTypes asset
 		break;
 	case DrawableAsset::EXPLOSION_SPRITE:
 		asset = new SpriteSheetAsset(_explosionSprite, assetType);
+		break;
 	case DrawableAsset::EMPTY_ASSET:
 		asset = new EmptyAsset();
 		break;
