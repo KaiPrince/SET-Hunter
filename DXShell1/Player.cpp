@@ -25,22 +25,7 @@ Player::~Player()
 
 void Player::Update()
 {
-	//_state->update(); //Update velocities
-
-	float newXPos = this->GetXPos() - this->GetXVelocity();
-	float newYPos = this->GetYPos() - this->GetYVelocity();
-
-	//Collision detection
-	Square* nextSquare = gb->FindSquare(newXPos + (this->GetWidth() / 2), newYPos);
-	if (nextSquare != nullptr && nextSquare->IsCollidable()) {
-		this->_state = new DeadState(this);
-		_state->enter();
-	}
-
-	//Advance position
-	this->SetXPos(newXPos);
-	this->SetYPos(newYPos);
-	
+	_state->update(); //Update position
 }
 
 void Player::Draw()
@@ -50,40 +35,15 @@ void Player::Draw()
 
 void Player::handleInput()
 {
-	this->xVelocity = 0;
-	this->yVelocity = 0;
-	if (GetKeyState(VK_UP) & 0x8000)
-	{
-		// UP arrow key is down.
-		this->yVelocity += this->gb->squareHeight / 10;
+
+	PlayerState* newState = _state->handleInput();
+	if (newState != NULL) {
+		//Change state
+
+		delete _state;
+		_state = newState;
+
+		_state->enter();
 	}
-
-	if (GetKeyState(VK_DOWN) & 0x8000)
-	{
-		// DOWN arrow key is down.
-		this->yVelocity += -(this->gb->squareHeight / 10);
-	}
-
-	if (GetKeyState(VK_RIGHT) & 0x8000)
-	{
-		// RIGHT arrow key is down.
-		this->xVelocity += -(this->gb->squareWidth / 20); //TODO: make this accelerrate rather than constant speed.
-	}
-
-	if (GetKeyState(VK_LEFT) & 0x8000)
-	{
-		// LEFT arrow key is down.
-		this->xVelocity += this->gb->squareWidth / 20; //TODO: make this accelerrate rather than constant speed.
-	}
-
-	//PlayerState* state = _state->handleInput(key);
-	//if (state != NULL && state != _state) {
-	//	//Change state
-
-	//	delete _state;
-	//	_state = state;
-
-	//	_state->enter();
-	//}
 
 }

@@ -15,7 +15,7 @@ public:
 	PlayerState(Player* player);
 	virtual ~PlayerState();
 
-	virtual PlayerState* handleInput(int key) = 0;
+	virtual PlayerState* handleInput() = 0;
 	virtual void enter() = 0;
 	virtual void update() = 0;
 };
