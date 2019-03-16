@@ -125,7 +125,7 @@ int WINAPI wWinMain(
 
 			const unsigned int maxUpdateLoopsPerFrame = 1000; //Don't let the game get stuck updating
 			unsigned int updateLoopCounter = 0;
-#define MS_PER_UPDATE (1000 / 60) //60 / sec
+#define MS_PER_UPDATE (1000 / 120) //120 / sec
 			while (lag >= MS_PER_UPDATE && updateLoopCounter < maxUpdateLoopsPerFrame)
 			{
 				//Update Routine... we've moved the code for handling updates to GameController
