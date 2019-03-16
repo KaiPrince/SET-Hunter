@@ -48,6 +48,9 @@ DrawableAsset* AssetFactory::CreateDrawableAsset(DrawableAsset::AssetTypes asset
 		break;
 	case DrawableAsset::EXPLOSION_SPRITE:
 		asset = new SpriteSheetAsset(_explosionSprite, assetType);
+	case DrawableAsset::EMPTY_ASSET:
+		asset = new EmptyAsset();
+		break;
 	default:
 		//asset = new TerrainAsset();
 		//TODO: throw error

@@ -19,7 +19,7 @@ public:
 
 	//TODO: move to assetFactory?
 	enum AssetTypes {
-		GRASS_TERRAIN, ROAD_TERRAIN, CAR_SPRITE, TREE_SPRITE, TREE2_SPRITE, SHRUB_SPRITE, EXPLOSION_SPRITE
+		GRASS_TERRAIN, ROAD_TERRAIN, CAR_SPRITE, TREE_SPRITE, TREE2_SPRITE, SHRUB_SPRITE, EXPLOSION_SPRITE, EMPTY_ASSET
 	};
 protected: //This is only here because the AssetTypes var must be below its definition.
 	DrawableAsset::AssetTypes type;
@@ -28,5 +28,19 @@ public:
 	DrawableAsset::AssetTypes GetType() { return type; }
 
 	virtual void Draw(float x, float y, float width, float height) = 0;
+};
+
+class EmptyAsset : public DrawableAsset
+{
+public:
+	EmptyAsset();
+	~EmptyAsset();
+
+	virtual void Draw(float x, float y, float width, float height) {
+		//Draw nothing.
+	}
+
+private:
+
 };
 
