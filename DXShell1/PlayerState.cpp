@@ -111,5 +111,7 @@ PlayerState* DeadState::update()
 		nextState = new AliveState(_player);
 	}
 
+	//TODO: add blinking before revivial
+
 	return nextState;
 }
