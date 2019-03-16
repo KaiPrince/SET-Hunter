@@ -13,7 +13,7 @@ public:
 	Observer();
 	virtual ~Observer();
 
-	virtual void Update(Observable* subject) = 0;
+	virtual void Notify(Observable* subject) = 0;
 };
 
 /*
@@ -28,7 +28,7 @@ public:
 	virtual ~Observable();
 
 	virtual void Notify();
-	virtual void Attach(Observer* observer);
+	virtual void AddObserver(Observer* observer);
 
 };
 

@@ -60,6 +60,9 @@ void AliveState::enter()
 
 	//Reset Sprite
 	_player->SetSprite(_player->GetGameBoard()->GetAssetFactory()->CreateDrawableAsset(DrawableAsset::CAR_SPRITE));
+
+	//Notify observers
+	_player->Notify();
 }
 
 PlayerState* AliveState::update()
@@ -102,6 +105,9 @@ void DeadState::enter()
 
 	//Death sprite
 	_player->SetSprite(_player->GetGameBoard()->GetAssetFactory()->CreateDrawableAsset(DrawableAsset::EXPLOSION_SPRITE));
+
+	//Notify observers
+	_player->Notify();
 }
 
 PlayerState* DeadState::update()

@@ -10,6 +10,7 @@
 void Level1::Load()
 {
 	continueRoadScolling = true;
+	player->AddObserver(this);
 }
 
 
@@ -22,8 +23,6 @@ void Level1::Update()
 {
 
 	player->Update();
-
-	//TODO: stop scrolling if player dies.
 
 	if (continueRoadScolling) {
 
@@ -60,4 +59,20 @@ void Level1::Render()
 	char msg[500] = "";
 	gfx->WriteDebugText(msg, sprintf_s(msg, 500, "x: %d\n"
 		"y: %d\n sX: %d\n sY: %d\n mX: %d\n mY: %d\n", (int)player->GetXPos(), (int)player->GetYPos(), sX, sY, gfx->MouseX, gfx->MouseY));*/
+}
+
+void Level1::Notify(Observable* subject) {
+
+	//TODO: check subject type is Player
+	switch (player->GetState()->GetType())
+	{
+	case PlayerState::ALIVE_STATE:
+		continueRoadScolling = true;
+		break;
+	case PlayerState::DEAD_STATE:
+		continueRoadScolling = false;
+		break;
+	default:
+		break;
+	}
 }

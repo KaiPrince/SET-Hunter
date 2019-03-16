@@ -22,10 +22,10 @@ Observable::~Observable() {
 void Observable::Notify() {
 	for each (Observer* observer in Observers)
 	{
-		observer->Update(this);
+		observer->Notify(this);
 	}
 }
 
-void Observable::Attach(Observer* observer) {
+void Observable::AddObserver(Observer* observer) {
 	Observers.push_back(observer);
 }

@@ -3,7 +3,7 @@
 #include "PlayerState.h"
 
 
-class Level1 : public GameLevel
+class Level1 : public GameLevel, public Observer
 {
 	bool continueRoadScolling; //TODO: move this to GameBoard class?
 
@@ -13,4 +13,5 @@ public:
 	void Update() override;
 	void Render() override;
 
+	void Notify(Observable* subject);
 };

@@ -13,6 +13,7 @@ class PlayerState
 protected:
 	Player* _player;
 
+
 public:
 	PlayerState(Player* player);
 	virtual ~PlayerState();
@@ -20,6 +21,16 @@ public:
 	virtual PlayerState* handleInput() = 0;
 	virtual void enter() = 0;
 	virtual PlayerState* update() = 0;
+
+	enum PlayerStates
+	{
+		ALIVE_STATE, DEAD_STATE
+	};
+protected: //This is only here because the PlayerStates var must be below its definition.
+	PlayerState::PlayerStates type;
+
+public:
+	PlayerState::PlayerStates GetType() { return type; }
 };
 
 /*
@@ -31,7 +42,7 @@ class AliveState : public PlayerState
 {
 private:
 public:
-	AliveState(Player* player) : PlayerState(player) {}
+	AliveState(Player* player) : PlayerState(player) { type = ALIVE_STATE; }
 	virtual ~AliveState() {}
 
 	//Transition states
@@ -55,7 +66,7 @@ class DeadState : public PlayerState
 private:
 	std::clock_t timeOfDeath;
 public:
-	DeadState(Player* player) : PlayerState(player) {}
+	DeadState(Player* player) : PlayerState(player) { type = DEAD_STATE; }
 	virtual ~DeadState();
 
 	//Transition states

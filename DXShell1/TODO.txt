@@ -11,4 +11,5 @@ For Fun:
 - Use prototypes pattern to create enemies.
 - Smooth road flow.
 - Implement Visitor or strategy pattern to player or level.
+	- Remove GetType() method and enums
 - Implement Observer Pattern.
