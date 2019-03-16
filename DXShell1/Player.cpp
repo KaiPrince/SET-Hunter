@@ -16,6 +16,7 @@ Player::Player(float x, float y, float width, float height, DrawableAsset * spri
 	this->xVelocity = xVelocity;
 	this->yVelocity = yVelocity;
 
+	this->_state = new AliveState(this);
 }
 
 Player::~Player()
@@ -32,7 +33,8 @@ void Player::Update()
 	//Collision detection
 	Square* nextSquare = gb->FindSquare(newXPos + (this->GetWidth() / 2), newYPos);
 	if (nextSquare != nullptr && nextSquare->IsCollidable()) {
-		//TODO: change state to dead
+		this->_state = new DeadState(this);
+		_state->enter();
 	}
 
 	//Advance position
@@ -65,13 +67,13 @@ void Player::handleInput()
 	if (GetKeyState(VK_RIGHT) & 0x8000)
 	{
 		// RIGHT arrow key is down.
-		this->xVelocity += -(this->gb->squareWidth / 10);
+		this->xVelocity += -(this->gb->squareWidth / 20); //TODO: make this accelerrate rather than constant speed.
 	}
 
 	if (GetKeyState(VK_LEFT) & 0x8000)
 	{
 		// LEFT arrow key is down.
-		this->xVelocity += this->gb->squareWidth / 10;
+		this->xVelocity += this->gb->squareWidth / 20; //TODO: make this accelerrate rather than constant speed.
 	}
 
 	//PlayerState* state = _state->handleInput(key);

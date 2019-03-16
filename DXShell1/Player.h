@@ -16,7 +16,7 @@ private:
 	DrawableAsset* sprite;
 	GameBoard* gb;
 
-	//PlayerState* _state;
+	PlayerState* _state;
 
 	float x;
 	float y;

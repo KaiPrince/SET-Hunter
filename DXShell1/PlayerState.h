@@ -21,103 +21,48 @@ public:
 };
 
 /*
-Class Name: NoMoveState
-Purpose: In this state, the car will not move.
+Class Name: AliveState
+Purpose: This class represents the state of the actor being alive.
+	In this state, the player can move, receive damage and interact with other game objects.
 */
-class NoMoveState : public PlayerState
+class AliveState : public PlayerState
 {
 private:
 public:
-	NoMoveState(Player* player) : PlayerState(player) {}
-	virtual ~NoMoveState() {}
+	AliveState(Player* player) : PlayerState(player) {}
+	virtual ~AliveState() {}
 
 	//Transition states
-	virtual PlayerState* handleInput(int key);
+	virtual PlayerState* handleInput();
 
-	//Set up velocity
+	//Set up
 	virtual void enter();
 
-	//Update player position
+	//Update player properties
 	virtual void update();
+
 };
 
 /*
-Class Name: MoveUpState
-Purpose: In this state, the car accelerates up its top height position, 
-	and then transitions back to the NoMoveState.
+Class Name: DeadState
+Purpose: This class represents the state of the actor being dead.
+	In this state, the player cannot move, receive damage, or interact with other game objects.
 */
-class MoveUpState : public PlayerState
+class DeadState : public PlayerState
 {
 private:
 public:
-	MoveUpState(Player* player) : PlayerState(player) {}
-	virtual ~MoveUpState() {}
+	DeadState(Player* player) : PlayerState(player) {}
+	virtual ~DeadState();
 
 	//Transition states
-	virtual PlayerState* handleInput(int key);
+	virtual PlayerState* handleInput();
 
-	//Set up velocity
+	//Player died
 	virtual void enter();
 
+	//Update player properties
 	virtual void update();
-};
-
-/*
-Class Name: MoveDownState
-Purpose: In this state, the car deccelerates back to the bottom row,
-	and then transitions back to the NoMoveState.
-*/
-class MoveDownState : public PlayerState
-{
-private:
-public:
-	MoveDownState(Player* player) : PlayerState(player) {}
-	virtual ~MoveDownState() {}
-
-	virtual PlayerState* handleInput(int key);
-
-	//Set up velocity
-	virtual void enter();
-
-	virtual void update();
-};
 
 
-/*
-Class Name: MoveLeftState
-Purpose: In this state, the player moves left at a constant rate until it reaches the left edge of the board.
-	Note: Collision detection is handled elsewhere.
-*/
-class MoveLeftState : public PlayerState
-{
-private:
-public:
-	MoveLeftState(Player* player) : PlayerState(player) {}
-	virtual ~MoveLeftState() {}
-
-	virtual PlayerState* handleInput(int key);
-
-	//Set up velocity
-	virtual void enter();
-
-	virtual void update();
-};
-
-/*
-Class Name: MoveRightState
-Purpose: In this state, the player moves right at a constant rate until it reaches the right edge of the board.
-*/
-class MoveRightState : public PlayerState
-{
-private:
-public:
-	MoveRightState(Player* player) : PlayerState(player) {}
-	virtual ~MoveRightState() {}
-
-	virtual PlayerState* handleInput(int key);
-
-	//Set up velocity
-	virtual void enter();
-
-	virtual void update();
 };
