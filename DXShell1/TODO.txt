@@ -1,0 +1,6 @@
+TODO:
+- Cleanup terrain classes by using type object pattern.
+- Separate Input, Physics, and Rendering to componenets.
+- Refactor Player into child of new Actor class.
+- Use prototypes pattern to create enemies.
+- Smooth road flow.
