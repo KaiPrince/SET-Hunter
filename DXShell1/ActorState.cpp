@@ -98,6 +98,7 @@ ActorState* DeadState::update()
 	}
 
 	//TODO: add blinking before revivial
+	//TODO: don't revive if no lives left.
 
 	return nextState;
 }
