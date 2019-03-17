@@ -14,6 +14,7 @@ class Actor :
 	public GameObject
 {
 protected:
+	InputComponent* _inputComponent;
 
 	ActorState* _state;
 public:
@@ -21,6 +22,8 @@ public:
 		float xVelocity = 0.0f, float yVelocity = 0.0f);
 	virtual ~Actor();
 
+	InputComponent* GetInputComponent() { return _inputComponent; }
+	void SetInputComponent(InputComponent* input) { _inputComponent = input; }
 
 	ActorState* GetState() { return _state; }
 	void ChangeState(ActorState* newState) {

@@ -8,7 +8,6 @@
 class GameObject : public Observable
 {
 	PhysicsComponent* _physicsComponent;
-	InputComponent* _inputComponent;
 
 protected:
 	DrawableAsset* sprite;
@@ -50,10 +49,8 @@ public:
 	//-------- Getters and Setters for Components ------------
 	GameBoard* GetGameBoard() { return gb; }
 	PhysicsComponent* GetPhysicsComponent() { return _physicsComponent; }
-	InputComponent* GetInputComponent() { return _inputComponent; }
 	void SetGameBoard(GameBoard* gb) { this->gb = gb; }
 	void SetPhysicsComponent(PhysicsComponent* physics) { _physicsComponent = physics; }
-	void SetInputComponent(InputComponent* input) { _inputComponent = input; }
 	void SetSprite(DrawableAsset* sprite) { this->sprite = sprite; }
 
 
