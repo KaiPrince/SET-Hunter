@@ -74,10 +74,13 @@ void DeadState::enter()
 {
 	timeOfDeath = clock();
 
+	//-1 life
+	GameController::SetLives(GameController::GetLives() - 1);
+
 	//Death sprite
 	_actor->SetSprite(_actor->GetGameBoard()->GetAssetFactory()->CreateDrawableAsset(DrawableAsset::EXPLOSION_SPRITE));
 
-	//Notify observers
+	//Notify observers (Road stops scrolling.)
 	_actor->Notify();
 }
 
