@@ -1,5 +1,7 @@
 #include "InputComponent.h"
 #include "Actor.h"
+#include "GameBoard.h"
+#include "GameObject.h"
 
 
 

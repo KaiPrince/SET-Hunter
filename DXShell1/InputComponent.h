@@ -18,6 +18,7 @@ public:
 	virtual void HandleInput() = 0;
 };
 
+class Actor;
 /*
 Class Name: PlayerInputComponent
 Purpose: This class models the input handling strategy of a player.

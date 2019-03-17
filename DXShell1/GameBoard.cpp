@@ -53,6 +53,7 @@ void GameBoard::Init()
 
 	roadTimer = clock(); //std::chrono::high_resolution_clock::now();
 	roadShift = 0;
+	verticalOffset = 0.0f;
 }
 
 Square * GameBoard::FindSquare(float xPos, float yPos)
@@ -105,6 +106,7 @@ void GameBoard::ScrollBoard() {
 		roadTimer = currentTime;
 
 		//Shift squares
+		verticalOffset = -squareHeight;
 		//Loop bottom - 1 to top, left to right
 		for (int row = (boardHeight - 1) - 1; row >= 0; row--)
 		{
@@ -118,7 +120,7 @@ void GameBoard::ScrollBoard() {
 				//Move square down
 				Square* thisSquare = squares[column][row];
 				thisSquare->SetGbY(thisSquare->GetGbY() + 1);
-				thisSquare->SetYPos(thisSquare->GetGbY() * squareHeight); //TODO: add vertical offset
+				thisSquare->SetYPos((thisSquare->GetGbY() * squareHeight));
 				squares[column][row + 1] = thisSquare; //Shift pointer
 
 				//Clear squares on top row

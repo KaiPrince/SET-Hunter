@@ -4,6 +4,7 @@
 #include "InputComponent.h"
 
 class ActorState;
+class InputComponent;
 
 /*
 Class Name: Actor
@@ -27,16 +28,16 @@ public:
 	void SetInputComponent(InputComponent* input) { _inputComponent = input; }
 
 	ActorState* GetState() { return _state; }
-	void ChangeState(ActorState* newState) {
-		if (newState != nullptr) {
-			//Change state
+	//void ChangeState(ActorState* newState) {
+	//	if (newState != nullptr) {
+	//		//Change state
 
-			delete _state;
-			_state = newState;
+	//		delete _state;
+	//		_state = newState;
 
-			_state->enter();
-		}
-	}
+	//		_state->enter();
+	//	}
+	//}
 
 	virtual void HandleInput();
 

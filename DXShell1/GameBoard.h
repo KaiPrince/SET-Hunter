@@ -18,6 +18,7 @@ class GameBoard
 	//std::chrono::time_point<std::chrono::steady_clock> roadTimer;
 	std::clock_t roadTimer;
 	int roadShift; //Shifts the road to the right
+	float verticalOffset;
 
 	void placePlants();
 	void placePlants(int row);

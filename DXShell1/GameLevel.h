@@ -3,6 +3,7 @@
 #include "Graphics.h"
 #include "GameBoard.h"
 #include "Actor.h"
+#include "InputComponent.h"
 
 class GameLevel
 {
