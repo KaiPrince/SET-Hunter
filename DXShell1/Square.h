@@ -1,7 +1,8 @@
 #pragma once
 #include "TerrainAsset.h"
-#include "SpriteSheet.h"
 #include "DrawableAsset.h"
+#include "GameObject.h"
+
 
 /*
 Class Name: Square
@@ -9,20 +10,15 @@ Purpose: This class is used to represent a single square of the game board.
 	It will manage its position and assets, and draw itself to the screen.
 	It also manages its collidability state.
 */
-class Square
+class Square : public GameObject
 {
-	TerrainAsset* terrain;
 	DrawableAsset* assets;
 
-	int x;
-	int y;
-	float width;
-	float height;
-
-	bool isCollidable;
+	/*int gbX;
+	int gbY;*/
 public:
-	Square();
-	Square(int x, int y, float width, float height);
+	Square(float x, float y, float width, float height, TerrainAsset* terrain, GameBoard* gb);
+	//Square(int x, int y, float width, float height, TerrainAsset* terrain, GameBoard* gb);
 	~Square();
 
 	void SetTerrain(TerrainAsset* terrain);
@@ -31,22 +27,14 @@ public:
 	void SetAssets(DrawableAsset * assets);
 	DrawableAsset* GetAssets();
 
-	void SetRectBoundary(int x, int y, float width, float height);
+	//void SetRectBoundary(int x, int y, float width, float height);
 
-	int GetX() { return x; }
-	int GetY() { return y; }
-	float GetXPos() { return x * width; }
-	float GetYPos() { return y * height; }
-	float GetWidth() { return width; }
-	float GetHeight() { return height; }
-	bool IsCollidable() { return isCollidable; }
+	//int GetGbX();
+	int GetGbY();
 
-	void SetX(int x) { this->x = x; }
-	void SetY(int y) { this->y = y; }
-	void SetCollidable(bool isCollidable) { this->isCollidable = isCollidable; }
+	void SetGbX(int x);
+	void SetGbY(int y);
 
-	bool ContainsPoint(float x, float y);
-
-	void Draw();
+	void Draw() override;
 };
 

@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "ActorState.h"
+#include "InputComponent.h"
 
 class ActorState;
 

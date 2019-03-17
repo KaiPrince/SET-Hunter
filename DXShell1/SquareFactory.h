@@ -1,12 +1,16 @@
 #pragma once
 #include "Square.h"
+#include "AssetFactory.h"
+
+class GameBoard;
 
 class SquareFactory
 {
+	GameBoard* gb;
+	AssetFactory* _assetFactory;
 public:
-	SquareFactory();
+	SquareFactory(GameBoard* gb, AssetFactory* assetFactory);
 	~SquareFactory();
-	Square* CreateSquare();
 	Square * CreateSquare(int x, int y, float width, float height);
 };
 

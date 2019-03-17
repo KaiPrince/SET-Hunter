@@ -25,7 +25,7 @@ GameBoard::~GameBoard()
 
 void GameBoard::Init()
 {
-	_squareFactory = new SquareFactory();
+	_squareFactory = new SquareFactory(this, _assetFactory);
 	_grassTerrain = (TerrainAsset*)_assetFactory->CreateDrawableAsset(DrawableAsset::GRASS_TERRAIN);
 	_roadTerrain = (TerrainAsset*)_assetFactory->CreateDrawableAsset(DrawableAsset::ROAD_TERRAIN);
 
@@ -120,7 +120,7 @@ void GameBoard::ScrollBoard() {
 
 				//Move square down
 				Square* thisSquare = squares[column][row];
-				thisSquare->SetY(thisSquare->GetY() + 1);
+				thisSquare->SetGbY(thisSquare->GetGbY() + 1);
 				squares[column][row + 1] = thisSquare; //Shift pointer
 
 				//Clear squares on top row

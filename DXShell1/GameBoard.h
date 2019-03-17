@@ -1,5 +1,4 @@
 #pragma once
-#include "Square.h"
 #include "TerrainAsset.h"
 #include "SquareFactory.h"
 #include "AssetFactory.h"

@@ -1,9 +1,10 @@
 #pragma once
-#include "AssetFactory.h"
-#include "GameBoard.h"
+#include "DrawableAsset.h"
+//#include "GameBoard.h"
 #include "Observer.h"
-#include "InputComponent.h"
 #include "PhysicsComponent.h"
+
+class GameBoard;
 
 class GameObject : public Observable
 {

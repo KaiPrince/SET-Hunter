@@ -1,9 +1,13 @@
 #include "SquareFactory.h"
+#include "GameBoard.h"
+#include "AssetFactory.h"
 
 
 
-SquareFactory::SquareFactory()
-{
+SquareFactory::SquareFactory(GameBoard* gb, AssetFactory* assetFactory)
+{ 
+	this->gb = gb;
+	this->_assetFactory = assetFactory;
 }
 
 
@@ -11,15 +15,15 @@ SquareFactory::~SquareFactory()
 {
 }
 
-Square* SquareFactory::CreateSquare()
-{
-	Square* square = new Square();
-	return square;
-}
-
 Square* SquareFactory::CreateSquare(int x, int y, float width, float height)
 {
-	Square* square = new Square();
-	square->SetRectBoundary(x, y, width, height);
+	float xPos = x * width; //TODO: change this to use gb->squareWidth
+	float yPos = y * height;
+
+	TerrainAsset* defaultTerrain = (TerrainAsset*) _assetFactory->CreateDrawableAsset(DrawableAsset::GRASS_TERRAIN);
+	Square* square = new Square(xPos, yPos, width, height, defaultTerrain, gb);
+
+
+
 	return square;
 }
