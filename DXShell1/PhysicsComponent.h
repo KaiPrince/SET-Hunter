@@ -1,5 +1,9 @@
 #pragma once
 
+class GameObject;
+class GameBoard;
+class Square;
+
 /*
 Class Name: PhysicsComponent
 Purpose: This class encapsulates the physics of a game object.
@@ -7,8 +11,47 @@ Purpose: This class encapsulates the physics of a game object.
 */
 class PhysicsComponent
 {
+protected:
+	GameObject* obj; 
+	GameBoard* world;
+
+	Square* collisionObject; //TODO: convert to GameObject
 public:
-	PhysicsComponent();
+	PhysicsComponent(GameObject* obj, GameBoard* world);
 	virtual ~PhysicsComponent();
+
+	virtual Square* GetCollisionObject() {
+		return collisionObject;
+	}
+
+	virtual bool IsCollisionDetected() {
+		if (collisionObject != nullptr) {
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	virtual void Update() = 0;
+};
+
+/*
+Class Name: PlayerPhysicsComponent
+Purpose: This class represents the movement (X and Y position) behaviour of the player.
+	It will not allow the object to move off screen.
+	When it collides with a plant, the player will be 
+*/
+class PlayerPhysicsComponent : public PhysicsComponent
+{
+public:
+	PlayerPhysicsComponent(GameObject* obj, GameBoard* world) : PhysicsComponent(obj, world) {}
+	~PlayerPhysicsComponent();
+
+	virtual void Update();
+
+private:
+
 };
 

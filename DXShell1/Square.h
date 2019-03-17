@@ -22,6 +22,7 @@ class Square
 	bool isCollidable;
 public:
 	Square();
+	Square(int x, int y, float width, float height);
 	~Square();
 
 	void SetTerrain(TerrainAsset* terrain);

@@ -13,3 +13,9 @@ For Fun:
 - Implement Visitor or strategy pattern to player or level.
 	- Remove GetType() method and enums
 - Implement Observer Pattern.
+- Move collision detection and score accumulation out of PlayerState
+- Move setX and setY validation logic out of player class.
+- Create world class, which is an aggregation of gameBoard and all gameObjects.
+	- used by physics component.
+- Remove references of GameBoard from Square class
+- Convert Square* to GameObject* for CollisionObject in PhysicsComponent

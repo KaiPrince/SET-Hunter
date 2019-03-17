@@ -45,7 +45,7 @@ void GameController::Update()
 
 void GameController::HandleInput()
 {
-	currentLevel->handleInput();
+	currentLevel->HandleInput();
 }
 
 unsigned int GameController::GetScore()

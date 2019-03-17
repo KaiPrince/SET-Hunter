@@ -122,11 +122,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Actor.cpp" />
     <ClCompile Include="CompositeAsset.cpp" />
     <ClCompile Include="DrawableAsset.cpp" />
     <ClCompile Include="GameBoard.cpp" />
     <ClCompile Include="GameController.cpp" />
     <ClCompile Include="GameLevel.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="GrassTerrain.cpp" />
     <ClCompile Include="InputComponent.cpp" />
@@ -134,8 +136,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Observer.cpp" />
     <ClCompile Include="PhysicsComponent.cpp" />
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="PlayerState.cpp" />
+    <ClCompile Include="ActorState.cpp" />
     <ClCompile Include="RoadTerrain.cpp" />
     <ClCompile Include="SpriteSheet.cpp" />
     <ClCompile Include="SpriteSheetAsset.cpp" />
@@ -145,19 +146,20 @@
     <ClCompile Include="AssetFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Actor.h" />
     <ClInclude Include="CompositeAsset.h" />
     <ClInclude Include="DrawableAsset.h" />
     <ClInclude Include="GameBoard.h" />
     <ClInclude Include="GameController.h" />
     <ClInclude Include="GameLevel.h" />
+    <ClInclude Include="GameObject.h" />
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="GrassTerrain.h" />
     <ClInclude Include="InputComponent.h" />
     <ClInclude Include="Level1.h" />
     <ClInclude Include="PhysicsComponent.h" />
     <ClInclude Include="Observer.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="PlayerState.h" />
+    <ClInclude Include="ActorState.h" />
     <ClInclude Include="RoadTerrain.h" />
     <ClInclude Include="SpriteSheet.h" />
     <ClInclude Include="SpriteSheetAsset.h" />

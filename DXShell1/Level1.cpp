@@ -66,10 +66,10 @@ void Level1::Notify(Observable* subject) {
 	//TODO: check subject type is Player
 	switch (player->GetState()->GetType())
 	{
-	case PlayerState::ALIVE_STATE:
+	case ActorState::ALIVE_STATE:
 		continueRoadScolling = true;
 		break;
-	case PlayerState::DEAD_STATE:
+	case ActorState::DEAD_STATE:
 		continueRoadScolling = false;
 		break;
 	default:

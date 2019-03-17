@@ -1,8 +1,14 @@
 #include "Square.h"
 
-
-
 Square::Square()
+{
+	terrain = nullptr;
+	assets = nullptr;
+
+	isCollidable = false;
+}
+
+Square::Square(int x, int y, float width, float height)
 {
 	terrain = nullptr;
 	assets = nullptr;

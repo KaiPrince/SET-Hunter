@@ -2,7 +2,7 @@
 
 #include "Graphics.h"
 #include "GameBoard.h"
-#include "Player.h"
+#include "Actor.h"
 
 class GameLevel
 {
@@ -11,7 +11,7 @@ protected:
 	static GameBoard* gb;
 	static AssetFactory* _assetFactory;
 
-	static Player* player;
+	static Actor* player;
 
 public:
 	static void Init(Graphics* graphics)
@@ -28,16 +28,18 @@ public:
 		float player_StartX = (float)((gb->boardWidth * gb->squareWidth / 2) - gb->squareWidth);
 		float player_StartY = ((float)gb->boardHeight * gb->squareHeight) - gb->squareHeight ;
 
-		player = new Player(player_StartX, player_StartY,
+		player = new Actor(player_StartX, player_StartY,
 			gb->squareWidth, gb->squareHeight, _assetFactory->CreateDrawableAsset(DrawableAsset::CAR_SPRITE), gb);
+		player->SetPhysicsComponent(new PlayerPhysicsComponent(player, gb));
+		player->SetInputComponent(new PlayerInputComponent(player));
 	}
 
 	virtual void Load() = 0;
 	virtual void Unload() = 0;
 	virtual void Update() = 0;
 	virtual void Render() = 0;
-	virtual void handleInput() {
-		player->handleInput();
+	virtual void HandleInput() {
+		player->HandleInput();
 	}
 
 	void SetGameBoard(GameBoard* gameBoard) {
@@ -48,7 +50,7 @@ public:
 		return gb;
 	}
 
-	Player* GetPlayer() {
+	Actor* GetPlayer() {
 		return player;
 	}
 };
