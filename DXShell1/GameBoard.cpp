@@ -99,111 +99,126 @@ void GameBoard::ScrollBoard() {
 
 	std::clock_t currentTime = clock();
 	double elapsedTimeInMS = std::chrono::duration<double, std::milli>(currentTime - roadTimer).count();
-	const double roadScollingSpeedInMS = 200;
+	const double roadScollingSpeedInMS = 1;
 
 	//Scroll roadway
 	if (elapsedTimeInMS >= roadScollingSpeedInMS) {
 		roadTimer = currentTime;
 
-		//Shift squares
-		verticalOffset = -squareHeight;
-		//Loop bottom - 1 to top, left to right
-		for (int row = (boardHeight - 1) - 1; row >= 0; row--)
-		{
-			for (int column = 0; column < boardWidth; column++)
+		verticalOffset += squareHeight / 20;
+		if (verticalOffset >= 0) {
+			verticalOffset = -squareHeight;
+
+			//Shift squares
+			//Loop bottom - 1 to top, left to right
+			for (int row = (boardHeight - 1) - 1; row >= 0; row--)
 			{
-				//Free squares on the bottom row
-				if (row == boardHeight - 1) {
-					delete squares[column][row + 1];
-				}
+				for (int column = 0; column < boardWidth; column++)
+				{
+					//Free squares on the bottom row
+					if (row == boardHeight - 1) {
+						delete squares[column][row + 1];
+					}
 
-				//Move square down
-				Square* thisSquare = squares[column][row];
-				thisSquare->SetGbY(thisSquare->GetGbY() + 1);
-				thisSquare->SetYPos((thisSquare->GetGbY() * squareHeight));
-				squares[column][row + 1] = thisSquare; //Shift pointer
+					//Move square down
+					Square* thisSquare = squares[column][row];
+					thisSquare->SetGbY(thisSquare->GetGbY() + 1);
+					squares[column][row + 1] = thisSquare; //Shift pointer
 
-				//Clear squares on top row
-				if (row == 0) {
-					squares[column][row] = nullptr; //Warning: this may cause errors elsewhere.
+					//Clear squares on top row
+					if (row == 0) {
+						squares[column][row] = nullptr; //Warning: this may cause errors elsewhere.
+					}
 				}
 			}
-		}
 
-		//Randomly shift road
-		const int roadShiftStability = 5;
-		const int shiftLeft = 1;
-		const int shiftRight = 2;
+			//Randomly shift road
+			const int roadShiftStability = 5;
+			const int shiftLeft = 1;
+			const int shiftRight = 2;
 
-		//TODO: move these to class members (static?)
-		unsigned seed = (unsigned int)std::chrono::system_clock::now().time_since_epoch().count();
-		std::default_random_engine generator(seed);
-		std::uniform_int_distribution<int> dice_roadShift(1, roadShiftStability);
-		switch (dice_roadShift(generator))
-		{
-		case shiftLeft:
-			this->roadShift += -1;
-			break;
-		case shiftRight:
-			this->roadShift += 1;
-			break;
-		default:
-			break;
-		}
-
-		/*
-			Math for the road shift:
-			-------------------------
-			rLS = 3 + rS
-			if rLS < 1
-				3 + rS < 1
-				rS < 1 - 3
-
-			rRS = 10 - 3 + rS
-			if rRS > 10 - 1
-				10 - 3 + rS > 10 - 1
-				rS > 10 - 1 - 10 + 3
-				rs > 3 - 1
-		*/
-		int roadLeftSide = (boardWidth / 3) + roadShift; //TODO: move these constants
-		int roadRightSide = (boardWidth - (boardWidth / 3)) + roadShift;
-		//int roadWidth = roadRightSide - roadLeftSide;
-		if (roadLeftSide < 1)
-		{
-			this->roadShift = 1 - (boardWidth / 3);
-		}
-		else if (roadRightSide > boardWidth - 1)
-		{
-			this->roadShift = (boardWidth / 3) - 1;
-		}
-		else
-		{
-			//roadShift is in bounds.
-		}
-
-		//Generate new top row
-		for (int column = 0, row = 0; column < boardWidth; column++)
-		{
-			squares[column][row] = CreateSquare(column, row);
-			Square* thisSquare = squares[column][row];
-
-
-			//Place road
-			int roadLeftSide = (boardWidth / 3) + roadShift; //TODO: move these constants
-			int roadRightSide = (boardWidth - (boardWidth / 3)) + roadShift; //TODO: move these constants
-			if (column + 1 <= roadLeftSide || column + 1 > roadRightSide)
+			//TODO: move these to class members (static?)
+			unsigned seed = (unsigned int)std::chrono::system_clock::now().time_since_epoch().count();
+			std::default_random_engine generator(seed);
+			std::uniform_int_distribution<int> dice_roadShift(1, roadShiftStability);
+			switch (dice_roadShift(generator))
 			{
-				thisSquare->SetTerrain(_grassTerrain);
+			case shiftLeft:
+				this->roadShift += -1;
+				break;
+			case shiftRight:
+				this->roadShift += 1;
+				break;
+			default:
+				break;
+			}
+
+			/*
+				Math for the road shift:
+				-------------------------
+				rLS = 3 + rS
+				if rLS < 1
+					3 + rS < 1
+					rS < 1 - 3
+
+				rRS = 10 - 3 + rS
+				if rRS > 10 - 1
+					10 - 3 + rS > 10 - 1
+					rS > 10 - 1 - 10 + 3
+					rs > 3 - 1
+			*/
+			int roadLeftSide = (boardWidth / 3) + roadShift; //TODO: move these constants
+			int roadRightSide = (boardWidth - (boardWidth / 3)) + roadShift;
+			//int roadWidth = roadRightSide - roadLeftSide;
+			if (roadLeftSide < 1)
+			{
+				this->roadShift = 1 - (boardWidth / 3);
+			}
+			else if (roadRightSide > boardWidth - 1)
+			{
+				this->roadShift = (boardWidth / 3) - 1;
 			}
 			else
 			{
-				thisSquare->SetTerrain(_roadTerrain);
+				//roadShift is in bounds.
 			}
+
+			//Generate new top row
+			for (int column = 0, row = 0; column < boardWidth; column++)
+			{
+				squares[column][row] = CreateSquare(column, row);
+				Square* thisSquare = squares[column][row];
+
+
+				//Place road
+				int roadLeftSide = (boardWidth / 3) + roadShift; //TODO: move these constants
+				int roadRightSide = (boardWidth - (boardWidth / 3)) + roadShift; //TODO: move these constants
+				if (column + 1 <= roadLeftSide || column + 1 > roadRightSide)
+				{
+					thisSquare->SetTerrain(_grassTerrain);
+				}
+				else
+				{
+					thisSquare->SetTerrain(_roadTerrain);
+				}
+
+			}
+
+			//Generate new terrain on top row
+			placePlants(0);
 
 		}
 
-		//Generate new terrain on top row
-		placePlants(0);
+		for (int column = 0; column < boardWidth; column++)
+		{
+			for (int row = 0; row < boardHeight; row++)
+			{
+				Square* thisSquare = squares[column][row];
+
+				thisSquare->SetYPos((thisSquare->GetGbY() * squareHeight) + verticalOffset);
+			}
+		}
+
 	}
 }
 
