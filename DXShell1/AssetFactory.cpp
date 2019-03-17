@@ -5,6 +5,7 @@ SpriteSheet* AssetFactory::_treeSprite;
 SpriteSheet* AssetFactory::_tree2Sprite;
 SpriteSheet* AssetFactory::_shrubSprite;
 SpriteSheet* AssetFactory::_explosionSprite;
+DrawableAsset* AssetFactory::_emptySprite = new EmptyAsset(); //TODO: delete?
 
 AssetFactory::AssetFactory(Graphics* graphics)
 {

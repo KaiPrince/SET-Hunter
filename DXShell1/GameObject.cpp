@@ -1,4 +1,5 @@
 #include "GameObject.h"
+#include "AssetFactory.h"
 
 
 
@@ -9,7 +10,13 @@ GameObject::GameObject(float x, float y, float width, float height, DrawableAsse
 	this->y = y;
 	this->width = width;
 	this->height = height;
-	this->sprite = sprite; //TODO: null check
+	if (sprite != nullptr) {
+		this->sprite = sprite;
+	}
+	else {
+		this->sprite = AssetFactory::_emptySprite;
+	}
+	//TODO: null check
 	this->gb = gameboard; //TODO: null check
 
 	this->xVelocity = xVelocity;

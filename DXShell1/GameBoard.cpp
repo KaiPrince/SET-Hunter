@@ -33,7 +33,7 @@ void GameBoard::Init()
 	{
 		for (int row = 0; row < boardHeight; row++)
 		{
-			squares[column][row] = _squareFactory->CreateSquare(column, row, squareWidth, squareHeight);
+			squares[column][row] = CreateSquare(column, row);
 			Square* thisSquare = squares[column][row];
 
 			//Left third or right third
@@ -89,9 +89,6 @@ Square * GameBoard::CreateSquare(int column, int row)
 		//Create square from factory
 		output = this->_squareFactory->CreateSquare(column, row, squareWidth, squareHeight);
 
-		//Give the square default assets
-		output->SetTerrain((TerrainAsset*)this->_assetFactory->CreateDrawableAsset(DrawableAsset::GRASS_TERRAIN));
-
 	}
 
 	return output;
@@ -121,6 +118,7 @@ void GameBoard::ScrollBoard() {
 				//Move square down
 				Square* thisSquare = squares[column][row];
 				thisSquare->SetGbY(thisSquare->GetGbY() + 1);
+				thisSquare->SetYPos(thisSquare->GetGbY() * squareHeight); //TODO: add vertical offset
 				squares[column][row + 1] = thisSquare; //Shift pointer
 
 				//Clear squares on top row

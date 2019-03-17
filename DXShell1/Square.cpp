@@ -41,15 +41,34 @@ DrawableAsset * Square::GetAssets()
 	return assets;
 }
 
-int Square::GetGbY() {
-	return this->GetYPos() / this->GetGameBoard()->squareHeight; //TODO: fix floating-point error.
+int Square::GetGbX() {
+	return this->gbX;
 }
+
+int Square::GetGbY() {
+	return this->gbY;
+}
+
 void Square::SetGbX(int x) {
-	this->SetXPos(x * this->GetGameBoard()->squareWidth);
+	if (x > 0 && x < this->GetGameBoard()->boardWidth)
+	{
+		this->gbX = x;
+		//this->SetXPos(x * this->GetGameBoard()->squareWidth);
+	}
+	else {
+		//Out of bounds. Refuse to set.
+	}
 }
 
 void Square::SetGbY(int y) {
-	this->SetYPos(y * this->GetGameBoard()->squareHeight);
+	if (y > 0 && y < this->GetGameBoard()->boardHeight) 
+	{
+		this->gbY = y;
+		//this->SetYPos(y * this->GetGameBoard()->squareHeight);
+	}
+	else {
+		//Out of bounds. Refuse to set.
+	}
 }
 
 

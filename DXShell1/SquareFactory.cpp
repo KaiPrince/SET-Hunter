@@ -20,8 +20,11 @@ Square* SquareFactory::CreateSquare(int x, int y, float width, float height)
 	float xPos = x * width; //TODO: change this to use gb->squareWidth
 	float yPos = y * height;
 
+	//Give the square default assets
 	TerrainAsset* defaultTerrain = (TerrainAsset*) _assetFactory->CreateDrawableAsset(DrawableAsset::GRASS_TERRAIN);
 	Square* square = new Square(xPos, yPos, width, height, defaultTerrain, gb);
+	square->SetGbX(x);
+	square->SetGbY(y);
 
 
 

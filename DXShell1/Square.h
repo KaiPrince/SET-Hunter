@@ -14,8 +14,8 @@ class Square : public GameObject
 {
 	DrawableAsset* assets;
 
-	/*int gbX;
-	int gbY;*/
+	int gbX;
+	int gbY;
 public:
 	Square(float x, float y, float width, float height, TerrainAsset* terrain, GameBoard* gb);
 	//Square(int x, int y, float width, float height, TerrainAsset* terrain, GameBoard* gb);
@@ -29,7 +29,7 @@ public:
 
 	//void SetRectBoundary(int x, int y, float width, float height);
 
-	//int GetGbX();
+	int GetGbX();
 	int GetGbY();
 
 	void SetGbX(int x);

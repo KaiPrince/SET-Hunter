@@ -53,7 +53,7 @@ ActorState* AliveState::update()
 
 		//Accumulate Score
 		Square* currentSquare = _actor->GetGameBoard()->FindSquare(_actor->GetXPos(), _actor->GetYPos());
-		if (currentSquare->GetTerrain()->GetType() == DrawableAsset::ROAD_TERRAIN) {
+		if (currentSquare != nullptr && currentSquare->GetTerrain()->GetType() == DrawableAsset::ROAD_TERRAIN) {
 			GameController::SetScore(GameController::GetScore() + 1);
 		}
 	}

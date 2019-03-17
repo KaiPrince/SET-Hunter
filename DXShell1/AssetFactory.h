@@ -20,5 +20,7 @@ public:
 	~AssetFactory();
 
 	DrawableAsset* CreateDrawableAsset(DrawableAsset::AssetTypes assetType);
+
+	static DrawableAsset* _emptySprite;
 };
 
