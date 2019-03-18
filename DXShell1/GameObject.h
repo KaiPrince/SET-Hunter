@@ -2,11 +2,12 @@
 #include "DrawableAsset.h"
 //#include "GameBoard.h"
 #include "Observer.h"
+#include "Visitor.h"
 #include "PhysicsComponent.h"
 
 class GameBoard;
 
-class GameObject : public Observable
+class GameObject : public Observable, public VisitorComponent
 {
 	PhysicsComponent* _physicsComponent;
 
@@ -62,5 +63,8 @@ public:
 	virtual void Update();
 
 	virtual void Draw();
+
+	// Inherited via VisitorComponent
+	virtual void accept(Visitor & vistor) override;
 };
 

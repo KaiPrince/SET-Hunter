@@ -34,6 +34,11 @@ void GameObject::Draw() {
 	sprite->Draw(x, y, width, height);
 }
 
+void GameObject::accept(Visitor & visitor)
+{
+	visitor.visit(this);
+}
+
 void GameObject::Update() {
 	this->_physicsComponent->Update();
 }

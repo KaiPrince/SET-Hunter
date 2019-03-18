@@ -1,6 +1,7 @@
 #pragma once
 
 class Actor;
+class GameObject;
 
 /*
 Class Name: InputComponent
@@ -16,7 +17,7 @@ public:
 		this->object = object;
 	}
 
-	virtual ~InputComponent();
+	virtual ~InputComponent() {}
 
 	virtual void HandleInput() = 0;
 };

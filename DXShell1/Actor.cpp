@@ -39,3 +39,8 @@ void Actor::Update() {
 		_state->enter();
 	}
 }
+
+void Actor::accept(Visitor & visitor)
+{
+	visitor.visit(this);
+}

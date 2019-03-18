@@ -26,3 +26,4 @@ For Fun:
 	- Create overloaded constructors. Use Null objects
 	- Player class with physics and input component
 - In GameLevel Update calls, use World->Update()
+- Rename Visitor and Observable to IVisitor and IObservable

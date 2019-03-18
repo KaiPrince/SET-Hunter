@@ -2,6 +2,8 @@
 #include "GameObject.h"
 #include "ActorState.h"
 #include "InputComponent.h"
+//#include "Visitor.h" //Note: Also inherits from GameObject.
+
 
 class ActorState;
 class InputComponent;
@@ -14,6 +16,7 @@ Purpose: This class is used to represent an actor in the game.
 */
 class Actor :
 	public GameObject
+	//public VisitorComponent //Note: Also inherits from GameObject
 {
 protected:
 	InputComponent* _inputComponent;
@@ -42,5 +45,8 @@ public:
 	virtual void HandleInput();
 
 	virtual void Update();
+
+	// Inherited via VisitorComponent
+	virtual void accept(Visitor & visitor) override;
 };
 

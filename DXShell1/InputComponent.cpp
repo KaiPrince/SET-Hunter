@@ -40,7 +40,7 @@ void PlayerInputComponent::HandleInput() {
 void ClickableInputComponent::HandleInput() {
 
 	if ((GetKeyState(VK_LBUTTON) & 0x100) != 0) {
-		if (this->object->ContainsPoint(GraphicsLocator::GetGraphics()->MouseX, GraphicsLocator::GetGraphics()->MouseY))
+		if (object->ContainsPoint((float)GraphicsLocator::GetGraphics()->MouseX, (float)GraphicsLocator::GetGraphics()->MouseY))
 		{
 			//Notify observers
 			object->Notify();

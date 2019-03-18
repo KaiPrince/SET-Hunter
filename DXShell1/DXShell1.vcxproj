@@ -146,6 +146,7 @@
     <ClCompile Include="SquareFactory.cpp" />
     <ClCompile Include="TerrainAsset.cpp" />
     <ClCompile Include="AssetFactory.cpp" />
+    <ClCompile Include="Visitor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
@@ -171,6 +172,7 @@
     <ClInclude Include="SquareFactory.h" />
     <ClInclude Include="TerrainAsset.h" />
     <ClInclude Include="AssetFactory.h" />
+    <ClInclude Include="Visitor.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\playercar.bmp" />
