@@ -2,6 +2,7 @@
 #include <WinUser.h>
 #include <Windowsx.h>
 #include "Graphics.h"
+#include "GraphicsLocator.h"
 #include "Level1.h"
 #include "GameController.h"
 #include <string.h>
@@ -72,6 +73,7 @@ int WINAPI wWinMain(
 		delete graphics;
 		return -1;
 	}
+	GraphicsLocator::Provide(graphics);
 
 
 	GameController::Init();

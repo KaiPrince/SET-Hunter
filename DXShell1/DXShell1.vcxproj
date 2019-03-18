@@ -130,6 +130,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameWorld.cpp" />
     <ClCompile Include="Graphics.cpp" />
+    <ClCompile Include="GraphicsLocator.cpp" />
     <ClCompile Include="GrassTerrain.cpp" />
     <ClCompile Include="InputComponent.cpp" />
     <ClCompile Include="Level1.cpp" />
@@ -154,6 +155,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameWorld.h" />
     <ClInclude Include="Graphics.h" />
+    <ClInclude Include="GraphicsLocator.h" />
     <ClInclude Include="GrassTerrain.h" />
     <ClInclude Include="InputComponent.h" />
     <ClInclude Include="Level1.h" />
