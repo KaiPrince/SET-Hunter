@@ -38,7 +38,10 @@ void Level1::Render()
 	gb->Draw();
 
 	//DEBUG
-	//gfx->DrawRect((float)column * gb->squareWidth, (float)row * gb->squareHeight, (float)gb->squareWidth, (float)gb->squareHeight, 0.0f, 0.0f, 0.0f, 1.0f);
+	for each (Square* square in gb->squares)
+	{
+		gfx->DrawRect(square->GetXPos(), square->GetYPos(), (float)gb->squareWidth, (float)gb->squareHeight, 1.0f, 0.0f, 1.0f, 1.0f);
+	}
 
 	player->Draw();
 
@@ -47,7 +50,7 @@ void Level1::Render()
 		GameController::GetScore(), GameController::GetLives()));*/
 
 
-	//DEBUG
+		//DEBUG
 	int sX = 0;
 	int sY = 0;
 	Square* test = gb->FindSquare(player->GetXPos() + (player->GetWidth() / 2), player->GetYPos());
@@ -55,7 +58,7 @@ void Level1::Render()
 		sX = test->GetGbX();
 		sY = test->GetGbY();
 	}
-	
+
 	gfx->DrawRect(test->GetXPos(), test->GetYPos(), (float)gb->squareWidth, (float)gb->squareHeight, 1.0f, 0.0f, 0.0f, 1.0f);
 
 

@@ -1,4 +1,5 @@
 #include "GameBoard.h"
+#include "GraphicsLocator.h"
 
 #include <random>
 #include <chrono>
@@ -99,10 +100,10 @@ void GameBoard::ScrollBoard() {
 
 	std::clock_t currentTime = clock();
 	double elapsedTimeInMS = std::chrono::duration<double, std::milli>(currentTime - roadTimer).count();
-	const double roadScollingSpeedInMS = 1;
+	const double roadScollingDelayInMS = 20;
 
 	//Scroll roadway
-	if (elapsedTimeInMS >= roadScollingSpeedInMS) {
+	if (elapsedTimeInMS >= roadScollingDelayInMS) {
 		roadTimer = currentTime;
 
 		verticalOffset += squareHeight / 20;
@@ -192,7 +193,8 @@ void GameBoard::ScrollBoard() {
 
 				//Place road
 				int roadLeftSide = (boardWidth / 3) + roadShift; //TODO: move these constants
-				int roadRightSide = (boardWidth - (boardWidth / 3)) + roadShift; //TODO: move these constants
+				int roadRightSide = (boardWidth - (boardWidth / 3)) + roadShift;
+				//int roadWidth = roadRightSide - roadLeftSide;
 				if (column + 1 <= roadLeftSide || column + 1 > roadRightSide)
 				{
 					thisSquare->SetTerrain(_grassTerrain);
@@ -256,7 +258,7 @@ void GameBoard::placePlants(int row)
 				case DrawableAsset::TREE_SPRITE:
 				case DrawableAsset::TREE2_SPRITE:
 				case DrawableAsset::SHRUB_SPRITE:
-					thisSquare->SetAssets(nullptr); //TODO: search through composite and replace only where necessary.
+					thisSquare->SetAssets(nullptr);
 				default:
 					break;
 				}
@@ -284,7 +286,6 @@ void GameBoard::placePlants(int row)
 					break;
 				}
 				thisSquare->SetAssets(_assetFactory->CreateDrawableAsset(plantAssetType));
-				//TODO: find some way to clear only plant assets from a possible composite asset. Use public type var? (like with terrain?)
 
 				thisSquare->SetCollidable(true);
 			}
@@ -303,6 +304,105 @@ void GameBoard::Draw() {
 
 			thisSquare->Draw();
 
+
+
 		}
+	}
+
+	DrawRoadMask();
+}
+
+//TODO: don't leave this here.
+//Blend the outer edges
+void GameBoard::DrawRoadMask()
+{
+
+	Square* leftRoadSquare = nullptr;
+	Square* leftRoadSquareAbove = nullptr;
+	Square* rightRoadSquare = nullptr;
+	Square* rightRoadSquareAbove = nullptr;
+	for (int row = 0; row < boardHeight; row++)
+	{
+		//Find left Road tile
+		for (int column = 0; column < boardWidth; column++)
+		{
+			Square* thisSquare = squares[column][row];
+
+			if (thisSquare->GetTerrain()->GetType() == DrawableAsset::ROAD_TERRAIN) {
+				leftRoadSquare = thisSquare;
+				break;
+			}
+
+		}
+
+		//Find right Road tile
+		for (int column = boardWidth - 1; column >= 0; column--)
+		{
+			Square* thisSquare = squares[column][row];
+
+			if (thisSquare->GetTerrain()->GetType() == DrawableAsset::ROAD_TERRAIN) {
+				rightRoadSquare = thisSquare;
+				break;
+			}
+
+		}
+
+		//Link to squares above it
+		if (row != 0) {
+
+			//Left Side
+			{
+				float x1 = leftRoadSquare->GetXPos();
+				float x2 = leftRoadSquareAbove->GetXPos();
+
+				float y1 = leftRoadSquare->GetYPos();
+				float y2 = y1;// = leftRoadSquareAbove->GetYPos() + leftRoadSquareAbove->GetHeight();
+
+				if (x1 < x2) {
+					//right - Top to Top
+					y1 = leftRoadSquare->GetYPos();
+					y2 = leftRoadSquareAbove->GetYPos();
+				}
+				else if (x1 > x2)
+				{
+					//left - Bottom to Bottom
+					y1 = leftRoadSquare->GetYPos() + leftRoadSquare->GetHeight();
+					y2 = leftRoadSquareAbove->GetYPos() + leftRoadSquareAbove->GetHeight();
+				}
+				else {
+					//don't draw
+				}
+				GraphicsLocator::GetGraphics()->DrawLine(x1, y1, x2, y2, 3.0f, 1.0f, 0.0f, 0.0f, 1.0f);
+				GraphicsLocator::GetGraphics()->DrawTriangle(x1, y1, x2, y2, leftRoadSquare->GetXPos(), leftRoadSquare->GetYPos(), 1.0f, 1.0f, 0.0f, 1.0f);
+			}
+
+			//Right side
+			{
+				float x1 = rightRoadSquare->GetXPos() + rightRoadSquare->GetWidth();
+				float x2 = rightRoadSquareAbove->GetXPos() + rightRoadSquareAbove->GetWidth();
+
+				float y1 = rightRoadSquare->GetYPos();
+				float y2 = y1;// = leftRoadSquareAbove->GetYPos() + leftRoadSquareAbove->GetHeight();
+
+				if (x1 < x2) {
+					//right - Bottom to Bottom
+					y1 = rightRoadSquare->GetYPos() + rightRoadSquare->GetHeight();
+					y2 = rightRoadSquareAbove->GetYPos() + rightRoadSquareAbove->GetHeight();
+				}
+				else if (x1 > x2)
+				{
+					//left - Top to Top
+					y1 = rightRoadSquare->GetYPos();
+					y2 = rightRoadSquareAbove->GetYPos();
+				}
+				else {
+					//don't draw
+				}
+				GraphicsLocator::GetGraphics()->DrawLine(x1, y1, x2, y2, 3.0f, 1.0f, 0.0f, 0.0f, 1.0f);
+			}
+		}
+
+		leftRoadSquareAbove = leftRoadSquare;
+		rightRoadSquareAbove = rightRoadSquare;
 	}
 }

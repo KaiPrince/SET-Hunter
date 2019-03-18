@@ -22,6 +22,11 @@ class GameBoard
 
 	void placePlants();
 	void placePlants(int row);
+
+	void DrawRoadMask();
+
+	
+			
 public:
 	GameBoard();
 	~GameBoard();

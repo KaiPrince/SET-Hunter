@@ -81,6 +81,40 @@ void Graphics::DrawRect(float x, float y, float width, float height, float r, fl
 	rendertarget->DrawRectangle(D2D1::RectF(x, y, x + width, y + height), brush, 1.0f);
 }
 
+void Graphics::DrawLine(float x1, float y1, float x2, float y2, float width, float r, float g, float b, float a) {
+	brush->SetColor(D2D1::ColorF(r, g, b, a));
+	rendertarget->DrawLine(D2D1::Point2F(x1, y1), D2D1::Point2F(x2, y2), brush, width);
+}
+
+void Graphics::DrawTriangle(float x1, float y1, float x2, float y2, float x3, float y3, float r, float g, float b, float a)
+{
+	brush->SetColor(D2D1::ColorF(r, g, b, a));
+
+	//TODO: move this somewhere it can be defined once.
+	ID2D1PathGeometry* pathGeometry = nullptr;
+	//TODO: error check
+	factory->CreatePathGeometry(&pathGeometry);
+	ID2D1GeometrySink *pSink = NULL;
+	pathGeometry->Open(&pSink);
+
+	pSink->SetFillMode(D2D1_FILL_MODE_WINDING);
+
+	pSink->BeginFigure(
+		D2D1::Point2F(x1, y1),
+		D2D1_FIGURE_BEGIN_FILLED
+	);
+	D2D1_POINT_2F points[2] = {
+		D2D1::Point2F(x2, y2),
+		D2D1::Point2F(x3, y3),
+	};
+	pSink->AddLines(points, ARRAYSIZE(points));
+	pSink->EndFigure(D2D1_FIGURE_END_CLOSED);
+
+	pSink->Close();
+
+	rendertarget->FillGeometry(pathGeometry, brush);
+}
+
 void Graphics::FillRect(float x, float y, float width, float height, float r, float g, float b, float a)
 {
 	brush->SetColor(D2D1::ColorF(r, g, b, a));
