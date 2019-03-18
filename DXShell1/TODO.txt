@@ -3,6 +3,7 @@ Assignment:
 - Make score update based on time.
 - Add score lockout for 3 seconds after leaving road.
 - Prevent player from getting stuck in death loop in bottom middle of screen.
+	- Make player invincible for 3 seconds after dying.
 
 For Fun:
 - Cleanup terrain classes by using type object pattern.
@@ -17,3 +18,5 @@ For Fun:
 - Remove references of GameBoard from Square class
 - Replace all nullptr assets with _emptyAsset
 	- rename to nullAsset?
+- Create abstract Graphics interface, and nullObject for GraphicsLocator.
+- Change Road filler to use a single triangle geometry and transform or rotate it when drawing.
