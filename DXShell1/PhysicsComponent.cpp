@@ -29,7 +29,7 @@ void PlayerPhysicsComponent::Update() {
 	float newXPos = obj->GetXPos() - obj->GetXVelocity();
 	float newYPos = obj->GetYPos() - obj->GetYVelocity();
 
-	Square* nextSquare = world->FindSquare(newXPos + (obj->GetWidth() / 2), newYPos);
+	GameObject* nextSquare = world->FindSquare(newXPos + (obj->GetWidth() / 2), newYPos);
 	if (nextSquare != nullptr && nextSquare->IsCollidable()) {
 		//Set collision flag
 		this->collisionObject = nextSquare;

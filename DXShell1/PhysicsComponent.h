@@ -2,7 +2,6 @@
 
 class GameObject;
 class GameBoard;
-class Square;
 
 /*
 Class Name: PhysicsComponent
@@ -15,12 +14,12 @@ protected:
 	GameObject* obj; 
 	GameBoard* world;
 
-	Square* collisionObject; //TODO: convert to GameObject
+	GameObject* collisionObject; //TODO: convert to GameObject
 public:
 	PhysicsComponent(GameObject* obj, GameBoard* world);
 	virtual ~PhysicsComponent();
 
-	virtual Square* GetCollisionObject() {
+	virtual GameObject* GetCollisionObject() {
 		return collisionObject;
 	}
 
@@ -41,7 +40,7 @@ public:
 Class Name: PlayerPhysicsComponent
 Purpose: This class represents the movement (X and Y position) behaviour of the player.
 	It will not allow the object to move off screen.
-	When it collides with a plant, the player will be 
+	When it collides with a plant, a collision flag will be set.
 */
 class PlayerPhysicsComponent : public PhysicsComponent
 {
