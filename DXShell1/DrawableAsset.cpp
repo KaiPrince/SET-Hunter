@@ -27,5 +27,11 @@ void MainMenuBackgroundAsset::Draw(float x, float y, float width, float height)
 }
 
 void TextAsset::Draw(float x, float y, float width, float height) {
-	GetGraphics()->WriteText(x, y, Text, strlen(Text));
+	GetGraphics()->WriteText(x, y, Text, (int)strlen(Text));
+}
+
+void AssetOutlineDecorator::Draw(float x, float y, float width, float height) {
+	_asset->Draw(x, y, width, height);
+
+	GetGraphics()->DrawRect(x, y, width, height, 1.0f, 0.0f, 0.0f, 1.0f);
 }

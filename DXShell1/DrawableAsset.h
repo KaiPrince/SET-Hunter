@@ -72,3 +72,14 @@ private:
 
 };
 
+class AssetOutlineDecorator : public DrawableAsset {
+	DrawableAsset* _asset;
+public:
+	AssetOutlineDecorator(DrawableAsset* asset) : DrawableAsset() {
+		_asset = asset;
+	}
+	~AssetOutlineDecorator() {}
+
+	virtual void Draw(float x, float y, float width, float height) override;
+};
+

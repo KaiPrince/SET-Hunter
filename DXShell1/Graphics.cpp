@@ -106,7 +106,8 @@ void Graphics::WriteText(float xPos, float yPos, char* text, int length) {
 	MultiByteToWideChar(CP_ACP, 0, p, -1, (LPWSTR)pwcsName, nChars);
 	// use it....
 
-	rendertarget->DrawText(pwcsName, length, textFormat, D2D1::RectF(xPos, yPos, 50.0f, 20.0f), brush);
+	rendertarget->DrawText(pwcsName, length, textFormat, D2D1::RectF(xPos, yPos, xPos + 50.0f, yPos + 20.0f), brush);
+	rendertarget->DrawRectangle(D2D1::RectF(xPos, yPos, xPos + 50.0f, yPos + 20.0f), brush);
 
 	// delete it
 	delete[] pwcsName;
