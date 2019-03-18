@@ -10,7 +10,9 @@ Purpose: This GameLevel class will display a starting menu for the user to selec
 class MainMenuLevel :
 	public GameLevel, public Observer
 {
-	std::vector<GameObject*> mainMenu; //TODO: replace with composition object.
+	//std::vector<GameObject*> mainMenu; //TODO: replace with composition object.
+	GameObject* StartButton; //TODO: move to MainMenu Type object or something.
+	GameObject* ExitButton;
 
 public:
 	MainMenuLevel();

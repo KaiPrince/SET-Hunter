@@ -27,3 +27,5 @@ For Fun:
 	- Player class with physics and input component
 - In GameLevel Update calls, use World->Update()
 - Rename Visitor and Observable to IVisitor and IObservable
+- Move Player to World->GameObjects
+- Replace GameObject with IGameObject

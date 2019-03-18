@@ -49,3 +49,12 @@ void ClickableInputComponent::HandleInput() {
 		}
 	}
 }
+
+void ClickableInputComponent::visit(GameObject * gameobject)
+{
+
+}
+
+void ClickableInputComponent::visit(Actor * actor)
+{
+}

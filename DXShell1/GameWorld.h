@@ -19,7 +19,7 @@ public:
 	GameWorld(GameBoard* gb);
 	~GameWorld();
 
-	std::vector<GameObject*> GetGameObjects() { return _gameObjects; }
+	std::vector<GameObject*>& GetGameObjects() { return _gameObjects; }
 	GameBoard* GetGameBoard() { return _gameBoard; }
 
 	void AddGameObject(GameObject* obj);

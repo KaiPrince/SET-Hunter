@@ -7,6 +7,7 @@ Actor::Actor(float x, float y, float width, float height, DrawableAsset* sprite,
 		xVelocity, yVelocity)
 {
 	this->_state = new AliveState(this);
+	this->_inputComponent = new NullInputComponent();
 }
 
 

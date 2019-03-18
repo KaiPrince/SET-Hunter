@@ -65,6 +65,20 @@ public:
 	virtual void Draw();
 
 	// Inherited via VisitorComponent
-	virtual void accept(Visitor & vistor) override;
+	virtual void accept(Visitor & visitor) override;
 };
 
+class NullGameObject : public GameObject
+{
+public:
+	NullGameObject() : GameObject(0.0f, 0.0f, 0.0f, 0.0f, nullptr, nullptr) {}
+	~NullGameObject() {}
+
+	void Update() override {}
+	void Draw() override {}
+
+	virtual void accept(Visitor & visitor) override {}
+
+private:
+
+};

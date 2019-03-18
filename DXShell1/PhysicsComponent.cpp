@@ -18,6 +18,14 @@ PhysicsComponent::~PhysicsComponent()
 {
 }
 
+void PhysicsComponent::visit(GameObject * gameobject)
+{
+}
+
+void PhysicsComponent::visit(Actor * actor)
+{
+}
+
 /*
 This function checks all GameBoard squares and GameObjects for a collision with a given point.
 */

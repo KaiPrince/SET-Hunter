@@ -20,8 +20,11 @@ Observable::~Observable() {
 }
 
 void Observable::Notify() {
-	for each (Observer* observer in Observers)
+	/*for each (Observer* observer in Observers)
 	{
+		observer->Notify(this);
+	}*/
+	for (Observer* observer : Observers) {
 		observer->Notify(this);
 	}
 }

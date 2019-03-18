@@ -1,15 +1,20 @@
 #include "MainMenuLevel.h"
 #include "GraphicsLocator.h"
+#include "GameController.h"
+#include "Level1.h"
 
 
 
 MainMenuLevel::MainMenuLevel()
 {
-
+	StartButton = new NullGameObject();
+	ExitButton = new NullGameObject();
 }
 
 MainMenuLevel::~MainMenuLevel()
 {
+	delete StartButton;
+	delete ExitButton;
 }
 
 void MainMenuLevel::Load()
@@ -25,9 +30,8 @@ void MainMenuLevel::Load()
 
 	GameObject* background = new GameObject(0.0f, 0.0f, ScreenWidth, ScreenHeight, 
 		UIsprite, gb);
-	background->SetPhysicsComponent(new NullPhysicsComponent(background, world));
 
-	mainMenu.push_back(background);
+	world->AddGameObject(background);
 
 	//Logo
 	UIsprite = new AssetOutlineDecorator(_assetFactory->CreateDrawableAsset(DrawableAsset::GRASS_TERRAIN));
@@ -35,9 +39,8 @@ void MainMenuLevel::Load()
 		pseudoPixelWidth * 3, pseudoPixelHeight * 4,
 		UIsprite,
 		gb);
-	Logo->SetPhysicsComponent(new NullPhysicsComponent(background, world));
 
-	mainMenu.push_back(Logo);
+	world->AddGameObject(Logo);
 
 	//Title
 	TextAsset* textAsset = (TextAsset*) _assetFactory->CreateDrawableAsset(DrawableAsset::TEXT_ASSET);
@@ -48,12 +51,21 @@ void MainMenuLevel::Load()
 	GameObject* Title = new GameObject(ScreenWidth - (5 * pseudoPixelWidth), 0 + pseudoPixelHeight,
 		4 * pseudoPixelWidth, 1 * pseudoPixelHeight,
 		UIsprite, gb);
-	Title->SetPhysicsComponent(new NullPhysicsComponent(Title, world));
 
-	mainMenu.push_back(Title);
+	world->AddGameObject(Title);
 
 	//Start Button
+	textAsset = (TextAsset*)_assetFactory->CreateDrawableAsset(DrawableAsset::TEXT_ASSET);
+	textAsset->SetText("Start Game");
 
+	UIsprite = new AssetOutlineDecorator(textAsset); //TODO: create Rounded Rectangle
+
+	this->StartButton = new Actor(0 + (2 * pseudoPixelWidth), ScreenHeight - (4 * pseudoPixelHeight),
+		6 * pseudoPixelWidth, 1 * pseudoPixelHeight, UIsprite, gb);
+	((Actor*)(this->StartButton))->SetInputComponent(new ClickableInputComponent(this->StartButton));
+	this->StartButton->AddObserver(this);
+
+	world->AddGameObject(this->StartButton);
 
 	//Exit Button
 
@@ -70,7 +82,7 @@ void MainMenuLevel::Update()
 
 void MainMenuLevel::Render()
 {
-	for each (GameObject* element in mainMenu)
+	for each (GameObject* element in world->GetGameObjects())
 	{
 		element->Draw();
 	}
@@ -78,5 +90,12 @@ void MainMenuLevel::Render()
 
 void MainMenuLevel::Notify(Observable * subject)
 {
-	//TODO: handle object click
+
+	if (subject == this->StartButton) {
+		//Load Level 1
+		GameController::SwitchLevel(new Level1());
+	}
+	else if (subject == this->ExitButton) {
+		//TODO: exit game.
+	}
 }

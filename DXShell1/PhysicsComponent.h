@@ -1,15 +1,17 @@
 #pragma once
+#include "Visitor.h"
 
 class GameObject;
 class GameBoard;
 class GameWorld;
+class Actor;
 
 /*
 Class Name: PhysicsComponent
 Purpose: This class encapsulates the physics of a game object.
 	This class will be used to handle collision detection and updates to the position of a game object.
 */
-class PhysicsComponent
+class PhysicsComponent : public Visitor
 {
 protected:
 	GameObject* obj; 
@@ -37,15 +39,23 @@ public:
 	}
 
 	virtual void Update() = 0;
+
+	// Inherited via Visitor
+	virtual void visit(GameObject * gameobject) override;
+	virtual void visit(Actor * actor) override;
 };
 
 class NullPhysicsComponent : public PhysicsComponent
 {
 public:
-	NullPhysicsComponent(GameObject* obj, GameWorld* world) : PhysicsComponent(obj, world) {}
+	NullPhysicsComponent() : PhysicsComponent(nullptr, nullptr) {}
 	~NullPhysicsComponent() {}
 
-	void Update() override { /*Do nothing*/ };
+	void Update() override { /*Do nothing*/ }
+
+	// Inherited via Visitor
+	void visit(GameObject * gameobject) override { /*Do nothing*/ }
+	void visit(Actor * actor) override { /*Do nothing*/ }
 private:
 
 };

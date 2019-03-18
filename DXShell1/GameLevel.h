@@ -5,8 +5,9 @@
 #include "Actor.h"
 #include "InputComponent.h"
 #include "GameWorld.h"
+#include "Visitor.h"
 
-class GameLevel
+class GameLevel : public Visitor
 {
 protected:
 	static Graphics* gfx;
@@ -46,6 +47,11 @@ public:
 	virtual void Render() = 0;
 	virtual void HandleInput() {
 		player->HandleInput();
+
+		for each (GameObject* gameObject in world->GetGameObjects())
+		{
+			gameObject->accept(*this);
+		}
 		
 	}
 
@@ -60,4 +66,8 @@ public:
 	Actor* GetPlayer() {
 		return player;
 	}
+
+	// Inherited via Visitor
+	virtual void visit(GameObject * gameobject) override;
+	virtual void visit(Actor * actor) override;
 };

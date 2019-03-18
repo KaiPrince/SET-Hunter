@@ -22,6 +22,7 @@ GameObject::GameObject(float x, float y, float width, float height, DrawableAsse
 	this->xVelocity = xVelocity;
 	this->yVelocity = yVelocity;
 
+	this->_physicsComponent = new NullPhysicsComponent();
 }
 
 
