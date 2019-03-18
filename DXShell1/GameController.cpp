@@ -2,12 +2,17 @@
 
 GameLevel* GameController::currentLevel;
 bool GameController::Loading;
+GameLevel* GameController::QueuedNextLevel;
+bool GameController::QueueExitGame;
 unsigned int GameController::_score;
 int GameController::_lives;
 
 void GameController::Init()
 {
 	Loading = true;
+	QueuedNextLevel = nullptr;
+	QueueExitGame = false;
+
 	currentLevel = 0;
 	_score = 0;
 	_lives = 3;

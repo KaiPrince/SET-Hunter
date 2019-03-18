@@ -11,34 +11,15 @@ class GameLevel : public Visitor
 {
 protected:
 	static Graphics* gfx;
-	static GameBoard* gb;
-	static GameWorld* world;
+	GameWorld* world;
+	Actor* player; //TODO: delete in destructor
 	static AssetFactory* _assetFactory;
-
-	static Actor* player;
 
 public:
 	static void Init(Graphics* graphics)
 	{
 		gfx = graphics;
-		gb = new GameBoard();
 		_assetFactory = new AssetFactory(gfx);
-		gb->SetAssetFactory(_assetFactory); //TODO: delete in destructor
-		gb->squareWidth = (float) gfx->Window_Width / gb->boardWidth; //TODO: change this to use a setter;
-		gb->squareHeight = (float) gfx->Window_Height / gb->boardHeight; //TODO: change this to use a setter;
-		gb->Init();
-
-		world = new GameWorld(gb);
-
-
-		//Player starts at bottom middle of screen.
-		float player_StartX = (float)((gb->boardWidth * gb->squareWidth / 2) - gb->squareWidth);
-		float player_StartY = ((float)gb->boardHeight * gb->squareHeight) - gb->squareHeight ;
-
-		player = new Actor(player_StartX, player_StartY,
-			gb->squareWidth, gb->squareHeight, _assetFactory->CreateDrawableAsset(DrawableAsset::CAR_SPRITE), gb);
-		player->SetPhysicsComponent(new PlayerPhysicsComponent(player, world));
-		player->SetInputComponent(new PlayerInputComponent(player));
 	}
 
 	virtual void Load() = 0;
@@ -46,26 +27,14 @@ public:
 	virtual void Update() = 0;
 	virtual void Render() = 0;
 	virtual void HandleInput() {
-		player->HandleInput();
 
-		for each (GameObject* gameObject in world->GetGameObjects())
+		for (GameObject* gameObject : world->GetGameObjects())
 		{
 			gameObject->accept(*this);
 		}
 		
 	}
 
-	void SetGameBoard(GameBoard* gameBoard) {
-		gb = gameBoard;
-	}
-
-	GameBoard* GetGameBoard() {
-		return gb;
-	}
-
-	Actor* GetPlayer() {
-		return player;
-	}
 
 	// Inherited via Visitor
 	virtual void visit(GameObject * gameobject) override;

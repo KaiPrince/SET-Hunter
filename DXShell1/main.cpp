@@ -98,7 +98,7 @@ int WINAPI wWinMain(
 	//when a message has to be dispatched.
 	MSG message;
 	message.message = WM_NULL; //Do not have this set to WM_QUIT, which has a specific context
-	while (message.message != WM_QUIT)
+	while (message.message != WM_QUIT && !GameController::QueueExitGame)
 	{
 		if (PeekMessage(&message, NULL, 0, 0, PM_REMOVE))
 		{
@@ -143,7 +143,11 @@ int WINAPI wWinMain(
 			GameController::Render();
 			graphics->EndDraw();
 
-
+			//Switch level if queued.
+			if (GameController::QueuedNextLevel != nullptr) {
+				GameController::SwitchLevel(GameController::QueuedNextLevel);
+				GameController::QueuedNextLevel = nullptr;
+			}
 		}
 	}
 

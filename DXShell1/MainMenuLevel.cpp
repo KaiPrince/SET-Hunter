@@ -13,12 +13,14 @@ MainMenuLevel::MainMenuLevel()
 
 MainMenuLevel::~MainMenuLevel()
 {
-	delete StartButton;
-	delete ExitButton;
 }
 
 void MainMenuLevel::Load()
 {
+	//Create World
+	world = new GameWorld(_assetFactory);
+
+	GameBoard* gb = world->GetGameBoard();
 	const float ScreenWidth = (float) GraphicsLocator::GetGraphics()->Window_Width;
 	const float ScreenHeight = (float) GraphicsLocator::GetGraphics()->Window_Height;
 
@@ -73,7 +75,8 @@ void MainMenuLevel::Load()
 
 void MainMenuLevel::Unload()
 {
-	//TODO..
+	//Delete World
+	delete world;
 }
 
 void MainMenuLevel::Update()
@@ -93,9 +96,9 @@ void MainMenuLevel::Notify(Observable * subject)
 
 	if (subject == this->StartButton) {
 		//Load Level 1
-		GameController::SwitchLevel(new Level1());
+		GameController::QueuedNextLevel = new Level1();
 	}
 	else if (subject == this->ExitButton) {
-		//TODO: exit game.
+		GameController::QueueExitGame = true;
 	}
 }

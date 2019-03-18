@@ -50,3 +50,19 @@ public:
 	virtual void accept(Visitor & visitor) override;
 };
 
+class NullActor : public Actor
+{
+public:
+	NullActor() : Actor(0.0f, 0.0f, 0.0f, 0.0f, nullptr, nullptr) {}
+	~NullActor() {}
+
+	virtual void HandleInput() override {}
+	virtual void Update() override {}
+	virtual void Draw() override {}
+
+	virtual void accept(Visitor & visitor) override {}
+
+
+private:
+
+};

@@ -1,4 +1,5 @@
 #include "Observer.h"
+#include <algorithm>
 
 
 
@@ -31,4 +32,11 @@ void Observable::Notify() {
 
 void Observable::AddObserver(Observer* observer) {
 	Observers.push_back(observer);
+}
+
+void Observable::RemoveObserver(Observer * observer)
+{
+	if (observer != nullptr) {
+		Observers.erase(std::remove(Observers.begin(), Observers.end(), observer));
+	}
 }

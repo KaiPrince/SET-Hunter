@@ -5,6 +5,8 @@
 
 class GameObject;
 class GameBoard;
+class Actor;
+class AssetFactory;
 
 /*
 Class Name: GameWorld
@@ -15,15 +17,23 @@ class GameWorld
 {
 	std::vector<GameObject*> _gameObjects;
 	GameBoard* _gameBoard;
+	Actor* _player;
 public:
-	GameWorld(GameBoard* gb);
+	GameWorld(AssetFactory* assetFactory);
 	~GameWorld();
 
-	std::vector<GameObject*>& GetGameObjects() { return _gameObjects; }
 	GameBoard* GetGameBoard() { return _gameBoard; }
+	void SetGameBoard(GameBoard* gameBoard);
 
+	Actor* GetPlayer() { return _player; }
+	void SetPlayer(Actor* player);
+
+	std::vector<GameObject*>& GetGameObjects() { return _gameObjects; }
 	void AddGameObject(GameObject* obj);
 	void RemoveGameObject(GameObject* obj);
+
+	void Draw();
+	void Update();
 
 };
 

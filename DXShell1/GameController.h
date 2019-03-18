@@ -17,6 +17,9 @@ class GameController
 
 public:
 	static bool Loading;
+	static GameLevel* QueuedNextLevel;
+	static bool QueueExitGame;
+
 	static void Init();
 	static void LoadInitialLevel(GameLevel* lev);
 	static void SwitchLevel(GameLevel* lev);

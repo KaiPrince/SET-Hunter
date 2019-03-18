@@ -29,6 +29,7 @@ public:
 
 	virtual void Notify();
 	virtual void AddObserver(Observer* observer);
+	virtual void RemoveObserver(Observer* observer);
 
 };
 

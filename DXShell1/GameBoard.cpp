@@ -6,14 +6,20 @@
 
 
 
-GameBoard::GameBoard()
+GameBoard::GameBoard(float squareWidth, float squareHeight, AssetFactory* assetFactory)
 {
+	this->squareWidth = squareWidth;
+	this->squareHeight = squareHeight;
+
+
+
 	for each (Square* square in squares)
 	{
 		square = nullptr;
 	};
-	_squareFactory = nullptr;
-	_assetFactory = nullptr;
+
+	_assetFactory = assetFactory;
+	_squareFactory = new SquareFactory(this, _assetFactory);
 	_grassTerrain = nullptr;
 	_roadTerrain = nullptr;
 }
@@ -21,14 +27,20 @@ GameBoard::GameBoard()
 
 GameBoard::~GameBoard()
 {
+	for each (Square* square in squares)
+	{
+		delete square;
+	};
+
+	delete _squareFactory;
 }
 
 void GameBoard::Init()
 {
-	_squareFactory = new SquareFactory(this, _assetFactory);
 	_grassTerrain = (TerrainAsset*)_assetFactory->CreateDrawableAsset(DrawableAsset::GRASS_TERRAIN);
 	_roadTerrain = (TerrainAsset*)_assetFactory->CreateDrawableAsset(DrawableAsset::ROAD_TERRAIN);
 
+	//Generate initial board layout
 	for (int column = 0; column < boardWidth; column++)
 	{
 		for (int row = 0; row < boardHeight; row++)
@@ -67,6 +79,7 @@ Square * GameBoard::FindSquare(float xPos, float yPos)
 			Square* thisSquare = squares[column][row];
 			if (thisSquare->ContainsPoint(xPos, yPos)) {
 				output = thisSquare;
+				break;
 			}
 		}
 	}
@@ -116,7 +129,7 @@ void GameBoard::ScrollBoard() {
 				for (int column = 0; column < boardWidth; column++)
 				{
 					//Free squares on the bottom row
-					if (row == boardHeight - 1) {
+					if (row == boardHeight - 1 - 1) {
 						delete squares[column][row + 1];
 					}
 
@@ -256,7 +269,7 @@ void GameBoard::placePlants(int row)
 				case DrawableAsset::TREE_SPRITE:
 				case DrawableAsset::TREE2_SPRITE:
 				case DrawableAsset::SHRUB_SPRITE:
-					thisSquare->SetAssets(nullptr); //TODO: search through composite and replace only where necessary.
+					thisSquare->SetAssets(AssetFactory::_emptySprite); //TODO: search through composite and replace only where necessary.
 				default:
 					break;
 				}

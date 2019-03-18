@@ -23,11 +23,11 @@ class GameBoard
 	void placePlants();
 	void placePlants(int row);
 public:
-	GameBoard();
+	GameBoard(float squareWidth, float squareHeight, AssetFactory* assetFactory);
 	~GameBoard();
 	void Init();
 
-	static const int boardWidth = 10;
+	static const int boardWidth = 10; //TODO: make these global const.
 	static const int boardHeight = 10;
 	static const int roadWidth = 4;
 

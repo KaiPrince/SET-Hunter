@@ -29,3 +29,4 @@ For Fun:
 - Rename Visitor and Observable to IVisitor and IObservable
 - Move Player to World->GameObjects
 - Replace GameObject with IGameObject
+- Change Observer Notify() to use visitor pattern?

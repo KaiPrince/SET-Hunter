@@ -74,8 +74,8 @@ public:
 	NullGameObject() : GameObject(0.0f, 0.0f, 0.0f, 0.0f, nullptr, nullptr) {}
 	~NullGameObject() {}
 
-	void Update() override {}
-	void Draw() override {}
+	virtual void Update() override {}
+	virtual void Draw() override {}
 
 	virtual void accept(Visitor & visitor) override {}
 

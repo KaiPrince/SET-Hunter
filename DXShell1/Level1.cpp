@@ -9,24 +9,47 @@
 
 void Level1::Load()
 {
+	//Create World
+	world = new GameWorld(_assetFactory);
+
 	continueRoadScolling = true;
+
+	{
+		//Player starts at bottom middle of screen.
+		GameBoard* gb = world->GetGameBoard();
+		float player_StartX = (float)((gb->boardWidth * gb->squareWidth / 2) - gb->squareWidth);
+		float player_StartY = ((float)gb->boardHeight * gb->squareHeight) - gb->squareHeight;
+
+		Actor* player = new Actor(player_StartX, player_StartY,
+			gb->squareWidth, gb->squareHeight, _assetFactory->CreateDrawableAsset(DrawableAsset::CAR_SPRITE), gb);
+		player->SetPhysicsComponent(new PlayerPhysicsComponent(player, world));
+		player->SetInputComponent(new PlayerInputComponent(player));
+
+		world->SetPlayer(player);
+	}
+
+	player = world->GetPlayer();
 	player->AddObserver(this);
 }
 
 
 void Level1::Unload()
 {
+	player->RemoveObserver(this);
+	
+	//Delete World
+	delete world;
 }
 
 
 void Level1::Update()
 {
 
-	player->Update();
+	world->Update();
 
 	if (continueRoadScolling) {
 
-		gb->ScrollBoard();
+		world->GetGameBoard()->ScrollBoard();
 	}
 
 }
@@ -35,28 +58,26 @@ void Level1::Render()
 {
 	gfx->ClearScreen(0.0f, 0.0f, 0.0f);
 
-	gb->Draw();
+	world->Draw();
 
 	//DEBUG
 	//gfx->DrawRect((float)column * gb->squareWidth, (float)row * gb->squareHeight, (float)gb->squareWidth, (float)gb->squareHeight, 0.0f, 0.0f, 0.0f, 1.0f);
-
-	player->Draw();
 
 	/*char ScoreMessage[500] = "";
 	gfx->WriteText(0, 0, ScoreMessage, sprintf_s(ScoreMessage, 500, "Score: %d\n Lives %d\n",
 		GameController::GetScore(), GameController::GetLives()));*/
 
 
-	//DEBUG
+		//DEBUG
 	int sX = 0;
 	int sY = 0;
-	Square* test = gb->FindSquare(player->GetXPos() + (player->GetWidth() / 2), player->GetYPos());
+	Square* test = world->GetGameBoard()->FindSquare(player->GetXPos() + (player->GetWidth() / 2), player->GetYPos());
 	if (test != nullptr) {
 		sX = test->GetGbX();
 		sY = test->GetGbY();
 	}
-	
-	gfx->DrawRect(test->GetXPos(), test->GetYPos(), (float)gb->squareWidth, (float)gb->squareHeight, 1.0f, 0.0f, 0.0f, 1.0f);
+
+	gfx->DrawRect(test->GetXPos(), test->GetYPos(), test->GetWidth(), test->GetHeight(), 1.0f, 0.0f, 0.0f, 1.0f);
 
 
 	char msg[500] = "";
@@ -66,16 +87,19 @@ void Level1::Render()
 
 void Level1::Notify(Observable* subject) {
 
-	//TODO: check subject type is Player
-	switch (player->GetState()->GetType())
-	{
-	case ActorState::ALIVE_STATE:
-		continueRoadScolling = true;
-		break;
-	case ActorState::DEAD_STATE:
-		continueRoadScolling = false;
-		break;
-	default:
-		break;
+	if (subject == player) {
+
+		switch (player->GetState()->GetType())
+		{
+		case ActorState::ALIVE_STATE:
+			continueRoadScolling = true;
+			break;
+		case ActorState::DEAD_STATE:
+			continueRoadScolling = false;
+			break;
+		default:
+			break;
+		}
 	}
+
 }
