@@ -20,3 +20,5 @@ For Fun:
 - Convert collisionObject to a vector array. Handle more than one collision at once.
 - Change trees and shrubs to be GameObjects instead of squares
 - Change Gameboard->FindSquare function to search by column and then row, rather than looping.
+- Change DrawableAssets to not use an assetfactory. Just let assets be singletons/flyweights and create with new.
+- Change all GameBoard references to World or World->GetGameBoard();
