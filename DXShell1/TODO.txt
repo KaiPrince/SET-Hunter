@@ -2,20 +2,18 @@ TODO:
 Assignment:
 - Make score update based on time.
 - Add score lockout for 3 seconds after leaving road.
-- Stop road scolling when dead.
+- Prevent player from getting stuck in death loop in bottom middle of screen.
 
 For Fun:
 - Cleanup terrain classes by using type object pattern.
-- Separate Input, Physics, and Rendering to componenets.
-- Refactor Player into child of new Actor class.
 - Use prototypes pattern to create enemies.
 - Smooth road flow.
 - Implement Visitor or strategy pattern to player or level.
 	- Remove GetType() method and enums
-- Implement Observer Pattern.
 - Move collision detection and score accumulation out of PlayerState
 - Move setX and setY validation logic out of player class.
 - Create world class, which is an aggregation of gameBoard and all gameObjects.
 	- used by physics component.
 - Remove references of GameBoard from Square class
-- Convert Square* to GameObject* for CollisionObject in PhysicsComponent
+- Replace all nullptr assets with _emptyAsset
+	- rename to nullAsset?
