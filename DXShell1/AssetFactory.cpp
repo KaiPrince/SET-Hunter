@@ -53,6 +53,12 @@ DrawableAsset* AssetFactory::CreateDrawableAsset(DrawableAsset::AssetTypes asset
 	case DrawableAsset::EMPTY_ASSET:
 		asset = new EmptyAsset();
 		break;
+	case DrawableAsset::MAIN_MENU_BACKGROUND_ASSET:
+		asset = new MainMenuBackgroundAsset();
+		break;
+	case DrawableAsset::TEXT_ASSET:
+		asset = new TextAsset();
+		break;
 	default:
 		//asset = new TerrainAsset();
 		//TODO: throw error

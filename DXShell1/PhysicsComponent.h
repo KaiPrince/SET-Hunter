@@ -39,6 +39,17 @@ public:
 	virtual void Update() = 0;
 };
 
+class NullPhysicsComponent : public PhysicsComponent
+{
+public:
+	NullPhysicsComponent(GameObject* obj, GameWorld* world) : PhysicsComponent(obj, world) {}
+	~NullPhysicsComponent() {}
+
+	void Update() override { /*Do nothing*/ };
+private:
+
+};
+
 /*
 Class Name: PlayerPhysicsComponent
 Purpose: This class represents the movement (X and Y position) behaviour of the player.

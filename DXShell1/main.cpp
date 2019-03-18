@@ -4,6 +4,7 @@
 #include "Graphics.h"
 #include "GraphicsLocator.h"
 #include "Level1.h"
+#include "MainMenuLevel.h"
 #include "GameController.h"
 #include <string.h>
 #include <stdio.h>
@@ -81,7 +82,7 @@ int WINAPI wWinMain(
 
 
 	ShowWindow(windowhandle, nCmdShow);
-	GameController::LoadInitialLevel(new Level1());
+	GameController::LoadInitialLevel(new MainMenuLevel());
 
 #pragma region GameLoop
 	//Below, we have essentially an infinite loop that will keep the window running and will dispatch/show messages

@@ -16,11 +16,12 @@ GameObject::GameObject(float x, float y, float width, float height, DrawableAsse
 	else {
 		this->sprite = AssetFactory::_emptySprite;
 	}
-	//TODO: null check
+
 	this->gb = gameboard; //TODO: null check
 
 	this->xVelocity = xVelocity;
 	this->yVelocity = yVelocity;
+
 }
 
 

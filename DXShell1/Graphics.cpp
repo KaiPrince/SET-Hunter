@@ -96,7 +96,7 @@ void Graphics::WriteDebugText(char* text, int length) {
 }
 
 void Graphics::WriteText(float xPos, float yPos, char* text, int length) {
-	brush->SetColor(D2D1::ColorF(1.0f, 1.0f, 1.0f, 1.0f));
+	brush->SetColor(D2D1::ColorF(0.0f, 0.0f, 0.0f));//(1.0f, 1.0f, 1.0f, 1.0f));
 	char *p = text; //just for proper syntax highlighting ..."
 	const WCHAR *pwcsName;
 	// required size

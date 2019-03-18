@@ -1,6 +1,7 @@
 #pragma once
 #include "GameLevel.h"
 #include "Observer.h"
+#include <vector>
 
 /*
 Class Name: MainMenu
@@ -9,6 +10,8 @@ Purpose: This GameLevel class will display a starting menu for the user to selec
 class MainMenuLevel :
 	public GameLevel, public Observer
 {
+	std::vector<GameObject*> mainMenu;
+
 public:
 	MainMenuLevel();
 	virtual ~MainMenuLevel();

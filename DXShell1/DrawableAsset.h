@@ -19,7 +19,8 @@ public:
 
 	//TODO: move to assetFactory?
 	enum AssetTypes {
-		GRASS_TERRAIN, ROAD_TERRAIN, CAR_SPRITE, TREE_SPRITE, TREE2_SPRITE, SHRUB_SPRITE, EXPLOSION_SPRITE, EMPTY_ASSET
+		GRASS_TERRAIN, ROAD_TERRAIN, CAR_SPRITE, TREE_SPRITE, TREE2_SPRITE, SHRUB_SPRITE, 
+		EXPLOSION_SPRITE, EMPTY_ASSET, MAIN_MENU_BACKGROUND_ASSET, TEXT_ASSET
 	};
 protected: //This is only here because the AssetTypes var must be below its definition.
 	DrawableAsset::AssetTypes type;
@@ -38,6 +39,33 @@ public:
 
 	virtual void Draw(float x, float y, float width, float height) {
 		//Draw nothing.
+	}
+
+private:
+
+};
+
+class MainMenuBackgroundAsset : public DrawableAsset
+{
+public:
+	MainMenuBackgroundAsset() : DrawableAsset() {}
+	~MainMenuBackgroundAsset() {}
+
+	// Inherited via DrawableAsset
+	virtual void Draw(float x, float y, float width, float height) override;
+};
+
+class TextAsset : public DrawableAsset
+{
+	char Text[500];
+public:
+	TextAsset() : DrawableAsset() {}
+	~TextAsset() {}
+
+	virtual void Draw(float x, float y, float width, float height) override;
+
+	void SetText(const char* text) {
+		strcpy_s(Text, 500, text);
 	}
 
 private:
