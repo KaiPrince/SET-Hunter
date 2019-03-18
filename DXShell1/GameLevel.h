@@ -46,6 +46,7 @@ public:
 	virtual void Render() = 0;
 	virtual void HandleInput() {
 		player->HandleInput();
+		
 	}
 
 	void SetGameBoard(GameBoard* gameBoard) {

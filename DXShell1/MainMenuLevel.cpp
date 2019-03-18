@@ -20,6 +20,7 @@ void MainMenuLevel::Load()
 	const float pseudoPixelWidth = ScreenWidth / 10;
 	const float pseudoPixelHeight = ScreenHeight / 10;
 
+	//Background
 	DrawableAsset* UIsprite = new AssetOutlineDecorator(_assetFactory->CreateDrawableAsset(DrawableAsset::MAIN_MENU_BACKGROUND_ASSET));
 
 	GameObject* background = new GameObject(0.0f, 0.0f, ScreenWidth, ScreenHeight, 
@@ -28,6 +29,7 @@ void MainMenuLevel::Load()
 
 	mainMenu.push_back(background);
 
+	//Logo
 	UIsprite = new AssetOutlineDecorator(_assetFactory->CreateDrawableAsset(DrawableAsset::GRASS_TERRAIN));
 	GameObject* Logo = new GameObject(0 + pseudoPixelWidth, 0 + pseudoPixelHeight,
 		pseudoPixelWidth * 3, pseudoPixelHeight * 4,
@@ -37,7 +39,7 @@ void MainMenuLevel::Load()
 
 	mainMenu.push_back(Logo);
 
-	//TODO: Text, Buttons
+	//Title
 	TextAsset* textAsset = (TextAsset*) _assetFactory->CreateDrawableAsset(DrawableAsset::TEXT_ASSET);
 	textAsset->SetText("SET HUNTER");
 
@@ -50,7 +52,10 @@ void MainMenuLevel::Load()
 
 	mainMenu.push_back(Title);
 
+	//Start Button
 
+
+	//Exit Button
 
 }
 
@@ -73,4 +78,5 @@ void MainMenuLevel::Render()
 
 void MainMenuLevel::Notify(Observable * subject)
 {
+	//TODO: handle object click
 }

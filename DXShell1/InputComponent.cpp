@@ -42,7 +42,10 @@ void ClickableInputComponent::HandleInput() {
 	if ((GetKeyState(VK_LBUTTON) & 0x100) != 0) {
 		if (this->object->ContainsPoint(GraphicsLocator::GetGraphics()->MouseX, GraphicsLocator::GetGraphics()->MouseY))
 		{
-			//TODO: a click event occurred.
+			//Notify observers
+			object->Notify();
+
+			//TODO: Save event information somewhere.
 		}
 	}
 }

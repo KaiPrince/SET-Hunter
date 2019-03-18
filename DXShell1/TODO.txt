@@ -22,3 +22,7 @@ For Fun:
 - Change Gameboard->FindSquare function to search by column and then row, rather than looping.
 - Change DrawableAssets to not use an assetfactory. Just let assets be singletons/flyweights and create with new.
 - Change all GameBoard references to World or World->GetGameBoard();
+- Explicit dependencies principle. Don't allow objects to be created in invalid states.
+	- Create overloaded constructors. Use Null objects
+	- Player class with physics and input component
+- In GameLevel Update calls, use World->Update()
