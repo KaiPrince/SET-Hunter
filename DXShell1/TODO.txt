@@ -19,3 +19,4 @@ For Fun:
 	- rename to nullAsset?
 - Convert collisionObject to a vector array. Handle more than one collision at once.
 - Change trees and shrubs to be GameObjects instead of squares
+- Change Gameboard->FindSquare function to search by column and then row, rather than looping.

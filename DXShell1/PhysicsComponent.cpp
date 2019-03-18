@@ -18,19 +18,16 @@ PhysicsComponent::~PhysicsComponent()
 {
 }
 
-PlayerPhysicsComponent::~PlayerPhysicsComponent()
-{
-}
-
-void PlayerPhysicsComponent::Update() {
+/*
+This function checks all GameBoard squares and GameObjects for a collision with a given point.
+*/
+void PhysicsComponent::DetectCollisions(float xPos, float yPos) {
 	//Reset Flags
 	this->collisionObject = nullptr;
 
 	//Collision detection
-	float newXPos = obj->GetXPos() - obj->GetXVelocity();
-	float newYPos = obj->GetYPos() - obj->GetYVelocity();
 
-	GameObject* nextSquare = world->GetGameBoard()->FindSquare(newXPos + (obj->GetWidth() / 2), newYPos);
+	GameObject* nextSquare = world->GetGameBoard()->FindSquare(xPos, yPos);
 	if (nextSquare != nullptr && nextSquare->IsCollidable()) {
 		//Set collision flag
 		this->collisionObject = nextSquare;
@@ -38,12 +35,26 @@ void PlayerPhysicsComponent::Update() {
 
 	for each (GameObject* objectInGameWorld in world->GetGameObjects())
 	{
-		if (objectInGameWorld->ContainsPoint(newXPos, newYPos) && objectInGameWorld->IsCollidable()) {
-		//Set collision flag
-		this->collisionObject = objectInGameWorld;
+		if (objectInGameWorld->IsCollidable() && objectInGameWorld->ContainsPoint(xPos, yPos)) {
+			//Set collision flag
+			this->collisionObject = objectInGameWorld;
 
 		}
 	}
+}
+
+PlayerPhysicsComponent::~PlayerPhysicsComponent()
+{
+}
+
+void PlayerPhysicsComponent::Update() {
+
+	float newXPos = obj->GetXPos() - obj->GetXVelocity();
+	float newYPos = obj->GetYPos() - obj->GetYVelocity();
+
+	DetectCollisions(newXPos + (obj->GetWidth() / 2), newYPos);
+
+	//... In this case, we advance the object regardless of its collision status.
 
 	//Check X Bounds
 	if (newXPos <= (world->GetGameBoard()->boardWidth * world->GetGameBoard()->squareWidth) - obj->GetWidth() && newXPos >= 0) {

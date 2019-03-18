@@ -16,6 +16,8 @@ protected:
 	GameWorld* world;
 
 	GameObject* collisionObject;
+
+	void DetectCollisions(float xPos, float yPos);
 public:
 	PhysicsComponent(GameObject* obj, GameWorld* world);
 	virtual ~PhysicsComponent();
