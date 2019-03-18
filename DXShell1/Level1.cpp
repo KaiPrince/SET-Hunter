@@ -85,6 +85,11 @@ void Level1::Render()
 		"y: %d\n sX: %d\n sY: %d\n mX: %d\n mY: %d\n", (int)player->GetXPos(), (int)player->GetYPos(), sX, sY, gfx->MouseX, gfx->MouseY));
 }
 
+void Level1::HandleInput()
+{
+	world->HandleInput();
+}
+
 void Level1::Notify(Observable* subject) {
 
 	if (subject == player) {

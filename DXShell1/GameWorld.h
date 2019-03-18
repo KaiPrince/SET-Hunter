@@ -2,6 +2,7 @@
 #include <vector>
 //#include "GameObject.h"
 //#include "GameBoard.h"
+#include "Visitor.h"
 
 class GameObject;
 class GameBoard;
@@ -13,7 +14,7 @@ Class Name: GameWorld
 Purpose: This class aggregates all GameObjects in the world, plus the gameboard.
 	This class will be used by the PhysicsComponent for the purposes of collision detection.
 */
-class GameWorld
+class GameWorld : public Visitor
 {
 	std::vector<GameObject*> _gameObjects;
 	GameBoard* _gameBoard;
@@ -32,8 +33,12 @@ public:
 	void AddGameObject(GameObject* obj);
 	void RemoveGameObject(GameObject* obj);
 
-	void Draw();
+	void HandleInput();
 	void Update();
+	void Draw();
 
+	// Inherited via Visitor
+	virtual void visit(GameObject * gameobject) override;
+	virtual void visit(Actor * actor) override;
 };
 

@@ -12,6 +12,7 @@ public:
 	void Unload() override;
 	void Update() override;
 	void Render() override;
+	void HandleInput() override;
 
 	void Notify(Observable* subject);
 };

@@ -30,3 +30,5 @@ For Fun:
 - Move Player to World->GameObjects
 - Replace GameObject with IGameObject
 - Change Observer Notify() to use visitor pattern?
+- In main menu, have game running in background, with computer playing for player.
+- Make AssetFactory track and delete all its assets.

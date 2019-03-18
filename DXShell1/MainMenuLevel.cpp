@@ -7,8 +7,8 @@
 
 MainMenuLevel::MainMenuLevel()
 {
-	StartButton = new NullGameObject();
-	ExitButton = new NullGameObject();
+	StartButton = new NullActor();
+	ExitButton = new NullActor();
 }
 
 MainMenuLevel::~MainMenuLevel()
@@ -64,12 +64,23 @@ void MainMenuLevel::Load()
 
 	this->StartButton = new Actor(0 + (2 * pseudoPixelWidth), ScreenHeight - (4 * pseudoPixelHeight),
 		6 * pseudoPixelWidth, 1 * pseudoPixelHeight, UIsprite, gb);
-	((Actor*)(this->StartButton))->SetInputComponent(new ClickableInputComponent(this->StartButton));
+	this->StartButton->SetInputComponent(new ClickableInputComponent(this->StartButton));
 	this->StartButton->AddObserver(this);
 
 	world->AddGameObject(this->StartButton);
 
 	//Exit Button
+	textAsset = (TextAsset*)_assetFactory->CreateDrawableAsset(DrawableAsset::TEXT_ASSET);
+	textAsset->SetText("Exit Game");
+
+	UIsprite = new AssetOutlineDecorator(textAsset); //TODO: create Rounded Rectangle
+
+	this->ExitButton = new Actor(0 + (2 * pseudoPixelWidth), ScreenHeight - (2 * pseudoPixelHeight),
+		6 * pseudoPixelWidth, 1 * pseudoPixelHeight, UIsprite, gb);
+	this->ExitButton->SetInputComponent(new ClickableInputComponent(this->ExitButton));
+	this->ExitButton->AddObserver(this);
+
+	world->AddGameObject(this->ExitButton);
 
 }
 
@@ -79,16 +90,18 @@ void MainMenuLevel::Unload()
 	delete world;
 }
 
+void MainMenuLevel::HandleInput() {
+	world->HandleInput();
+}
+
 void MainMenuLevel::Update()
 {
+	world->Update();
 }
 
 void MainMenuLevel::Render()
 {
-	for each (GameObject* element in world->GetGameObjects())
-	{
-		element->Draw();
-	}
+	world->Draw();
 }
 
 void MainMenuLevel::Notify(Observable * subject)

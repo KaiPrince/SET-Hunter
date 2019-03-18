@@ -11,8 +11,8 @@ class MainMenuLevel :
 	public GameLevel, public Observer
 {
 	//std::vector<GameObject*> mainMenu; //TODO: replace with composition object.
-	GameObject* StartButton; //TODO: move to MainMenu Type object or something.
-	GameObject* ExitButton;
+	Actor* StartButton; //TODO: move to MainMenu Type object or something.
+	Actor* ExitButton;
 
 public:
 	MainMenuLevel();
@@ -23,6 +23,7 @@ public:
 	void Unload() override;
 	void Update() override;
 	void Render() override;
+	void HandleInput() override;
 
 	void Notify(Observable* subject);
 };

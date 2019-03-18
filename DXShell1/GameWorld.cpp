@@ -80,6 +80,23 @@ void GameWorld::Draw() {
 	}
 }
 
+void GameWorld::HandleInput()
+{
+	for (GameObject* gameObject : _gameObjects)
+	{
+		gameObject->accept(*this);
+	}
+}
+
+void GameWorld::visit(GameObject * gameobject)
+{
+}
+
+void GameWorld::visit(Actor * actor)
+{
+	actor->HandleInput();
+}
+
 void GameWorld::Update()
 {
 
