@@ -128,6 +128,7 @@
     <ClCompile Include="GameController.cpp" />
     <ClCompile Include="GameLevel.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="GameWorld.cpp" />
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="GrassTerrain.cpp" />
     <ClCompile Include="InputComponent.cpp" />
@@ -151,6 +152,7 @@
     <ClInclude Include="GameController.h" />
     <ClInclude Include="GameLevel.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="GameWorld.h" />
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="GrassTerrain.h" />
     <ClInclude Include="InputComponent.h" />
