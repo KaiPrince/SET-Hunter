@@ -8,6 +8,7 @@
 
 GameWorld::GameWorld(GameBoard* gb)
 {
+	this->_gameBoard = gb;
 }
 
 

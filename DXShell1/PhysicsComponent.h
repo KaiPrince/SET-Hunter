@@ -2,6 +2,7 @@
 
 class GameObject;
 class GameBoard;
+class GameWorld;
 
 /*
 Class Name: PhysicsComponent
@@ -12,11 +13,11 @@ class PhysicsComponent
 {
 protected:
 	GameObject* obj; 
-	GameBoard* world;
+	GameWorld* world;
 
-	GameObject* collisionObject; //TODO: convert to GameObject
+	GameObject* collisionObject;
 public:
-	PhysicsComponent(GameObject* obj, GameBoard* world);
+	PhysicsComponent(GameObject* obj, GameWorld* world);
 	virtual ~PhysicsComponent();
 
 	virtual GameObject* GetCollisionObject() {
@@ -45,7 +46,7 @@ Purpose: This class represents the movement (X and Y position) behaviour of the 
 class PlayerPhysicsComponent : public PhysicsComponent
 {
 public:
-	PlayerPhysicsComponent(GameObject* obj, GameBoard* world) : PhysicsComponent(obj, world) {}
+	PlayerPhysicsComponent(GameObject* obj, GameWorld* world) : PhysicsComponent(obj, world) {}
 	~PlayerPhysicsComponent();
 
 	virtual void Update();

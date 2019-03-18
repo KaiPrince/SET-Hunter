@@ -3,10 +3,11 @@
 #include "GameBoard.h"
 #include "ActorState.h"
 #include "Square.h"
+#include "GameWorld.h"
 
 
 
-PhysicsComponent::PhysicsComponent(GameObject* obj, GameBoard* world)
+PhysicsComponent::PhysicsComponent(GameObject* obj, GameWorld* world)
 {
 	this->obj = obj;
 	this->world = world;
@@ -29,22 +30,31 @@ void PlayerPhysicsComponent::Update() {
 	float newXPos = obj->GetXPos() - obj->GetXVelocity();
 	float newYPos = obj->GetYPos() - obj->GetYVelocity();
 
-	GameObject* nextSquare = world->FindSquare(newXPos + (obj->GetWidth() / 2), newYPos);
+	GameObject* nextSquare = world->GetGameBoard()->FindSquare(newXPos + (obj->GetWidth() / 2), newYPos);
 	if (nextSquare != nullptr && nextSquare->IsCollidable()) {
 		//Set collision flag
 		this->collisionObject = nextSquare;
 	}
 
+	for each (GameObject* objectInGameWorld in world->GetGameObjects())
+	{
+		if (objectInGameWorld->ContainsPoint(newXPos, newYPos) && objectInGameWorld->IsCollidable()) {
+		//Set collision flag
+		this->collisionObject = objectInGameWorld;
+
+		}
+	}
+
 	//Check X Bounds
-	if (newXPos <= (world->boardWidth * world->squareWidth) - obj->GetWidth() && newXPos >= 0) {
+	if (newXPos <= (world->GetGameBoard()->boardWidth * world->GetGameBoard()->squareWidth) - obj->GetWidth() && newXPos >= 0) {
 		//Advance position
 		obj->SetXPos(newXPos);
 	}
 
 
 	//Check Y Bounds
-	const float maxheight = (world->boardHeight * world->squareHeight) - (obj->GetHeight() * 2);
-	const float minheight = (world->boardHeight * world->squareHeight) / 2;
+	const float maxheight = (world->GetGameBoard()->boardHeight * world->GetGameBoard()->squareHeight) - (obj->GetHeight() * 2);
+	const float minheight = (world->GetGameBoard()->boardHeight * world->GetGameBoard()->squareHeight) / 2;
 
 	if (newYPos <= maxheight && newYPos >= minheight) {
 		obj->SetYPos(newYPos);

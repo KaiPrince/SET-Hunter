@@ -17,3 +17,5 @@ For Fun:
 - Remove references of GameBoard from Square class
 - Replace all nullptr assets with _emptyAsset
 	- rename to nullAsset?
+- Convert collisionObject to a vector array. Handle more than one collision at once.
+- Change trees and shrubs to be GameObjects instead of squares

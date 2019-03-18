@@ -4,12 +4,14 @@
 #include "GameBoard.h"
 #include "Actor.h"
 #include "InputComponent.h"
+#include "GameWorld.h"
 
 class GameLevel
 {
 protected:
 	static Graphics* gfx;
 	static GameBoard* gb;
+	static GameWorld* world;
 	static AssetFactory* _assetFactory;
 
 	static Actor* player;
@@ -25,13 +27,16 @@ public:
 		gb->squareHeight = (float) gfx->Window_Height / gb->boardHeight; //TODO: change this to use a setter;
 		gb->Init();
 
+		world = new GameWorld(gb);
+
+
 		//Player starts at bottom middle of screen.
 		float player_StartX = (float)((gb->boardWidth * gb->squareWidth / 2) - gb->squareWidth);
 		float player_StartY = ((float)gb->boardHeight * gb->squareHeight) - gb->squareHeight ;
 
 		player = new Actor(player_StartX, player_StartY,
 			gb->squareWidth, gb->squareHeight, _assetFactory->CreateDrawableAsset(DrawableAsset::CAR_SPRITE), gb);
-		player->SetPhysicsComponent(new PlayerPhysicsComponent(player, gb));
+		player->SetPhysicsComponent(new PlayerPhysicsComponent(player, world));
 		player->SetInputComponent(new PlayerInputComponent(player));
 	}
 
