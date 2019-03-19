@@ -55,6 +55,19 @@ private:
 
 };
 
+/*
+Class Name: StayOnRoadInputComponent
+Purpose: This class autopilots its actor to remain on the road.
+*/
+class StayOnRoadInputComponent : public InputComponent
+{
+public:
+	StayOnRoadInputComponent(GameObject* object) : InputComponent(object) {}
+	virtual ~StayOnRoadInputComponent() {}
+
+	virtual void HandleInput() override;
+};
+
 class ClickableInputComponent : public InputComponent 
 {
 public:

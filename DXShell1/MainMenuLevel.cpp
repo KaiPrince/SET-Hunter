@@ -20,6 +20,21 @@ void MainMenuLevel::Load()
 	//Create World
 	world = new GameWorld(_assetFactory);
 
+	{
+		//Player starts at bottom middle of screen.
+		GameBoard* gb = world->GetGameBoard();
+		float player_StartX = (float)((gb->boardWidth * gb->squareWidth / 2) - gb->squareWidth);
+		float player_StartY = ((float)gb->boardHeight * gb->squareHeight) - gb->squareHeight;
+
+		Actor* player = new Actor(player_StartX, player_StartY,
+			gb->squareWidth, gb->squareHeight, _assetFactory->CreateDrawableAsset(DrawableAsset::CAR_SPRITE), gb);
+		player->SetPhysicsComponent(new PlayerPhysicsComponent(player, world));
+		player->SetInputComponent(new StayOnRoadInputComponent(player));
+
+		world->SetPlayer(player);
+	}
+
+
 	GameBoard* gb = world->GetGameBoard();
 	const float ScreenWidth = (float)GraphicsLocator::GetGraphics()->Window_Width;
 	const float ScreenHeight = (float)GraphicsLocator::GetGraphics()->Window_Height;

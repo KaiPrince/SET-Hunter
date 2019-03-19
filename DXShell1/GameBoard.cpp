@@ -315,7 +315,26 @@ void GameBoard::Draw() {
 			Square* thisSquare = squares[column][row];
 
 			thisSquare->Draw();
-
+			FindLeftRoadSquare(row);
 		}
 	}
 }
+
+Square* GameBoard::FindLeftRoadSquare(int row)
+{
+	Square* output = nullptr;
+	//Find left Road tile
+	for (int column = 0; column < boardWidth; column++)
+	{
+		Square* thisSquare = squares[column][row];
+
+		if (thisSquare->GetTerrain()->GetType() == DrawableAsset::ROAD_TERRAIN) {
+			output = thisSquare;
+			break;
+		}
+
+	}
+
+	return output;
+}
+

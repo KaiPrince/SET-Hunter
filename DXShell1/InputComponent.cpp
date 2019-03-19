@@ -4,6 +4,10 @@
 #include "GameObject.h"
 #include "GraphicsLocator.h"
 
+#include <chrono>
+#include <random>
+#include <math.h>
+
 
 void PlayerInputComponent::HandleInput() {
 
@@ -57,4 +61,29 @@ void ClickableInputComponent::visit(GameObject * gameobject)
 
 void ClickableInputComponent::visit(Actor * actor)
 {
+}
+
+void StayOnRoadInputComponent::HandleInput()
+{
+	GameBoard* gb = object->GetGameBoard();
+	int rowAbove = gb->FindSquare(object->GetXPos(), object->GetYPos())->GetGbY() - 3;
+	Square* leftRoadSquare = gb->FindLeftRoadSquare(rowAbove);
+
+	/*unsigned seed = (unsigned int)std::chrono::system_clock::now().time_since_epoch().count();
+	std::default_random_engine generator(seed);
+
+	std::uniform_int_distribution<int> dice_randomRoadOffset(0, gb->roadWidth);*/
+
+
+	Square* targetSquare = gb->GetSquare(leftRoadSquare->GetGbX() + (gb->roadWidth / 2), rowAbove);
+
+	float newXVelocity = -(targetSquare->GetXPos() - object->GetXPos()) / 100.0f;
+	const float movingThreshold = 0.0f; //Threshold for future tuning.
+
+	if (fabs(newXVelocity) < movingThreshold) {
+		newXVelocity = 0.0f;
+	}
+
+	object->SetXVelocity(newXVelocity);
+
 }
