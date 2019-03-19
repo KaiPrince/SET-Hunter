@@ -136,6 +136,9 @@ void MainMenuLevel::Load()
 
 void MainMenuLevel::Unload()
 {
+	GameController::SetLives(3);
+	GameController::SetScore(0);
+
 	//Delete World
 	delete world;
 }
