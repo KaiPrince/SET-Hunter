@@ -23,6 +23,7 @@ Graphics::~Graphics()
 	if (factory) factory->Release();
 	if (rendertarget) rendertarget->Release();
 	if (brush) brush->Release();
+	if (HeaderTypography) HeaderTypography->Release();
 }
 
 //Provide some comments for each of the methods below.
@@ -68,11 +69,15 @@ bool Graphics::Init(HWND windowHandle)
 		DWRITE_FONT_WEIGHT_REGULAR,
 		DWRITE_FONT_STYLE_NORMAL,
 		DWRITE_FONT_STRETCH_NORMAL,
-		64.0f,
+		10.0f,
 		L"en-US", // locale 
 		&HeaderTextFormat
 	);
 
+	textFactory->CreateTypography(&HeaderTypography);
+
+	DWRITE_FONT_FEATURE fontFeature = { DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_1, 1 };
+	//HeaderTypography->AddFontFeature(fontFeature);
 	
 
 	return true;
@@ -136,21 +141,13 @@ void Graphics::WriteText(float xPos, float yPos, float width, float height, floa
 		&textLayout
 	);
 
-
-	IDWriteTypography* HeaderTypography;
-	textFactory->CreateTypography(&HeaderTypography);
-
-	DWRITE_FONT_FEATURE fontFeature = { DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_6, 1 };
-	HeaderTypography->AddFontFeature(fontFeature);
-
 	DWRITE_TEXT_RANGE textRange = { 0, (UINT32) nChars };
 	textLayout->SetFontSize(fontSize, textRange);
-	textLayout->SetTypography(HeaderTypography, textRange);
 
 	rendertarget->DrawTextLayout(D2D1::Point2F(xPos, yPos), textLayout, brush);
 
 	//rendertarget->DrawText(pwcsName, length, textFormat, D2D1::RectF(xPos, yPos, xPos + 50.0f, yPos + 20.0f), brush);
-	rendertarget->DrawRectangle(D2D1::RectF(xPos, yPos, xPos + textLayout->GetMaxWidth(), yPos + textLayout->GetMaxHeight()), brush);
+	//rendertarget->DrawRectangle(D2D1::RectF(xPos, yPos, xPos + textLayout->GetMaxWidth(), yPos + textLayout->GetMaxHeight()), brush);
 
 
 	// delete it
@@ -175,27 +172,21 @@ void Graphics::WriteFancyText(float xPos, float yPos, float width, float height,
 	textFactory->CreateTextLayout(
 		pwcsName,
 		nChars,
-		textFormat,
+		HeaderTextFormat,
 		width,
 		height,
 		&textLayout
 	);
 
-
-	IDWriteTypography* HeaderTypography;
-	textFactory->CreateTypography(&HeaderTypography);
-
-	DWRITE_FONT_FEATURE fontFeature = { DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_6, 1 };
-	HeaderTypography->AddFontFeature(fontFeature);
-
 	DWRITE_TEXT_RANGE textRange = { 0, (UINT32)nChars };
 	textLayout->SetFontSize(fontSize, textRange);
+
 	textLayout->SetTypography(HeaderTypography, textRange);
 
 	rendertarget->DrawTextLayout(D2D1::Point2F(xPos, yPos), textLayout, brush);
+	rendertarget->DrawRectangle(D2D1::RectF(xPos, yPos, xPos + textLayout->GetMaxWidth(), yPos + textLayout->GetMaxHeight()), brush);
 
 	//rendertarget->DrawText(pwcsName, length, textFormat, D2D1::RectF(xPos, yPos, xPos + 50.0f, yPos + 20.0f), brush);
-	rendertarget->DrawRectangle(D2D1::RectF(xPos, yPos, xPos + textLayout->GetMaxWidth(), yPos + textLayout->GetMaxHeight()), brush);
 
 
 	// delete it

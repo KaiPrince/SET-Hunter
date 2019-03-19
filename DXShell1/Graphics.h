@@ -29,6 +29,7 @@ class Graphics
 	IDWriteFactory* textFactory;
 	IDWriteTextFormat* textFormat;
 	IDWriteTextFormat* HeaderTextFormat;
+	IDWriteTypography* HeaderTypography;
 
 	
 public:

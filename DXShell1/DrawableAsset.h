@@ -58,14 +58,24 @@ public:
 class TextAsset : public DrawableAsset
 {
 	char Text[500];
+	float FontSize;
+	bool UseFancyFont;
 public:
-	TextAsset() : DrawableAsset() {}
+	TextAsset() : DrawableAsset() { FontSize = 10.0f; UseFancyFont = false; }
 	~TextAsset() {}
 
 	virtual void Draw(float x, float y, float width, float height) override;
 
 	void SetText(const char* text) {
 		strcpy_s(Text, 500, text);
+	}
+
+	void SetFontSize(float fontsize) {
+		FontSize = fontsize;
+	}
+
+	void SetUseFancyFont(bool tf) {
+		UseFancyFont = tf;
 	}
 
 private:

@@ -27,7 +27,15 @@ void MainMenuBackgroundAsset::Draw(float x, float y, float width, float height)
 }
 
 void TextAsset::Draw(float x, float y, float width, float height) {
-	GetGraphics()->WriteText(x, y, width, height, 64.0f, Text, (int)strlen(Text));
+	if (UseFancyFont)
+	{
+		GetGraphics()->WriteFancyText(x, y, width, height, FontSize, Text, (int)strlen(Text));
+	}
+	else
+	{
+		GetGraphics()->WriteText(x, y, width, height, FontSize, Text, (int)strlen(Text));
+	}
+	
 }
 
 void AssetOutlineDecorator::Draw(float x, float y, float width, float height) {

@@ -47,6 +47,8 @@ void MainMenuLevel::Load()
 	//Title
 	TextAsset* textAsset = (TextAsset*) _assetFactory->CreateDrawableAsset(DrawableAsset::TEXT_ASSET);
 	textAsset->SetText("SET HUNTER");
+	textAsset->SetUseFancyFont(true);
+	textAsset->SetFontSize(40.0f);
 
 	UIsprite = textAsset;
 	
@@ -56,9 +58,23 @@ void MainMenuLevel::Load()
 
 	world->AddGameObject(Title);
 
+	//PlayerName
+	textAsset = (TextAsset*)_assetFactory->CreateDrawableAsset(DrawableAsset::TEXT_ASSET);
+	textAsset->SetText("By Agent Kai Prince"); //TODO: global constant
+
+	UIsprite = textAsset;
+
+	GameObject* PlayerName = new GameObject(Title->GetXPos(), Title->GetYPos() + pseudoPixelHeight,
+		4 * pseudoPixelWidth, 1 * pseudoPixelHeight,
+		UIsprite, gb);
+
+	world->AddGameObject(PlayerName);
+
 	//Start Button
 	textAsset = (TextAsset*)_assetFactory->CreateDrawableAsset(DrawableAsset::TEXT_ASSET);
 	textAsset->SetText("Start Game");
+	textAsset->SetUseFancyFont(true);
+	textAsset->SetFontSize(40.0f);
 
 	UIsprite = new AssetRoundedOutlineDecorator(textAsset); //TODO: create Rounded Rectangle
 
@@ -72,6 +88,8 @@ void MainMenuLevel::Load()
 	//Exit Button
 	textAsset = (TextAsset*)_assetFactory->CreateDrawableAsset(DrawableAsset::TEXT_ASSET);
 	textAsset->SetText("Exit Game");
+	textAsset->SetUseFancyFont(true);
+	textAsset->SetFontSize(40.0f);
 
 	UIsprite = new AssetRoundedOutlineDecorator(textAsset); //TODO: create Rounded Rectangle
 
