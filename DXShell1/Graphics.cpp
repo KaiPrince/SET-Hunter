@@ -184,7 +184,7 @@ void Graphics::WriteFancyText(float xPos, float yPos, float width, float height,
 	textLayout->SetTypography(HeaderTypography, textRange);
 
 	rendertarget->DrawTextLayout(D2D1::Point2F(xPos, yPos), textLayout, brush);
-	rendertarget->DrawRectangle(D2D1::RectF(xPos, yPos, xPos + textLayout->GetMaxWidth(), yPos + textLayout->GetMaxHeight()), brush);
+	//rendertarget->DrawRectangle(D2D1::RectF(xPos, yPos, xPos + textLayout->GetMaxWidth(), yPos + textLayout->GetMaxHeight()), brush);
 
 	//rendertarget->DrawText(pwcsName, length, textFormat, D2D1::RectF(xPos, yPos, xPos + 50.0f, yPos + 20.0f), brush);
 

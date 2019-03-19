@@ -115,6 +115,7 @@ void MainMenuLevel::HandleInput() {
 
 void MainMenuLevel::Update()
 {
+	world->GetGameBoard()->ScrollBoard();
 	world->Update();
 }
 

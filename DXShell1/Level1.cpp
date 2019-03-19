@@ -63,13 +63,13 @@ void Level1::Render()
 	//DEBUG
 	//gfx->DrawRect((float)column * gb->squareWidth, (float)row * gb->squareHeight, (float)gb->squareWidth, (float)gb->squareHeight, 0.0f, 0.0f, 0.0f, 1.0f);
 
-	/*char ScoreMessage[500] = "";
-	gfx->WriteText(0, 0, ScoreMessage, sprintf_s(ScoreMessage, 500, "Score: %d\n Lives %d\n",
-		GameController::GetScore(), GameController::GetLives()));*/
+	char ScoreMessage[500] = "";
+	gfx->WriteText(0, 0, 200.0f, 100.0f, 10.0f, ScoreMessage, sprintf_s(ScoreMessage, 500, "Score: %d\n Lives %d\n",
+		GameController::GetScore(), GameController::GetLives()));
 
 
-		//DEBUG
-	int sX = 0;
+	//DEBUG
+	/*int sX = 0;
 	int sY = 0;
 	Square* test = world->GetGameBoard()->FindSquare(player->GetXPos() + (player->GetWidth() / 2), player->GetYPos());
 	if (test != nullptr) {
@@ -82,7 +82,7 @@ void Level1::Render()
 
 	char msg[500] = "";
 	gfx->WriteDebugText(msg, sprintf_s(msg, 500, "x: %d\n"
-		"y: %d\n sX: %d\n sY: %d\n mX: %d\n mY: %d\n", (int)player->GetXPos(), (int)player->GetYPos(), sX, sY, gfx->MouseX, gfx->MouseY));
+		"y: %d\n sX: %d\n sY: %d\n mX: %d\n mY: %d\n", (int)player->GetXPos(), (int)player->GetYPos(), sX, sY, gfx->MouseX, gfx->MouseY));*/
 }
 
 void Level1::HandleInput()
