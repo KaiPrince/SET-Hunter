@@ -122,16 +122,4 @@ void SpriteSheet::Draw(float x, float y, float width, float height)
 		scaleEffect,
 		D2D1::Point2F(x, y)
 		);
-
-
-	//gfx->GetRenderTarget()->DrawBitmap(
-	//	bmp, //Bitmap we built from WIC
-	//	D2D1::RectF(x, y,
-	//		x + width, y + height), //Destination rectangle
-	//	0.8f, //Opacity or Alpha
-	//	D2D1_BITMAP_INTERPOLATION_MODE::D2D1_BITMAP_INTERPOLATION_MODE_NEAREST_NEIGHBOR,
-	//	//Above - the interpolation mode to use if this object is 'stretched' or 'shrunk'. 
-	//	//Refer back to lecture notes on image/bitmap files
-	//	D2D1::RectF(0.0f, 0.0f, bmp->GetSize().width, bmp->GetSize().height) //Source Rect
-	//);
 }

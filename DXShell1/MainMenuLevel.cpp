@@ -48,7 +48,7 @@ void MainMenuLevel::Load()
 	TextAsset* textAsset = (TextAsset*) _assetFactory->CreateDrawableAsset(DrawableAsset::TEXT_ASSET);
 	textAsset->SetText("SET HUNTER");
 
-	UIsprite = new AssetOutlineDecorator(textAsset);
+	UIsprite = textAsset;
 	
 	GameObject* Title = new GameObject(ScreenWidth - (5 * pseudoPixelWidth), 0 + pseudoPixelHeight,
 		4 * pseudoPixelWidth, 1 * pseudoPixelHeight,
@@ -60,7 +60,7 @@ void MainMenuLevel::Load()
 	textAsset = (TextAsset*)_assetFactory->CreateDrawableAsset(DrawableAsset::TEXT_ASSET);
 	textAsset->SetText("Start Game");
 
-	UIsprite = new AssetOutlineDecorator(textAsset); //TODO: create Rounded Rectangle
+	UIsprite = new AssetRoundedOutlineDecorator(textAsset); //TODO: create Rounded Rectangle
 
 	this->StartButton = new Actor(0 + (2 * pseudoPixelWidth), ScreenHeight - (4 * pseudoPixelHeight),
 		6 * pseudoPixelWidth, 1 * pseudoPixelHeight, UIsprite, gb);
@@ -73,7 +73,7 @@ void MainMenuLevel::Load()
 	textAsset = (TextAsset*)_assetFactory->CreateDrawableAsset(DrawableAsset::TEXT_ASSET);
 	textAsset->SetText("Exit Game");
 
-	UIsprite = new AssetOutlineDecorator(textAsset); //TODO: create Rounded Rectangle
+	UIsprite = new AssetRoundedOutlineDecorator(textAsset); //TODO: create Rounded Rectangle
 
 	this->ExitButton = new Actor(0 + (2 * pseudoPixelWidth), ScreenHeight - (2 * pseudoPixelHeight),
 		6 * pseudoPixelWidth, 1 * pseudoPixelHeight, UIsprite, gb);
@@ -81,6 +81,7 @@ void MainMenuLevel::Load()
 	this->ExitButton->AddObserver(this);
 
 	world->AddGameObject(this->ExitButton);
+
 
 }
 

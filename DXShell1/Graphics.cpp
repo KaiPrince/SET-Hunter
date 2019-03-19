@@ -62,6 +62,19 @@ bool Graphics::Init(HWND windowHandle)
 		&textFormat
 	);
 
+	res = textFactory->CreateTextFormat(
+		L"Gabriola",
+		nullptr,
+		DWRITE_FONT_WEIGHT_REGULAR,
+		DWRITE_FONT_STYLE_NORMAL,
+		DWRITE_FONT_STRETCH_NORMAL,
+		64.0f,
+		L"en-US", // locale 
+		&HeaderTextFormat
+	);
+
+	
+
 	return true;
 }
 
@@ -81,6 +94,11 @@ void Graphics::DrawRect(float x, float y, float width, float height, float r, fl
 	rendertarget->DrawRectangle(D2D1::RectF(x, y, x + width, y + height), brush, 1.0f);
 }
 
+void Graphics::DrawRoundRect(float x, float y, float width, float height, float radiusX, float radiusY, float r, float g, float b, float a) {
+	brush->SetColor(D2D1::ColorF(r, g, b, a));
+	rendertarget->DrawRoundedRectangle(D2D1::RoundedRect(D2D1::RectF(x, y, x + width, y + height), radiusX, radiusY) ,brush, 1.0f);
+}
+
 void Graphics::FillRect(float x, float y, float width, float height, float r, float g, float b, float a)
 {
 	brush->SetColor(D2D1::ColorF(r, g, b, a));
@@ -92,11 +110,13 @@ void Graphics::FillRect(float x, float y, float width, float height, float r, fl
 }
 
 void Graphics::WriteDebugText(char* text, int length) {
-	WriteText(0.0f, 0.0f, text, length);
+	WriteText(0.0f, 0.0f, 10.0f, 50.0f, 20.0f, text, length);
 }
 
-void Graphics::WriteText(float xPos, float yPos, char* text, int length) {
+void Graphics::WriteText(float xPos, float yPos, float width, float height, float fontSize, char* text, int length) {
 	brush->SetColor(D2D1::ColorF(0.0f, 0.0f, 0.0f));//(1.0f, 1.0f, 1.0f, 1.0f));
+	
+
 	char *p = text; //just for proper syntax highlighting ..."
 	const WCHAR *pwcsName;
 	// required size
@@ -106,9 +126,79 @@ void Graphics::WriteText(float xPos, float yPos, char* text, int length) {
 	MultiByteToWideChar(CP_ACP, 0, p, -1, (LPWSTR)pwcsName, nChars);
 	// use it....
 
-	rendertarget->DrawText(pwcsName, length, textFormat, D2D1::RectF(xPos, yPos, xPos + 50.0f, yPos + 20.0f), brush);
-	rendertarget->DrawRectangle(D2D1::RectF(xPos, yPos, xPos + 50.0f, yPos + 20.0f), brush);
+	IDWriteTextLayout* textLayout;
+	textFactory->CreateTextLayout(
+		pwcsName,
+		nChars,
+		textFormat,
+		width,
+		height,
+		&textLayout
+	);
+
+
+	IDWriteTypography* HeaderTypography;
+	textFactory->CreateTypography(&HeaderTypography);
+
+	DWRITE_FONT_FEATURE fontFeature = { DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_6, 1 };
+	HeaderTypography->AddFontFeature(fontFeature);
+
+	DWRITE_TEXT_RANGE textRange = { 0, (UINT32) nChars };
+	textLayout->SetFontSize(fontSize, textRange);
+	textLayout->SetTypography(HeaderTypography, textRange);
+
+	rendertarget->DrawTextLayout(D2D1::Point2F(xPos, yPos), textLayout, brush);
+
+	//rendertarget->DrawText(pwcsName, length, textFormat, D2D1::RectF(xPos, yPos, xPos + 50.0f, yPos + 20.0f), brush);
+	rendertarget->DrawRectangle(D2D1::RectF(xPos, yPos, xPos + textLayout->GetMaxWidth(), yPos + textLayout->GetMaxHeight()), brush);
+
 
 	// delete it
 	delete[] pwcsName;
+	textLayout->Release();
+}
+
+void Graphics::WriteFancyText(float xPos, float yPos, float width, float height, float fontSize, char * text, int length) {
+	brush->SetColor(D2D1::ColorF(0.0f, 0.0f, 0.0f));//(1.0f, 1.0f, 1.0f, 1.0f));
+
+
+	char *p = text; //just for proper syntax highlighting ..."
+	const WCHAR *pwcsName;
+	// required size
+	int nChars = MultiByteToWideChar(CP_ACP, 0, p, -1, NULL, 0);
+	// allocate it
+	pwcsName = new WCHAR[nChars];
+	MultiByteToWideChar(CP_ACP, 0, p, -1, (LPWSTR)pwcsName, nChars);
+	// use it....
+
+	IDWriteTextLayout* textLayout;
+	textFactory->CreateTextLayout(
+		pwcsName,
+		nChars,
+		textFormat,
+		width,
+		height,
+		&textLayout
+	);
+
+
+	IDWriteTypography* HeaderTypography;
+	textFactory->CreateTypography(&HeaderTypography);
+
+	DWRITE_FONT_FEATURE fontFeature = { DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_6, 1 };
+	HeaderTypography->AddFontFeature(fontFeature);
+
+	DWRITE_TEXT_RANGE textRange = { 0, (UINT32)nChars };
+	textLayout->SetFontSize(fontSize, textRange);
+	textLayout->SetTypography(HeaderTypography, textRange);
+
+	rendertarget->DrawTextLayout(D2D1::Point2F(xPos, yPos), textLayout, brush);
+
+	//rendertarget->DrawText(pwcsName, length, textFormat, D2D1::RectF(xPos, yPos, xPos + 50.0f, yPos + 20.0f), brush);
+	rendertarget->DrawRectangle(D2D1::RectF(xPos, yPos, xPos + textLayout->GetMaxWidth(), yPos + textLayout->GetMaxHeight()), brush);
+
+
+	// delete it
+	delete[] pwcsName;
+	textLayout->Release();
 }
