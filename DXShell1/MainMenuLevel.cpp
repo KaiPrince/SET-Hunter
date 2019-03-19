@@ -21,8 +21,8 @@ void MainMenuLevel::Load()
 	world = new GameWorld(_assetFactory);
 
 	GameBoard* gb = world->GetGameBoard();
-	const float ScreenWidth = (float) GraphicsLocator::GetGraphics()->Window_Width;
-	const float ScreenHeight = (float) GraphicsLocator::GetGraphics()->Window_Height;
+	const float ScreenWidth = (float)GraphicsLocator::GetGraphics()->Window_Width;
+	const float ScreenHeight = (float)GraphicsLocator::GetGraphics()->Window_Height;
 
 	const float pseudoPixelWidth = ScreenWidth / 10;
 	const float pseudoPixelHeight = ScreenHeight / 10;
@@ -30,7 +30,7 @@ void MainMenuLevel::Load()
 	//Background
 	DrawableAsset* UIsprite = new AssetOutlineDecorator(_assetFactory->CreateDrawableAsset(DrawableAsset::MAIN_MENU_BACKGROUND_ASSET));
 
-	GameObject* background = new GameObject(0.0f, 0.0f, ScreenWidth, ScreenHeight, 
+	GameObject* background = new GameObject(0.0f, 0.0f, ScreenWidth, ScreenHeight,
 		UIsprite, gb);
 
 	world->AddGameObject(background);
@@ -45,13 +45,13 @@ void MainMenuLevel::Load()
 	world->AddGameObject(Logo);
 
 	//Title
-	TextAsset* textAsset = (TextAsset*) _assetFactory->CreateDrawableAsset(DrawableAsset::TEXT_ASSET);
+	TextAsset* textAsset = (TextAsset*)_assetFactory->CreateDrawableAsset(DrawableAsset::TEXT_ASSET);
 	textAsset->SetText("SET HUNTER");
 	textAsset->SetUseFancyFont(true);
 	textAsset->SetFontSize(40.0f);
 
 	UIsprite = textAsset;
-	
+
 	GameObject* Title = new GameObject(ScreenWidth - (5 * pseudoPixelWidth), 0 + pseudoPixelHeight,
 		4 * pseudoPixelWidth, 1 * pseudoPixelHeight,
 		UIsprite, gb);
@@ -70,13 +70,29 @@ void MainMenuLevel::Load()
 
 	world->AddGameObject(PlayerName);
 
-	//Start Button
+	//Previous Score
 	textAsset = (TextAsset*)_assetFactory->CreateDrawableAsset(DrawableAsset::TEXT_ASSET);
+	{
+		char labelText[500];
+		sprintf_s(labelText, 500, "Previous Score: %d", GameController::GetScore());
+		textAsset->SetText(labelText);
+	}
+
+	UIsprite = textAsset;
+
+	GameObject* PreviousScoreLabel = new GameObject(PlayerName->GetXPos(), PlayerName->GetYPos() + pseudoPixelHeight,
+		4 * pseudoPixelWidth, 1 * pseudoPixelHeight,
+		UIsprite, gb);
+
+	world->AddGameObject(PreviousScoreLabel);
+
+	//Start Button
+	textAsset = (TextAsset*)_assetFactory->CreateDrawableAsset(DrawableAsset::TEXT_ASSET); //TODO: Center text
 	textAsset->SetText("Start Game");
 	textAsset->SetUseFancyFont(true);
 	textAsset->SetFontSize(40.0f);
 
-	UIsprite = new AssetRoundedOutlineDecorator(textAsset); //TODO: create Rounded Rectangle
+	UIsprite = new AssetRoundedOutlineDecorator(textAsset);
 
 	this->StartButton = new Actor(0 + (2 * pseudoPixelWidth), ScreenHeight - (4 * pseudoPixelHeight),
 		6 * pseudoPixelWidth, 1 * pseudoPixelHeight, UIsprite, gb);
@@ -86,12 +102,12 @@ void MainMenuLevel::Load()
 	world->AddGameObject(this->StartButton);
 
 	//Exit Button
-	textAsset = (TextAsset*)_assetFactory->CreateDrawableAsset(DrawableAsset::TEXT_ASSET);
+	textAsset = (TextAsset*)_assetFactory->CreateDrawableAsset(DrawableAsset::TEXT_ASSET); //TODO: Center text
 	textAsset->SetText("Exit Game");
 	textAsset->SetUseFancyFont(true);
 	textAsset->SetFontSize(40.0f);
 
-	UIsprite = new AssetRoundedOutlineDecorator(textAsset); //TODO: create Rounded Rectangle
+	UIsprite = new AssetRoundedOutlineDecorator(textAsset);
 
 	this->ExitButton = new Actor(0 + (2 * pseudoPixelWidth), ScreenHeight - (2 * pseudoPixelHeight),
 		6 * pseudoPixelWidth, 1 * pseudoPixelHeight, UIsprite, gb);

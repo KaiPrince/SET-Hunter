@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include "GameBoard.h"
 #include "SpriteSheetAsset.h"
+#include "MainMenuLevel.h"
 
 
 void Level1::Load()
@@ -45,13 +46,16 @@ void Level1::Unload()
 void Level1::Update()
 {
 
-	world->Update();
-
 	if (continueRoadScolling) {
 
 		world->GetGameBoard()->ScrollBoard();
 	}
 
+	world->Update();
+
+	if (GameController::GetLives() <= 0) {
+		GameController::QueuedNextLevel = new MainMenuLevel();
+	}
 }
 
 void Level1::Render()
