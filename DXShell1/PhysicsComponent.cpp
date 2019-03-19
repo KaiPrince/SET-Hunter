@@ -57,8 +57,8 @@ PlayerPhysicsComponent::~PlayerPhysicsComponent()
 
 void PlayerPhysicsComponent::Update() {
 
-	float newXPos = obj->GetXPos() - obj->GetXVelocity();
-	float newYPos = obj->GetYPos() - obj->GetYVelocity();
+	float newXPos = obj->GetXPos() + obj->GetXVelocity();
+	float newYPos = obj->GetYPos() - obj->GetYVelocity(); // Because y axis is inverted.
 
 	DetectCollisions(newXPos + (obj->GetWidth() / 2), newYPos);
 

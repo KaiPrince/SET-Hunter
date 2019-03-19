@@ -28,13 +28,13 @@ void PlayerInputComponent::HandleInput() {
 	if (GetKeyState(VK_RIGHT) & 0x8000)
 	{
 		// RIGHT arrow key is down.
-		xVelocity += -(object->GetGameBoard()->squareWidth / 20); //TODO: make this accelerrate rather than constant speed.
+		xVelocity += object->GetGameBoard()->squareWidth / 20; //TODO: make this accelerrate rather than constant speed.
 	}
 
 	if (GetKeyState(VK_LEFT) & 0x8000)
 	{
 		// LEFT arrow key is down.
-		xVelocity += object->GetGameBoard()->squareWidth / 20; //TODO: make this accelerrate rather than constant speed.
+		xVelocity += -(object->GetGameBoard()->squareWidth / 20); //TODO: make this accelerrate rather than constant speed.
 	}
 
 	object->SetXVelocity(xVelocity);
@@ -77,7 +77,7 @@ void StayOnRoadInputComponent::HandleInput()
 
 	Square* targetSquare = gb->GetSquare(leftRoadSquare->GetGbX() + (gb->roadWidth / 2), rowAbove);
 
-	float newXVelocity = -(targetSquare->GetXPos() - object->GetXPos()) / 100.0f;
+	float newXVelocity = (targetSquare->GetXPos() - object->GetXPos()) / 100.0f;
 	const float movingThreshold = 0.0f; //Threshold for future tuning.
 
 	if (fabs(newXVelocity) < movingThreshold) {
