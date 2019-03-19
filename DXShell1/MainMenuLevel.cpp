@@ -131,16 +131,38 @@ void MainMenuLevel::Load()
 
 	world->AddGameObject(this->ExitButton);
 
-
+	mainMenu.push_back(background);
+	mainMenu.push_back(Logo);
+	mainMenu.push_back(Title);
+	mainMenu.push_back(PlayerName);
+	mainMenu.push_back(PreviousScoreLabel);
+	mainMenu.push_back(StartButton);
+	mainMenu.push_back(ExitButton);
 }
 
 void MainMenuLevel::Unload()
 {
+	StartButton->RemoveObserver(this);
+	ExitButton->RemoveObserver(this);
+
 	GameController::SetLives(3);
 	GameController::SetScore(0);
 
+	//Delete all menu items.
+	for (GameObject* obj : mainMenu) {
+
+		if (obj != world->GetPlayer()) {
+			world->RemoveGameObject(obj);
+		}
+
+	}
+
+	world->GetPlayer()->RemoveObserver(this);
+	delete world->GetPlayer()->GetInputComponent();
+	world->GetPlayer()->SetInputComponent(new PlayerInputComponent(world->GetPlayer()));
+
 	//Delete World
-	delete world;
+	//delete world;
 }
 
 void MainMenuLevel::HandleInput() {

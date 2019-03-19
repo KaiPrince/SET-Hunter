@@ -68,7 +68,7 @@ void GameWorld::AddGameObject(GameObject * obj)
 void GameWorld::RemoveGameObject(GameObject * obj)
 {
 	if (obj != nullptr) {
-		_gameObjects.erase(std::remove(_gameObjects.begin(), _gameObjects.end(), obj));
+		_gameObjects.erase(std::remove(_gameObjects.begin(), _gameObjects.end(), obj), _gameObjects.end());
 	}
 }
 

@@ -37,6 +37,6 @@ void Observable::AddObserver(Observer* observer) {
 void Observable::RemoveObserver(Observer * observer)
 {
 	if (observer != nullptr) {
-		Observers.erase(std::remove(Observers.begin(), Observers.end(), observer));
+		Observers.erase(std::remove(Observers.begin(), Observers.end(), observer), Observers.end());
 	}
 }

@@ -3,4 +3,5 @@
 
 Graphics* GameLevel::gfx;
 AssetFactory* GameLevel::_assetFactory;
-
+GameWorld* GameLevel::world;
+Actor* GameLevel::player;

@@ -10,8 +10,8 @@ class GameLevel
 {
 protected:
 	static Graphics* gfx;
-	GameWorld* world;
-	Actor* player; //TODO: delete in destructor
+	static GameWorld* world;
+	static Actor* player; //TODO: delete in destructor
 	static AssetFactory* _assetFactory;
 
 public:
