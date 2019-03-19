@@ -42,6 +42,7 @@ public:
 	Square* squares[boardWidth][boardHeight];
 
 	Square** GetSquares() { return *squares; }
+	Square* GetSquare(int column, int row) { return squares[column][row]; }
 	AssetFactory* GetAssetFactory() { return _assetFactory; }
 
 	void SetAssetFactory(AssetFactory* assetFactory);
@@ -54,5 +55,6 @@ public:
 	void ScrollBoard();
 
 	void Draw();
+	Square* FindLeftRoadSquare(int row);
 };
 

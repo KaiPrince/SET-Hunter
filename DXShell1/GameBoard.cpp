@@ -333,6 +333,17 @@ void GameBoard::DrawRoadMask()
 				break;
 			}
 
+Square* GameBoard::FindLeftRoadSquare(int row)
+{
+	Square* output = nullptr;
+	//Find left Road tile
+	for (int column = 0; column < boardWidth; column++)
+	{
+		Square* thisSquare = squares[column][row];
+
+		if (thisSquare->GetTerrain()->GetType() == DrawableAsset::ROAD_TERRAIN) {
+			output = thisSquare;
+			break;
 		}
 
 		//Find right Road tile
@@ -405,4 +416,8 @@ void GameBoard::DrawRoadMask()
 		leftRoadSquareAbove = leftRoadSquare;
 		rightRoadSquareAbove = rightRoadSquare;
 	}
+
+	return output;
+}
+
 }
