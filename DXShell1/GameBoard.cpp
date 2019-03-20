@@ -385,7 +385,7 @@ void GameBoard::DrawLeftRoadMask(Square* leftRoadSquare, Square* leftRoadSquareA
 	float x2 = leftRoadSquareAbove->GetXPos();
 
 	float y1 = leftRoadSquare->GetYPos();
-	float y2 = y1;// = leftRoadSquareAbove->GetYPos() + leftRoadSquareAbove->GetHeight();
+	float y2 = y1;
 
 	float x3 = leftRoadSquare->GetXPos() + leftRoadSquare->GetWidth();
 	float y3 = y1;
@@ -395,6 +395,8 @@ void GameBoard::DrawLeftRoadMask(Square* leftRoadSquare, Square* leftRoadSquareA
 		y1 = leftRoadSquare->GetYPos();
 		y2 = leftRoadSquareAbove->GetYPos();
 		x3 = leftRoadSquare->GetXPos() + leftRoadSquare->GetWidth();
+
+		GraphicsLocator::GetGraphics()->DrawTriangle(x1, y1, x2, y2, x3, y3, 0.0f, 0.0f, 0.0f, 1.0f); //TODO: move this out of gameboard.
 	}
 	else if (x1 > x2)
 	{
@@ -402,12 +404,12 @@ void GameBoard::DrawLeftRoadMask(Square* leftRoadSquare, Square* leftRoadSquareA
 		y1 = leftRoadSquare->GetYPos() + leftRoadSquare->GetHeight();
 		y2 = leftRoadSquareAbove->GetYPos() + leftRoadSquareAbove->GetHeight();
 		x3 = leftRoadSquare->GetXPos();
+
+		GraphicsLocator::GetGraphics()->DrawTriangle(x1, y1, x2, y2, x3, y3, 0.0f, 0.0f, 0.0f, 1.0f);
 	}
 	else {
 		//don't draw
 	}
-	GraphicsLocator::GetGraphics()->DrawLine(x1, y1, x2, y2, 3.0f, 1.0f, 0.0f, 0.0f, 1.0f);
-	GraphicsLocator::GetGraphics()->DrawTriangle(x1, y1, x2, y2, x3, y3, 1.0f, 1.0f, 0.0f, 1.0f);
 }
 
 void GameBoard::DrawRightRoadMask(Square* rightRoadSquare, Square* rightRoadSquareAbove)
@@ -416,7 +418,7 @@ void GameBoard::DrawRightRoadMask(Square* rightRoadSquare, Square* rightRoadSqua
 	float x2 = rightRoadSquareAbove->GetXPos() + rightRoadSquareAbove->GetWidth();
 
 	float y1 = rightRoadSquare->GetYPos();
-	float y2 = y1;// = leftRoadSquareAbove->GetYPos() + leftRoadSquareAbove->GetHeight();
+	float y2 = y1;
 
 	float x3 = rightRoadSquare->GetXPos() + rightRoadSquare->GetWidth();
 	float y3 = y1;
@@ -426,6 +428,8 @@ void GameBoard::DrawRightRoadMask(Square* rightRoadSquare, Square* rightRoadSqua
 		y1 = rightRoadSquare->GetYPos() + rightRoadSquare->GetHeight();
 		y2 = rightRoadSquareAbove->GetYPos() + rightRoadSquareAbove->GetHeight();
 		x3 = rightRoadSquare->GetXPos() + rightRoadSquare->GetWidth();
+
+		GraphicsLocator::GetGraphics()->DrawTriangle(x1, y1, x2, y2, x3, y3, 0.0f, 0.0f, 0.0f, 1.0f);
 	}
 	else if (x1 > x2)
 	{
@@ -433,10 +437,11 @@ void GameBoard::DrawRightRoadMask(Square* rightRoadSquare, Square* rightRoadSqua
 		y1 = rightRoadSquare->GetYPos();
 		y2 = rightRoadSquareAbove->GetYPos();
 		x3 = rightRoadSquare->GetXPos();
+
+		GraphicsLocator::GetGraphics()->DrawTriangle(x1, y1, x2, y2, x3, y3, 0.0f, 0.0f, 0.0f, 1.0f);
 	}
 	else {
 		//don't draw
 	}
-	GraphicsLocator::GetGraphics()->DrawLine(x1, y1, x2, y2, 3.0f, 1.0f, 0.0f, 0.0f, 1.0f);
-	GraphicsLocator::GetGraphics()->DrawTriangle(x1, y1, x2, y2, x3, y3, 1.0f, 1.0f, 0.0f, 1.0f);
+
 }
