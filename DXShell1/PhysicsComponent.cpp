@@ -29,25 +29,46 @@ void PhysicsComponent::visit(Actor * actor)
 /*
 This function checks all GameBoard squares and GameObjects for a collision with a given point.
 */
-void PhysicsComponent::DetectCollisions(float xPos, float yPos) {
+void PhysicsComponent::DetectCollisions() {
 	//Reset Flags
-	this->collisionObject = nullptr;
+	this->collisionObjects.clear();
 
 	//Collision detection
+	GameBoard* gb = world->GetGameBoard();
+	for (int column = 0; column < gb->boardWidth; column++)
+	{
+		for (int row = 0; row < gb->boardHeight; row++)
+		{
+			Square* thisSquare = gb->squares[column][row];
+			if (thisSquare->IsCollidable() && CheckIntersection(obj, thisSquare)) {
 
-	GameObject* nextSquare = world->GetGameBoard()->FindSquare(xPos, yPos);
-	if (nextSquare != nullptr && nextSquare->IsCollidable()) {
-		//Set collision flag
-		this->collisionObject = nextSquare;
+				//Set collision flag
+				this->collisionObjects.push_back(thisSquare);
+			}
+		}
 	}
 
 	for each (GameObject* objectInGameWorld in world->GetGameObjects())
 	{
-		if (objectInGameWorld->IsCollidable() && objectInGameWorld->ContainsPoint(xPos, yPos)) {
+		if (objectInGameWorld->IsCollidable() && CheckIntersection(obj, objectInGameWorld)) {
 			//Set collision flag
-			this->collisionObject = objectInGameWorld;
+			this->collisionObjects.push_back(objectInGameWorld);
 
 		}
+	}
+}
+
+bool PhysicsComponent::CheckIntersection(GameObject * obj1, GameObject * obj2)
+{
+	if (obj1->GetXPos() < obj2->GetXPos() + obj2->GetWidth() &&
+		obj1->GetXPos() + obj1->GetWidth() > obj2->GetXPos() &&
+		obj1->GetYPos() < obj2->GetYPos() + obj2->GetHeight() &&
+		obj1->GetYPos() + obj1->GetHeight() > obj2->GetYPos()) {
+		// collision detected!
+		return true;
+	}
+	else {
+		return false;
 	}
 }
 
@@ -60,7 +81,6 @@ void PlayerPhysicsComponent::Update() {
 	float newXPos = obj->GetXPos() + obj->GetXVelocity();
 	float newYPos = obj->GetYPos() - obj->GetYVelocity(); // Because y axis is inverted.
 
-	DetectCollisions(newXPos + (obj->GetWidth() / 2), newYPos);
 
 	//... In this case, we advance the object regardless of its collision status.
 
@@ -69,7 +89,6 @@ void PlayerPhysicsComponent::Update() {
 		//Advance position
 		obj->SetXPos(newXPos);
 	}
-
 
 	//Check Y Bounds
 	const float maxheight = (world->GetGameBoard()->boardHeight * world->GetGameBoard()->squareHeight) - (obj->GetHeight() * 2);
@@ -90,4 +109,12 @@ void PlayerPhysicsComponent::Update() {
 		//Out of bounds. Refuse to set.
 	}
 
+	//Set collision flags.
+	DetectCollisions(); 
+
+}
+
+void CollidablePhysicsComponent::Update()
+{
+	DetectCollisions();
 }

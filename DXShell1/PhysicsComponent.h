@@ -1,5 +1,6 @@
 #pragma once
 #include "Visitor.h"
+#include <vector>
 
 class GameObject;
 class GameBoard;
@@ -17,19 +18,20 @@ protected:
 	GameObject* obj; 
 	GameWorld* world;
 
-	GameObject* collisionObject;
+	std::vector<GameObject*> collisionObjects;
 
-	void DetectCollisions(float xPos, float yPos);
+	void DetectCollisions();
+	bool CheckIntersection(GameObject* obj1, GameObject* obj2);
 public:
 	PhysicsComponent(GameObject* obj, GameWorld* world);
 	virtual ~PhysicsComponent();
 
-	virtual GameObject* GetCollisionObject() {
-		return collisionObject;
+	virtual std::vector<GameObject*> GetCollisionObject() {
+		return collisionObjects;
 	}
 
 	virtual bool IsCollisionDetected() {
-		if (collisionObject != nullptr) {
+		if (!collisionObjects.empty()) {
 			return true;
 		}
 		else
@@ -70,11 +72,21 @@ class PlayerPhysicsComponent : public PhysicsComponent
 {
 public:
 	PlayerPhysicsComponent(GameObject* obj, GameWorld* world) : PhysicsComponent(obj, world) {}
-	~PlayerPhysicsComponent();
+	virtual ~PlayerPhysicsComponent();
 
 	virtual void Update();
 
 private:
+
+};
+
+class CollidablePhysicsComponent : public PhysicsComponent
+{
+public:
+	CollidablePhysicsComponent(GameObject* obj, GameWorld* world) : PhysicsComponent(obj, world) {}
+	virtual ~CollidablePhysicsComponent() {}
+
+	virtual void Update();
 
 };
 
