@@ -22,6 +22,11 @@ class GameBoard
 
 	void placePlants();
 	void placePlants(int row);
+
+	void DrawRoadMask();
+
+	
+			
 public:
 	GameBoard(float squareWidth, float squareHeight, AssetFactory* assetFactory);
 	~GameBoard();
@@ -51,5 +56,8 @@ public:
 
 	void Draw();
 	Square* FindLeftRoadSquare(int row);
+	Square * FindRightRoadSquare(int row);
+	void DrawLeftRoadMask(Square * leftRoadSquare, Square * leftRoadSquareAbove);
+	void DrawRightRoadMask(Square * rightRoadSquare, Square * rightRoadSquareAbove);
 };
 
