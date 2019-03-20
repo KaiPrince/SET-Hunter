@@ -32,4 +32,5 @@ For Fun:
 - Change Observer Notify() to use visitor pattern?
 - Make AssetFactory track and delete all its assets.
 - Change spritesheet in update method or state enter method or create state draw method.
-Change physicsComponenet to use decorator.
+- Change physicsComponenet to use decorator.
+- Move GameObject->IsCollidable to Physics Component.

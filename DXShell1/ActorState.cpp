@@ -46,7 +46,7 @@ ActorState* AliveState::update()
 	_actor->GetPhysicsComponent()->Update();
 
 	//Transition States
-	if (_actor->GetPhysicsComponent()->IsCollisionDetected()) {
+	if (_actor->IsCollidable() && ((CollidablePhysicsComponent*)_actor->GetPhysicsComponent())->IsCollisionDetected()) {
 		nextState = new DeadState(_actor);
 	}
 	else {

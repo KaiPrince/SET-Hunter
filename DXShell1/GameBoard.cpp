@@ -102,7 +102,6 @@ Square * GameBoard::CreateSquare(int column, int row)
 
 		//Create square from factory
 		output = this->_squareFactory->CreateSquare(column, row, squareWidth, squareHeight);
-
 	}
 
 	return output;

@@ -18,29 +18,12 @@ protected:
 	GameObject* _obj; 
 	GameWorld* _world;
 
-	std::vector<GameObject*> _collisionObjects;
 
-
-	void DetectCollisions();
-	void DetectCollisionsAs(GameObject* obj);
-	bool CheckIntersection(GameObject* obj1, GameObject* obj2);
 public:
 	PhysicsComponent(GameObject* obj, GameWorld* world);
 	virtual ~PhysicsComponent();
 
-	virtual std::vector<GameObject*> GetCollisionObjects() {
-		return _collisionObjects;
-	}
 
-	virtual bool IsCollisionDetected() {
-		if (!_collisionObjects.empty()) {
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
 
 	virtual void Update() = 0; //NOTE: all derived classes must call on their decorated component.
 
@@ -65,17 +48,50 @@ private:
 
 };
 
+class CollidablePhysicsComponent : public PhysicsComponent
+{
+	GameObject* _hitbox;
+protected:
+	std::vector<GameObject*> _collisionObjects;
+
+	void DetectCollisions();
+	void DetectCollisionsAs(GameObject* obj);
+	bool CheckIntersection(GameObject* obj1, GameObject* obj2);
+
+public:
+	CollidablePhysicsComponent(GameObject* obj, GameWorld* world);
+	virtual ~CollidablePhysicsComponent() {}
+
+	virtual std::vector<GameObject*> GetCollisionObjects() {
+		return _collisionObjects;
+	}
+
+	virtual bool IsCollisionDetected() {
+		if (!_collisionObjects.empty()) {
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	virtual GameObject* GetHitbox() { return _hitbox; }
+	virtual void ChangeHitbox(float x, float y, float width, float height);
+
+	virtual void Update();
+
+};
+
 /*
 Class Name: PlayerPhysicsComponent
 Purpose: This class represents the movement (X and Y position) behaviour of the player.
 	It will not allow the object to move off screen.
 	When it collides with a plant, a collision flag will be set.
 */
-class PlayerPhysicsComponent : public PhysicsComponent
+class PlayerPhysicsComponent : public CollidablePhysicsComponent
 {
-	GameObject* _hitbox;
 
-	virtual void ChangeHitbox(float x, float y, float width, float height);
 public:
 	PlayerPhysicsComponent(GameObject* obj, GameWorld* world);
 	virtual ~PlayerPhysicsComponent();
@@ -85,17 +101,3 @@ public:
 private:
 
 };
-
-class CollidablePhysicsComponent : public PhysicsComponent
-{
-	GameObject* _hitbox;
-public:
-	CollidablePhysicsComponent(GameObject* obj, GameWorld* world);
-	virtual ~CollidablePhysicsComponent() {}
-
-	virtual void ChangeHitbox(float x, float y, float width, float height);
-
-	virtual void Update();
-
-};
-

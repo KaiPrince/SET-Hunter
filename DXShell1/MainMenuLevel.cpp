@@ -28,6 +28,7 @@ void MainMenuLevel::Load()
 
 		Actor* player = new Actor(player_StartX, player_StartY,
 			gb->squareWidth, gb->squareHeight, _assetFactory->CreateDrawableAsset(DrawableAsset::CAR_SPRITE), gb);
+		player->SetCollidable(true);
 		player->SetPhysicsComponent(new PlayerPhysicsComponent(player, world));
 		player->SetInputComponent(new StayOnRoadInputComponent(player));
 

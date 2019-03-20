@@ -27,7 +27,7 @@ void PhysicsComponent::visit(Actor * actor)
 {
 }
 
-void PhysicsComponent::DetectCollisions()
+void CollidablePhysicsComponent::DetectCollisions()
 {
 	DetectCollisionsAs(_obj);
 }
@@ -36,7 +36,7 @@ void PhysicsComponent::DetectCollisions()
 This function checks all GameBoard squares and GameObjects for a collision with a given object.
 Sets the class collision flags if collision is detected.
 */
-void PhysicsComponent::DetectCollisionsAs(GameObject* obj) {
+void CollidablePhysicsComponent::DetectCollisionsAs(GameObject* obj) {
 	//Reset Flags
 	this->_collisionObjects.clear();
 
@@ -57,7 +57,7 @@ void PhysicsComponent::DetectCollisionsAs(GameObject* obj) {
 
 	for each (GameObject* objectInGameWorld in _world->GetGameObjects())
 	{
-		if (objectInGameWorld->IsCollidable() && CheckIntersection(obj, objectInGameWorld)) {
+		if (objectInGameWorld != _obj && objectInGameWorld->IsCollidable() && CheckIntersection(obj, objectInGameWorld)) {
 			//Set collision flag
 			this->_collisionObjects.push_back(objectInGameWorld);
 
@@ -65,7 +65,7 @@ void PhysicsComponent::DetectCollisionsAs(GameObject* obj) {
 	}
 }
 
-bool PhysicsComponent::CheckIntersection(GameObject * obj1, GameObject * obj2)
+bool CollidablePhysicsComponent::CheckIntersection(GameObject * obj1, GameObject * obj2)
 {
 	if (obj1->GetXPos() < obj2->GetXPos() + obj2->GetWidth() &&
 		obj1->GetXPos() + obj1->GetWidth() > obj2->GetXPos() &&
@@ -79,11 +79,8 @@ bool PhysicsComponent::CheckIntersection(GameObject * obj1, GameObject * obj2)
 	}
 }
 
-PlayerPhysicsComponent::PlayerPhysicsComponent(GameObject * obj, GameWorld * world) : PhysicsComponent(obj, world)
+PlayerPhysicsComponent::PlayerPhysicsComponent(GameObject * obj, GameWorld * world) : CollidablePhysicsComponent(obj, world)
 {
-	this->_hitbox = new NullGameObject();
-	//this->_hitbox = new GameObject(0.0f, 0.0f, 0.0f, 0.0f, new AssetOutlineDecorator(AssetFactory::_emptySprite), world->GetGameBoard());
-	//world->AddGameObject(this->_hitbox);
 }
 
 PlayerPhysicsComponent::~PlayerPhysicsComponent()
@@ -129,21 +126,15 @@ void PlayerPhysicsComponent::Update() {
 	float heightDifference = _obj->GetHeight() / 5;
 	ChangeHitbox(_obj->GetXPos() + oneThirdWidth, _obj->GetYPos() + heightDifference, oneThirdWidth, _obj->GetHeight() - heightDifference);
 
-	DetectCollisionsAs(_hitbox);
+	CollidablePhysicsComponent::Update();
 
-}
-
-void PlayerPhysicsComponent::ChangeHitbox(float x, float y, float width, float height)
-{
-	_hitbox->SetXPos(x);
-	_hitbox->SetYPos(y);
-	_hitbox->SetWidth(width);
-	_hitbox->SetHeight(height);
 }
 
 CollidablePhysicsComponent::CollidablePhysicsComponent(GameObject * obj, GameWorld * world) : PhysicsComponent(obj, world)
 {
 	this->_hitbox = new NullGameObject(obj->GetXPos(), obj->GetYPos(), obj->GetWidth(), obj->GetHeight());
+	//this->_hitbox = new GameObject(0.0f, 0.0f, 0.0f, 0.0f, new AssetOutlineDecorator(AssetFactory::_emptySprite), world->GetGameBoard());
+	//world->AddGameObject(this->_hitbox);
 }
 
 void CollidablePhysicsComponent::ChangeHitbox(float x, float y, float width, float height)

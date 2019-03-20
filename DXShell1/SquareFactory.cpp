@@ -27,6 +27,5 @@ Square* SquareFactory::CreateSquare(int x, int y, float width, float height)
 	square->SetGbY(y);
 
 
-
 	return square;
 }
