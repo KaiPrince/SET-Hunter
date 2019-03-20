@@ -324,39 +324,10 @@ void GameBoard::DrawRoadMask()
 	for (int row = 0; row < boardHeight; row++)
 	{
 		//Find left Road tile
-		for (int column = 0; column < boardWidth; column++)
-		{
-			Square* thisSquare = squares[column][row];
-
-			if (thisSquare->GetTerrain()->GetType() == DrawableAsset::ROAD_TERRAIN) {
-				leftRoadSquare = thisSquare;
-				break;
-			}
-
-Square* GameBoard::FindLeftRoadSquare(int row)
-{
-	Square* output = nullptr;
-	//Find left Road tile
-	for (int column = 0; column < boardWidth; column++)
-	{
-		Square* thisSquare = squares[column][row];
-
-		if (thisSquare->GetTerrain()->GetType() == DrawableAsset::ROAD_TERRAIN) {
-			output = thisSquare;
-			break;
-		}
+		leftRoadSquare = FindLeftRoadSquare(row);
 
 		//Find right Road tile
-		for (int column = boardWidth - 1; column >= 0; column--)
-		{
-			Square* thisSquare = squares[column][row];
-
-			if (thisSquare->GetTerrain()->GetType() == DrawableAsset::ROAD_TERRAIN) {
-				rightRoadSquare = thisSquare;
-				break;
-			}
-
-		}
+		rightRoadSquare = FindRightRoadSquare(row); //TODO: replace with left + roadwidth?
 
 		//Link to squares above it
 		if (row != 0) {
@@ -410,14 +381,46 @@ Square* GameBoard::FindLeftRoadSquare(int row)
 					//don't draw
 				}
 				GraphicsLocator::GetGraphics()->DrawLine(x1, y1, x2, y2, 3.0f, 1.0f, 0.0f, 0.0f, 1.0f);
+				GraphicsLocator::GetGraphics()->DrawTriangle(x1, y1, x2, y2, rightRoadSquare->GetXPos() + rightRoadSquare->GetWidth(), rightRoadSquare->GetYPos(), 1.0f, 1.0f, 0.0f, 1.0f);
 			}
 		}
 
 		leftRoadSquareAbove = leftRoadSquare;
 		rightRoadSquareAbove = rightRoadSquare;
 	}
+}
+
+Square* GameBoard::FindLeftRoadSquare(int row)
+{
+	Square* output = nullptr;
+	//Find left Road tile
+	for (int column = 0; column < boardWidth; column++)
+	{
+		Square* thisSquare = squares[column][row];
+
+		if (thisSquare->GetTerrain()->GetType() == DrawableAsset::ROAD_TERRAIN) {
+			output = thisSquare;
+			break;
+		}
+
+	}
 
 	return output;
 }
 
+Square* GameBoard::FindRightRoadSquare(int row) {
+	Square* output = nullptr;
+
+	for (int column = boardWidth - 1; column >= 0; column--)
+	{
+		Square* thisSquare = squares[column][row];
+
+		if (thisSquare->GetTerrain()->GetType() == DrawableAsset::ROAD_TERRAIN) {
+			output = thisSquare;
+			break;
+		}
+
+	}
+
+	return output;
 }

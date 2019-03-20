@@ -56,5 +56,6 @@ public:
 
 	void Draw();
 	Square* FindLeftRoadSquare(int row);
+	Square * FindRightRoadSquare(int row);
 };
 
