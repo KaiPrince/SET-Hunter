@@ -15,23 +15,25 @@ Purpose: This class encapsulates the physics of a game object.
 class PhysicsComponent : public Visitor
 {
 protected:
-	GameObject* obj; 
-	GameWorld* world;
+	GameObject* _obj; 
+	GameWorld* _world;
 
-	std::vector<GameObject*> collisionObjects;
+	std::vector<GameObject*> _collisionObjects;
+
 
 	void DetectCollisions();
+	void DetectCollisionsAs(GameObject* obj);
 	bool CheckIntersection(GameObject* obj1, GameObject* obj2);
 public:
 	PhysicsComponent(GameObject* obj, GameWorld* world);
 	virtual ~PhysicsComponent();
 
-	virtual std::vector<GameObject*> GetCollisionObject() {
-		return collisionObjects;
+	virtual std::vector<GameObject*> GetCollisionObjects() {
+		return _collisionObjects;
 	}
 
 	virtual bool IsCollisionDetected() {
-		if (!collisionObjects.empty()) {
+		if (!_collisionObjects.empty()) {
 			return true;
 		}
 		else
@@ -40,7 +42,7 @@ public:
 		}
 	}
 
-	virtual void Update() = 0;
+	virtual void Update() = 0; //NOTE: all derived classes must call on their decorated component.
 
 	// Inherited via Visitor
 	virtual void visit(GameObject * gameobject) override;
@@ -54,6 +56,7 @@ public:
 	~NullPhysicsComponent() {}
 
 	void Update() override { /*Do nothing*/ }
+
 
 	// Inherited via Visitor
 	void visit(GameObject * gameobject) override { /*Do nothing*/ }
@@ -70,8 +73,11 @@ Purpose: This class represents the movement (X and Y position) behaviour of the 
 */
 class PlayerPhysicsComponent : public PhysicsComponent
 {
+	GameObject* _hitbox;
+
+	virtual void ChangeHitbox(float x, float y, float width, float height);
 public:
-	PlayerPhysicsComponent(GameObject* obj, GameWorld* world) : PhysicsComponent(obj, world) {}
+	PlayerPhysicsComponent(GameObject* obj, GameWorld* world);
 	virtual ~PlayerPhysicsComponent();
 
 	virtual void Update();
@@ -82,9 +88,12 @@ private:
 
 class CollidablePhysicsComponent : public PhysicsComponent
 {
+	GameObject* _hitbox;
 public:
-	CollidablePhysicsComponent(GameObject* obj, GameWorld* world) : PhysicsComponent(obj, world) {}
+	CollidablePhysicsComponent(GameObject* obj, GameWorld* world);
 	virtual ~CollidablePhysicsComponent() {}
+
+	virtual void ChangeHitbox(float x, float y, float width, float height);
 
 	virtual void Update();
 

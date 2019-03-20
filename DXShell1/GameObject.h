@@ -72,6 +72,7 @@ class NullGameObject : public GameObject
 {
 public:
 	NullGameObject() : GameObject(0.0f, 0.0f, 0.0f, 0.0f, nullptr, nullptr) {}
+	NullGameObject(float x, float y, float width, float height) : GameObject(x, y, width, height, nullptr, nullptr) {}
 	~NullGameObject() {}
 
 	virtual void Update() override {}
