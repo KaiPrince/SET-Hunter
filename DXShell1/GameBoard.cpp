@@ -129,7 +129,14 @@ void GameBoard::ScrollBoard() {
 				{
 					//Free squares on the bottom row
 					if (row == boardHeight - 1 - 1) {
+						for (Square* obstacle : _obstacles) {
+							if (obstacle->GetGbX() == column && obstacle->GetGbY() == row + 1) {
+								RemoveObstacle(obstacle);
+							}
+						}
+
 						delete squares[column][row + 1];
+
 					}
 
 					//Move square down
@@ -302,6 +309,18 @@ void GameBoard::placePlants(int row)
 			}
 
 		}
+	}
+}
+
+void GameBoard::AddObstacle(Square * obstacle)
+{
+	_obstacles.push_back(obstacle);
+}
+
+void GameBoard::RemoveObstacle(Square * obstacle)
+{
+	if (obstacle != nullptr) {
+		_obstacles.erase(std::remove(_obstacles.begin(), _obstacles.end(), obstacle), _obstacles.end());
 	}
 }
 

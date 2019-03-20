@@ -4,6 +4,7 @@
 #include "AssetFactory.h"
 #include <ctime>
 #include <chrono>
+#include <vector>
 
 /*
 Class Name: GameBoard
@@ -20,8 +21,12 @@ class GameBoard
 	int roadShift; //Shifts the road to the right
 	float verticalOffset;
 
+	std::vector<Square*> _obstacles; //Plants
 	void placePlants();
 	void placePlants(int row);
+
+	void AddObstacle(Square* obstacle);
+	void RemoveObstacle(Square* obstacle);
 public:
 	GameBoard(float squareWidth, float squareHeight, AssetFactory* assetFactory);
 	~GameBoard();
