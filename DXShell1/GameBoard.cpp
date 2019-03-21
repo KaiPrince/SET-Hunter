@@ -66,7 +66,7 @@ void GameBoard::Init()
 
 	placePlants();
 
-	roadTimer = clock(); //std::chrono::high_resolution_clock::now();
+	roadTimer = std::chrono::steady_clock::now();
 	roadShift = 0;
 	verticalOffset = 0.0f;
 }
@@ -111,9 +111,9 @@ Square * GameBoard::CreateSquare(int column, int row)
 }
 
 void GameBoard::ScrollBoard() {
-
-	std::clock_t currentTime = clock();
-	double elapsedTimeInMS = std::chrono::duration<double, std::milli>(currentTime - roadTimer).count();
+	using namespace std::chrono;
+	time_point<std::chrono::steady_clock> currentTime = steady_clock::now();
+	double elapsedTimeInMS = duration<double, std::milli>(currentTime - roadTimer).count();
 	const double roadScollingDelayInMS = 1;
 
 	//Scroll roadway

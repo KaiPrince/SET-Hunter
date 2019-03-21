@@ -17,8 +17,8 @@ class GameBoard
 	AssetFactory* _assetFactory;
 	GameWorld* _world;
 
-	//std::chrono::time_point<std::chrono::steady_clock> roadTimer;
-	std::clock_t roadTimer;
+	std::chrono::time_point<std::chrono::steady_clock> roadTimer;
+	//std::clock_t roadTimer;
 	int roadShift; //Shifts the road to the right
 	float verticalOffset;
 

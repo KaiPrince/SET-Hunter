@@ -41,6 +41,7 @@ Purpose: This class represents the state of the actor being alive.
 class AliveState : public ActorState
 {
 private:
+	std::chrono::time_point<std::chrono::steady_clock> scoreTimer;
 public:
 	AliveState(Actor* actor) : ActorState(actor) { type = ALIVE_STATE; }
 	virtual ~AliveState() {}

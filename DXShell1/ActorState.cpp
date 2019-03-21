@@ -35,6 +35,11 @@ void AliveState::enter()
 	//Reset Sprite
 	_actor->SetSprite(_actor->GetGameBoard()->GetAssetFactory()->CreateDrawableAsset(DrawableAsset::CAR_SPRITE));
 
+	//Reset ScoreTimer
+	using namespace std::chrono;
+	time_point<steady_clock> currentTime = steady_clock::now();
+	scoreTimer = currentTime;
+
 	//Notify observers
 	_actor->Notify();
 }
@@ -50,12 +55,24 @@ ActorState* AliveState::update()
 		nextState = new DeadState(_actor);
 	}
 	else {
+		using namespace std::chrono;
+		time_point<steady_clock> currentTime = steady_clock::now();
 
 		//Accumulate Score
-		Square* currentSquare = _actor->GetGameBoard()->FindSquare(_actor->GetXPos(), _actor->GetYPos());
+		Square* currentSquare = _actor->GetGameBoard()->FindSquare(_actor->GetXPos() + (_actor->GetWidth() / 2), _actor->GetYPos());
 		if (currentSquare != nullptr && currentSquare->GetTerrain()->GetType() == DrawableAsset::ROAD_TERRAIN) {
-			GameController::SetScore(GameController::GetScore() + 1);
+
+			double elapsedTimeInMS = duration<double, std::milli>(currentTime - scoreTimer).count();
+			const double pointsPerMS = 1;
+
+
+			GameController::SetScore(GameController::GetScore() + (pointsPerMS * elapsedTimeInMS));
+
+
 		}
+
+		//Reset Score timer
+		scoreTimer = currentTime;
 	}
 
 	return nextState;
