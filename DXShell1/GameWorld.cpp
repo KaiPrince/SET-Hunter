@@ -72,11 +72,32 @@ void GameWorld::RemoveGameObject(GameObject * obj)
 	}
 }
 
+void GameWorld::AddUIObject(GameObject * obj)
+{
+	if (obj != nullptr) {
+		_uiObjects.push_back(obj);
+	}
+}
+
+void GameWorld::RemoveUIObject(GameObject * obj)
+{
+	if (obj != nullptr) {
+		_uiObjects.erase(std::remove(_gameObjects.begin(), _gameObjects.end(), obj), _gameObjects.end());
+	}
+}
+
 void GameWorld::Draw() {
 	_gameBoard->Draw();
 
 	for (GameObject* gameObject : _gameObjects) {
-		gameObject->Draw();
+		if (gameObject != _player) {
+			gameObject->Draw();
+		}
+	}
+	_player->Draw(); //Draw player last.
+
+	for (GameObject* uiObject : _uiObjects) {
+		uiObject->Draw();
 	}
 }
 

@@ -17,6 +17,7 @@ Purpose: This class aggregates all GameObjects in the world, plus the gameboard.
 class GameWorld : public Visitor
 {
 	std::vector<GameObject*> _gameObjects;
+	std::vector<GameObject*> _uiObjects;
 	GameBoard* _gameBoard;
 	Actor* _player;
 public:
@@ -32,6 +33,9 @@ public:
 	std::vector<GameObject*>& GetGameObjects() { return _gameObjects; }
 	void AddGameObject(GameObject* obj);
 	void RemoveGameObject(GameObject* obj);
+
+	void AddUIObject(GameObject * obj);
+	void RemoveUIObject(GameObject * obj);
 
 	void HandleInput();
 	void Update();
