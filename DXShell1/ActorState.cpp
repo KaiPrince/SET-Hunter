@@ -63,12 +63,23 @@ ActorState* AliveState::update()
 		if (currentSquare != nullptr && currentSquare->GetTerrain()->GetType() == DrawableAsset::ROAD_TERRAIN) {
 
 			double elapsedTimeInMS = duration<double, std::milli>(currentTime - scoreTimer).count();
-			const double pointsPerMS = 1;
+
+			if (offRoadDelayCountdown.count() <= 0) {
+				const double pointsPerMS = 1;
+				GameController::SetScore(GameController::GetScore() + static_cast<unsigned int>(pointsPerMS * elapsedTimeInMS));
+			}
+			else {
+				offRoadDelayCountdown -= duration<int, std::milli>(static_cast<int>(elapsedTimeInMS));
+			}
 
 
-			GameController::SetScore(GameController::GetScore() + static_cast<unsigned int>(pointsPerMS * elapsedTimeInMS));
 
 
+		}
+		else {
+
+			//Start off-road delay.
+			offRoadDelayCountdown = duration<int, std::milli>(3000);
 		}
 
 		//Reset Score timer
