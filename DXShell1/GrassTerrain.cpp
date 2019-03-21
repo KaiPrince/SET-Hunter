@@ -2,7 +2,7 @@
 
 
 
-GrassTerrain::GrassTerrain() : TerrainAsset()
+GrassTerrain::GrassTerrain() : DrawableAsset()
 {
 	type = DrawableAsset::GRASS_TERRAIN;
 }

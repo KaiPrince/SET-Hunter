@@ -110,11 +110,11 @@ void MainMenuLevel::Load()
 	textAsset->SetText("Start Game");
 	textAsset->SetUseFancyFont(true);
 	textAsset->SetFontSize(70.0f);
-	
+
 	const float originX = StartButton->GetXPos() + (StartButton->GetWidth() / 2);
 	const float originY = StartButton->GetYPos();
 	GameObject* StartButtonLabel = new GameObject(originX - (1 * pseudoPixelWidth),
-		originY - (0.4 * pseudoPixelWidth), StartButton->GetWidth(), StartButton->GetHeight(), textAsset, gb);
+		originY - (0.4f * pseudoPixelWidth), StartButton->GetWidth(), StartButton->GetHeight(), textAsset, gb);
 
 	//Exit Button
 	textAsset = (TextAsset*)_assetFactory->CreateDrawableAsset(DrawableAsset::TEXT_ASSET); //TODO: Center text
@@ -132,14 +132,14 @@ void MainMenuLevel::Load()
 	//Exit Button Label
 
 
-	world->AddGameObject(background);
-	world->AddGameObject(Logo);
-	world->AddGameObject(Title);
-	world->AddGameObject(PlayerName);
-	world->AddGameObject(PreviousScoreLabel);
-	world->AddGameObject(this->StartButton);
-	world->AddGameObject(StartButtonLabel);
-	world->AddGameObject(this->ExitButton);
+	world->AddUIObject(background);
+	world->AddUIObject(Logo);
+	world->AddUIObject(Title);
+	world->AddUIObject(PlayerName);
+	world->AddUIObject(PreviousScoreLabel);
+	world->AddUIObject(this->StartButton);
+	world->AddUIObject(StartButtonLabel);
+	world->AddUIObject(this->ExitButton);
 
 	mainMenu.push_back(background);
 	mainMenu.push_back(Logo);
@@ -162,9 +162,7 @@ void MainMenuLevel::Unload()
 	//Delete all menu items.
 	for (GameObject* obj : mainMenu) {
 
-		if (obj != world->GetPlayer()) {
-			world->RemoveGameObject(obj);
-		}
+		world->RemoveUIObject(obj);
 
 	}
 

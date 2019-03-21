@@ -1,4 +1,5 @@
 #include "GameBoard.h"
+#include "GameWorld.h"
 #include "GraphicsLocator.h"
 
 #include <random>
@@ -7,10 +8,11 @@
 
 
 
-GameBoard::GameBoard(float squareWidth, float squareHeight, AssetFactory* assetFactory)
+GameBoard::GameBoard(float squareWidth, float squareHeight, AssetFactory* assetFactory, GameWorld* world)
 {
 	this->squareWidth = squareWidth;
 	this->squareHeight = squareHeight;
+	this->_world = world;
 
 
 
@@ -38,8 +40,8 @@ GameBoard::~GameBoard()
 
 void GameBoard::Init()
 {
-	_grassTerrain = static_cast<TerrainAsset*>(_assetFactory->CreateDrawableAsset(DrawableAsset::GRASS_TERRAIN));
-	_roadTerrain = (TerrainAsset*)_assetFactory->CreateDrawableAsset(DrawableAsset::ROAD_TERRAIN);
+	_grassTerrain = (DrawableAsset*)_assetFactory->CreateDrawableAsset(DrawableAsset::GRASS_TERRAIN);
+	_roadTerrain = (DrawableAsset*)_assetFactory->CreateDrawableAsset(DrawableAsset::ROAD_TERRAIN);
 
 	//Generate initial board layout
 	for (int column = 0; column < boardWidth; column++)
@@ -130,13 +132,27 @@ void GameBoard::ScrollBoard() {
 				{
 					//Free squares on the bottom row
 					if (row == boardHeight - 1 - 1) {
+						for (Square* obstacle : _plantObstacles) {
+							if (obstacle->GetGbX() == column && obstacle->GetGbY() == row + 1) {
+								RemoveObstacle(obstacle);
+							}
+						}
+
 						delete squares[column][row + 1];
+
 					}
 
 					//Move square down
 					Square* thisSquare = squares[column][row];
 					thisSquare->SetGbY(thisSquare->GetGbY() + 1);
 					squares[column][row + 1] = thisSquare; //Shift pointer
+
+					//Move Obstacles down
+					for (Square* obstacle : _plantObstacles) {
+						if (obstacle->GetGbX() == column && obstacle->GetGbY() == row) {
+							obstacle->SetGbY(obstacle->GetGbY() + 1);
+						}
+					}
 
 					//Clear squares on top row
 					if (row == 0) {
@@ -229,7 +245,15 @@ void GameBoard::ScrollBoard() {
 			{
 				Square* thisSquare = squares[column][row];
 
+				//Add vertical offset to square
 				thisSquare->SetYPos((thisSquare->GetGbY() * squareHeight) + verticalOffset);
+
+				//Keep obstacles in track with their squares
+				for (Square* obstacle : _plantObstacles) {
+					if (obstacle->GetGbX() == column && obstacle->GetGbY() == row) {
+						obstacle->SetYPos(thisSquare->GetYPos());
+					}
+				}
 			}
 		}
 
@@ -262,19 +286,30 @@ void GameBoard::placePlants(int row)
 		Square* thisSquare = squares[column][row];
 
 		if (thisSquare->GetTerrain()->GetType() == DrawableAsset::GRASS_TERRAIN) {
-			//clear any current plants
-			if (thisSquare->GetAssets() != nullptr) {
-				switch (thisSquare->GetAssets()->GetType())
-				{
-					//intentional fall-through
-				case DrawableAsset::TREE_SPRITE:
-				case DrawableAsset::TREE2_SPRITE:
-				case DrawableAsset::SHRUB_SPRITE:
-					thisSquare->SetAssets(AssetFactory::_emptySprite); //TODO: search through composite and replace only where necessary.
-				default:
-					break;
+
+			for (Square* plant : _plantObstacles)
+			{
+
+				//clear any current plants
+				if (plant->GetGbY() == row && plant->GetGbX() == column)  {
+					RemoveObstacle(plant);
 				}
+
 			}
+
+			//clear any current plants
+			//if (thisSquare->GetAssets() != nullptr) {
+			//	switch (thisSquare->GetAssets()->GetType())
+			//	{
+			//		//intentional fall-through
+			//	case DrawableAsset::TREE_SPRITE:
+			//	case DrawableAsset::TREE2_SPRITE:
+			//	case DrawableAsset::SHRUB_SPRITE:
+			//		thisSquare->SetAssets(AssetFactory::_emptySprite); //TODO: search through composite and replace only where necessary.
+			//	default:
+			//		break;
+			//	}
+			//}
 
 
 
@@ -297,12 +332,32 @@ void GameBoard::placePlants(int row)
 					plantAssetType = DrawableAsset::CAR_SPRITE; //TODO: actual error handling
 					break;
 				}
-				thisSquare->SetAssets(_assetFactory->CreateDrawableAsset(plantAssetType));
+				//thisSquare->SetAssets(_assetFactory->CreateDrawableAsset(plantAssetType));
 
-				thisSquare->SetCollidable(true);
+				Square* newPlant = _squareFactory->CreateSquare(column, row, thisSquare->GetWidth(), thisSquare->GetHeight());
+				newPlant->SetTerrain(AssetFactory::_emptySprite);
+				newPlant->SetAssets(_assetFactory->CreateDrawableAsset(plantAssetType));
+				newPlant->SetCollidable(true);
+
+				AddObstacle(newPlant);
+
 			}
 
 		}
+	}
+}
+
+void GameBoard::AddObstacle(Square * obstacle)
+{
+	_plantObstacles.push_back(obstacle);
+	_world->AddGameObject(obstacle);
+}
+
+void GameBoard::RemoveObstacle(Square * obstacle)
+{
+	if (obstacle != nullptr) {
+		_world->RemoveGameObject(obstacle);
+		_plantObstacles.erase(std::remove(_plantObstacles.begin(), _plantObstacles.end(), obstacle), _plantObstacles.end());
 	}
 }
 

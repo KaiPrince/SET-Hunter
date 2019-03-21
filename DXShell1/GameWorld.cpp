@@ -13,14 +13,14 @@ GameWorld::GameWorld(AssetFactory* assetFactory)
 {
 	float squareWidth = (float)GraphicsLocator::GetGraphics()->Window_Width / GameBoard::boardWidth;
 	float squareHeight = (float)GraphicsLocator::GetGraphics()->Window_Height / GameBoard::boardHeight;
-	GameBoard* gb = new GameBoard(squareWidth, squareHeight, assetFactory);
+	GameBoard* gb = new GameBoard(squareWidth, squareHeight, assetFactory, this);
 	gb->Init();
 
 
-	
+
 
 	_gameBoard = gb;
-	_player = new NullActor(); 
+	_player = new NullActor();
 
 	_gameObjects.push_back(_player);
 }
@@ -72,11 +72,32 @@ void GameWorld::RemoveGameObject(GameObject * obj)
 	}
 }
 
+void GameWorld::AddUIObject(GameObject * obj)
+{
+	if (obj != nullptr) {
+		_uiObjects.push_back(obj);
+	}
+}
+
+void GameWorld::RemoveUIObject(GameObject * obj)
+{
+	if (obj != nullptr) {
+		_uiObjects.erase(std::remove(_uiObjects.begin(), _uiObjects.end(), obj), _uiObjects.end());
+	}
+}
+
 void GameWorld::Draw() {
 	_gameBoard->Draw();
 
 	for (GameObject* gameObject : _gameObjects) {
-		gameObject->Draw();
+		if (gameObject != _player) {
+			gameObject->Draw();
+		}
+	}
+	_player->Draw(); //Draw player last.
+
+	for (GameObject* uiObject : _uiObjects) {
+		uiObject->Draw();
 	}
 }
 
@@ -85,6 +106,11 @@ void GameWorld::HandleInput()
 	for (GameObject* gameObject : _gameObjects)
 	{
 		gameObject->accept(*this);
+	}
+
+	for (GameObject* uiObject : _uiObjects)
+	{
+		uiObject->accept(*this);
 	}
 }
 
