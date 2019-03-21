@@ -38,3 +38,13 @@ For Fun:
 	- rename to nullAsset?
 - Create abstract Graphics interface, and nullObject for GraphicsLocator.
 - Change Road filler to use a single triangle geometry and transform or rotate it when drawing.
+
+- Squash Actor into GameObject
+- Make SquareFactory have more responsibility in creating squares
+	- and deleting them
+- Move all collision information to physicsComponent
+- remove visitor pattern from gamelevel?
+
+- Give gameboard an array of Obstacle vectors
+- review prototype, type object, and flyweight patterns
+- apply prototype to assetfactory and square factory
