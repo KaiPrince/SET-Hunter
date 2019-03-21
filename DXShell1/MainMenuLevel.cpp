@@ -111,18 +111,13 @@ void MainMenuLevel::Load()
 	textAsset->SetUseFancyFont(true);
 	textAsset->SetFontSize(70.0f);
 
-	const float originX = StartButton->GetXPos() + (StartButton->GetWidth() / 2);
-	const float originY = StartButton->GetYPos();
-	GameObject* StartButtonLabel = new GameObject(originX - (1 * pseudoPixelWidth),
-		originY - (0.4f * pseudoPixelWidth), StartButton->GetWidth(), StartButton->GetHeight(), textAsset, gb);
+	const float originX_startButton = StartButton->GetXPos() + (StartButton->GetWidth() / 2);
+	const float originY_startButton = StartButton->GetYPos();
+	GameObject* StartButtonLabel = new GameObject(originX_startButton - (1 * pseudoPixelWidth),
+		originY_startButton - (0.4f * pseudoPixelWidth), StartButton->GetWidth(), StartButton->GetHeight(), textAsset, gb);
 
 	//Exit Button
-	textAsset = (TextAsset*)_assetFactory->CreateDrawableAsset(DrawableAsset::TEXT_ASSET); //TODO: Center text
-	textAsset->SetText("Exit Game");
-	textAsset->SetUseFancyFont(true);
-	textAsset->SetFontSize(40.0f);
-
-	UIsprite = new AssetRoundedOutlineDecorator(textAsset);
+	UIsprite = new AssetRoundedOutlineDecorator(AssetFactory::_emptySprite);
 
 	this->ExitButton = new Actor(0 + (2 * pseudoPixelWidth), ScreenHeight - (2 * pseudoPixelHeight),
 		6 * pseudoPixelWidth, 1 * pseudoPixelHeight, UIsprite, gb);
@@ -130,7 +125,15 @@ void MainMenuLevel::Load()
 	this->ExitButton->AddObserver(this);
 
 	//Exit Button Label
+	textAsset = (TextAsset*)_assetFactory->CreateDrawableAsset(DrawableAsset::TEXT_ASSET); //TODO: Center text
+	textAsset->SetText("Exit Game");
+	textAsset->SetUseFancyFont(true);
+	textAsset->SetFontSize(70.0f);
 
+	const float originX_exitButton = ExitButton->GetXPos() + (ExitButton->GetWidth() / 2);
+	const float originY_exitButton = ExitButton->GetYPos();
+	GameObject* ExitButtonLabel = new GameObject(originX_exitButton - (1 * pseudoPixelWidth),
+		originY_exitButton - (0.4f * pseudoPixelWidth), ExitButton->GetWidth(), ExitButton->GetHeight(), textAsset, gb);
 
 	world->AddUIObject(background);
 	world->AddUIObject(Logo);
@@ -140,6 +143,7 @@ void MainMenuLevel::Load()
 	world->AddUIObject(this->StartButton);
 	world->AddUIObject(StartButtonLabel);
 	world->AddUIObject(this->ExitButton);
+	world->AddUIObject(ExitButtonLabel);
 
 	mainMenu.push_back(background);
 	mainMenu.push_back(Logo);
@@ -149,6 +153,7 @@ void MainMenuLevel::Load()
 	mainMenu.push_back(StartButton);
 	mainMenu.push_back(StartButtonLabel);
 	mainMenu.push_back(ExitButton);
+	mainMenu.push_back(ExitButtonLabel);
 }
 
 void MainMenuLevel::Unload()
