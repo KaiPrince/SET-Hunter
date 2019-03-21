@@ -66,7 +66,7 @@ ActorState* AliveState::update()
 			const double pointsPerMS = 1;
 
 
-			GameController::SetScore(GameController::GetScore() + (pointsPerMS * elapsedTimeInMS));
+			GameController::SetScore(GameController::GetScore() + static_cast<unsigned int>(pointsPerMS * elapsedTimeInMS));
 
 
 		}
