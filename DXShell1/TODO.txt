@@ -45,6 +45,5 @@ For Fun:
 - Move all collision information to physicsComponent
 - remove visitor pattern from gamelevel?
 
-- Give gameboard an array of Obstacle vectors
 - review prototype, type object, and flyweight patterns
 - apply prototype to assetfactory and square factory
