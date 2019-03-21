@@ -49,7 +49,6 @@ void MainMenuLevel::Load()
 	GameObject* background = new GameObject(0.0f, 0.0f, ScreenWidth, ScreenHeight,
 		UIsprite, gb);
 
-	world->AddGameObject(background);
 
 	//Logo
 	UIsprite = new AssetOutlineDecorator(_assetFactory->CreateDrawableAsset(DrawableAsset::GRASS_TERRAIN));
@@ -58,7 +57,6 @@ void MainMenuLevel::Load()
 		UIsprite,
 		gb);
 
-	world->AddGameObject(Logo);
 
 	//Title
 	TextAsset* textAsset = (TextAsset*)_assetFactory->CreateDrawableAsset(DrawableAsset::TEXT_ASSET);
@@ -72,7 +70,6 @@ void MainMenuLevel::Load()
 		4 * pseudoPixelWidth, 1 * pseudoPixelHeight,
 		UIsprite, gb);
 
-	world->AddGameObject(Title);
 
 	//PlayerName
 	textAsset = (TextAsset*)_assetFactory->CreateDrawableAsset(DrawableAsset::TEXT_ASSET);
@@ -84,7 +81,6 @@ void MainMenuLevel::Load()
 		4 * pseudoPixelWidth, 1 * pseudoPixelHeight,
 		UIsprite, gb);
 
-	world->AddGameObject(PlayerName);
 
 	//Previous Score
 	textAsset = (TextAsset*)_assetFactory->CreateDrawableAsset(DrawableAsset::TEXT_ASSET);
@@ -100,22 +96,25 @@ void MainMenuLevel::Load()
 		4 * pseudoPixelWidth, 1 * pseudoPixelHeight,
 		UIsprite, gb);
 
-	world->AddGameObject(PreviousScoreLabel);
-
 	//Start Button
-	textAsset = (TextAsset*)_assetFactory->CreateDrawableAsset(DrawableAsset::TEXT_ASSET); //TODO: Center text
-	textAsset->SetText("Start Game");
-	textAsset->SetUseFancyFont(true);
-	textAsset->SetFontSize(40.0f);
-
-	UIsprite = new AssetRoundedOutlineDecorator(textAsset);
+	UIsprite = new AssetRoundedOutlineDecorator(AssetFactory::_emptySprite);
 
 	this->StartButton = new Actor(0 + (2 * pseudoPixelWidth), ScreenHeight - (4 * pseudoPixelHeight),
 		6 * pseudoPixelWidth, 1 * pseudoPixelHeight, UIsprite, gb);
 	this->StartButton->SetInputComponent(new ClickableInputComponent(this->StartButton));
 	this->StartButton->AddObserver(this);
 
-	world->AddGameObject(this->StartButton);
+
+	//Start Button Label
+	textAsset = (TextAsset*)_assetFactory->CreateDrawableAsset(DrawableAsset::TEXT_ASSET); //TODO: Center text
+	textAsset->SetText("Start Game");
+	textAsset->SetUseFancyFont(true);
+	textAsset->SetFontSize(70.0f);
+	
+	const float originX = StartButton->GetXPos() + (StartButton->GetWidth() / 2);
+	const float originY = StartButton->GetYPos();
+	GameObject* StartButtonLabel = new GameObject(originX - (1 * pseudoPixelWidth),
+		originY - (0.4 * pseudoPixelWidth), StartButton->GetWidth(), StartButton->GetHeight(), textAsset, gb);
 
 	//Exit Button
 	textAsset = (TextAsset*)_assetFactory->CreateDrawableAsset(DrawableAsset::TEXT_ASSET); //TODO: Center text
@@ -130,6 +129,16 @@ void MainMenuLevel::Load()
 	this->ExitButton->SetInputComponent(new ClickableInputComponent(this->ExitButton));
 	this->ExitButton->AddObserver(this);
 
+	//Exit Button Label
+
+
+	world->AddGameObject(background);
+	world->AddGameObject(Logo);
+	world->AddGameObject(Title);
+	world->AddGameObject(PlayerName);
+	world->AddGameObject(PreviousScoreLabel);
+	world->AddGameObject(this->StartButton);
+	world->AddGameObject(StartButtonLabel);
 	world->AddGameObject(this->ExitButton);
 
 	mainMenu.push_back(background);
@@ -138,6 +147,7 @@ void MainMenuLevel::Load()
 	mainMenu.push_back(PlayerName);
 	mainMenu.push_back(PreviousScoreLabel);
 	mainMenu.push_back(StartButton);
+	mainMenu.push_back(StartButtonLabel);
 	mainMenu.push_back(ExitButton);
 }
 
