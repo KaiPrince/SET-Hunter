@@ -37,7 +37,7 @@ public:
 	EmptyAsset();
 	~EmptyAsset();
 
-	virtual void Draw(float x, float y, float width, float height) {
+	virtual void Draw(float x, float y, float width, float height) override {
 		//Draw nothing.
 	}
 
@@ -61,7 +61,7 @@ class TextAsset : public DrawableAsset
 	float FontSize;
 	bool UseFancyFont;
 public:
-	TextAsset() : DrawableAsset() { FontSize = 10.0f; UseFancyFont = false; }
+	TextAsset() : DrawableAsset() { FontSize = 10.0f; UseFancyFont = false; Text[0] = '\0'; }
 	~TextAsset() {}
 
 	virtual void Draw(float x, float y, float width, float height) override;

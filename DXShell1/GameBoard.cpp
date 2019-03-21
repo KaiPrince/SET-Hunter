@@ -38,7 +38,7 @@ GameBoard::~GameBoard()
 
 void GameBoard::Init()
 {
-	_grassTerrain = (TerrainAsset*)_assetFactory->CreateDrawableAsset(DrawableAsset::GRASS_TERRAIN);
+	_grassTerrain = static_cast<TerrainAsset*>(_assetFactory->CreateDrawableAsset(DrawableAsset::GRASS_TERRAIN));
 	_roadTerrain = (TerrainAsset*)_assetFactory->CreateDrawableAsset(DrawableAsset::ROAD_TERRAIN);
 
 	//Generate initial board layout

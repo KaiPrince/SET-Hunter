@@ -36,7 +36,7 @@ DrawableAsset* AssetFactory::CreateDrawableAsset(DrawableAsset::AssetTypes asset
 		asset = new RoadTerrain();
 		break;
 	case DrawableAsset::CAR_SPRITE:
-		asset = new SpriteSheetAsset(_carSprite, assetType);
+		asset = new SpriteSheetAsset(_carSprite, assetType); //TODO: make static (flyweight)
 		break;
 	case DrawableAsset::TREE_SPRITE:
 		asset = new SpriteSheetAsset(_treeSprite, assetType);
@@ -51,7 +51,7 @@ DrawableAsset* AssetFactory::CreateDrawableAsset(DrawableAsset::AssetTypes asset
 		asset = new SpriteSheetAsset(_explosionSprite, assetType);
 		break;
 	case DrawableAsset::EMPTY_ASSET:
-		asset = new EmptyAsset();
+		asset = _emptySprite;
 		break;
 	case DrawableAsset::MAIN_MENU_BACKGROUND_ASSET:
 		asset = new MainMenuBackgroundAsset();
@@ -60,8 +60,7 @@ DrawableAsset* AssetFactory::CreateDrawableAsset(DrawableAsset::AssetTypes asset
 		asset = new TextAsset();
 		break;
 	default:
-		//asset = new TerrainAsset();
-		//TODO: throw error
+		asset = _emptySprite;
 		break;
 	}
 	return asset;
