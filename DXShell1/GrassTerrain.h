@@ -1,8 +1,8 @@
 #pragma once
-#include "TerrainAsset.h"
+#include "DrawableAsset.h"
 
 class GrassTerrain :
-	public TerrainAsset
+	public DrawableAsset
 {
 public:
 	GrassTerrain();

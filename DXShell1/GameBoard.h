@@ -1,5 +1,5 @@
 #pragma once
-#include "TerrainAsset.h"
+#include "DrawableAsset.h"
 #include "SquareFactory.h"
 #include "AssetFactory.h"
 #include <ctime>
@@ -15,20 +15,21 @@ class GameBoard
 
 	SquareFactory* _squareFactory;
 	AssetFactory* _assetFactory;
+	GameWorld* _world;
 
 	//std::chrono::time_point<std::chrono::steady_clock> roadTimer;
 	std::clock_t roadTimer;
 	int roadShift; //Shifts the road to the right
 	float verticalOffset;
 
-	std::vector<Square*> _obstacles; //Plants
+	std::vector<Square*> _plantObstacles; //Plants
 	void placePlants();
 	void placePlants(int row);
 
 	void AddObstacle(Square* obstacle);
 	void RemoveObstacle(Square* obstacle);
 public:
-	GameBoard(float squareWidth, float squareHeight, AssetFactory* assetFactory);
+	GameBoard(float squareWidth, float squareHeight, AssetFactory* assetFactory, GameWorld* world);
 	~GameBoard();
 	void Init();
 
@@ -42,12 +43,13 @@ public:
 	Square* squares[boardWidth][boardHeight];
 
 	Square** GetSquares() { return *squares; }
+	std::vector<Square*>& GetObstacles() { return _plantObstacles; }
 	Square* GetSquare(int column, int row) { return squares[column][row]; }
 	AssetFactory* GetAssetFactory() { return _assetFactory; }
 
 	void SetAssetFactory(AssetFactory* assetFactory);
-	TerrainAsset* _grassTerrain;
-	TerrainAsset* _roadTerrain;
+	DrawableAsset* _grassTerrain;
+	DrawableAsset* _roadTerrain;
 
 	Square* CreateSquare(int column, int row);
 	Square* FindSquare(float xPos, float yPos);

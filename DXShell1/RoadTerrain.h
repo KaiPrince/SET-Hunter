@@ -1,7 +1,7 @@
 #pragma once
-#include "TerrainAsset.h"
+#include "DrawableAsset.h"
 class RoadTerrain :
-	public TerrainAsset
+	public DrawableAsset
 {
 public:
 	RoadTerrain();

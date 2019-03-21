@@ -1,5 +1,5 @@
 #pragma once
-#include "TerrainAsset.h"
+#include "DrawableAsset.h"
 #include "GrassTerrain.h"
 #include "RoadTerrain.h"
 #include "SpriteSheetAsset.h"

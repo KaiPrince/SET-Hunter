@@ -13,14 +13,14 @@ GameWorld::GameWorld(AssetFactory* assetFactory)
 {
 	float squareWidth = (float)GraphicsLocator::GetGraphics()->Window_Width / GameBoard::boardWidth;
 	float squareHeight = (float)GraphicsLocator::GetGraphics()->Window_Height / GameBoard::boardHeight;
-	GameBoard* gb = new GameBoard(squareWidth, squareHeight, assetFactory);
+	GameBoard* gb = new GameBoard(squareWidth, squareHeight, assetFactory, this);
 	gb->Init();
 
 
-	
+
 
 	_gameBoard = gb;
-	_player = new NullActor(); 
+	_player = new NullActor();
 
 	_gameObjects.push_back(_player);
 }

@@ -3,7 +3,7 @@
 #include "GameObject.h"
 
 
-Square::Square(float x, float y, float width, float height, TerrainAsset* terrain, GameBoard* gb)
+Square::Square(float x, float y, float width, float height, DrawableAsset* terrain, GameBoard* gb)
 	: GameObject(x, y, width, height, (DrawableAsset*)terrain, gb)
 {
 	assets = AssetFactory::_emptySprite;
@@ -21,14 +21,14 @@ Square::~Square()
 {
 }
 
-void Square::SetTerrain(TerrainAsset * terrain)
+void Square::SetTerrain(DrawableAsset * terrain)
 {
 	this->sprite = terrain;
 }
 
-TerrainAsset * Square::GetTerrain()
+DrawableAsset * Square::GetTerrain()
 {
-	return (TerrainAsset*) sprite;
+	return (DrawableAsset*) sprite;
 }
 
 void Square::SetAssets(DrawableAsset * assets)

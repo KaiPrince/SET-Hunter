@@ -1,5 +1,5 @@
 #pragma once
-#include "TerrainAsset.h"
+#include "DrawableAsset.h"
 #include "DrawableAsset.h"
 #include "GameObject.h"
 
@@ -17,12 +17,12 @@ class Square : public GameObject
 	int gbX;
 	int gbY;
 public:
-	Square(float x, float y, float width, float height, TerrainAsset* terrain, GameBoard* gb);
+	Square(float x, float y, float width, float height, DrawableAsset* terrain, GameBoard* gb);
 	//Square(int x, int y, float width, float height, TerrainAsset* terrain, GameBoard* gb);
 	~Square();
 
-	void SetTerrain(TerrainAsset* terrain);
-	TerrainAsset* GetTerrain();
+	void SetTerrain(DrawableAsset* terrain);
+	DrawableAsset* GetTerrain();
 
 	void SetAssets(DrawableAsset * assets);
 	DrawableAsset* GetAssets();
