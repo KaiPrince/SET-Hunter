@@ -2,7 +2,6 @@
 #include <WinUser.h>
 #include <Windowsx.h>
 #include "Graphics.h"
-#include "GraphicsLocator.h"
 #include "Level1.h"
 #include "MainMenuLevel.h"
 #include "GameController.h"

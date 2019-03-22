@@ -123,6 +123,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Audio.cpp" />
     <ClCompile Include="DrawableAsset.cpp" />
     <ClCompile Include="GameBoard.cpp" />
     <ClCompile Include="GameController.cpp" />
@@ -130,7 +131,6 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameWorld.cpp" />
     <ClCompile Include="Graphics.cpp" />
-    <ClCompile Include="GraphicsLocator.cpp" />
     <ClCompile Include="GrassTerrain.cpp" />
     <ClCompile Include="InputComponent.cpp" />
     <ClCompile Include="Level1.cpp" />
@@ -148,6 +148,7 @@
     <ClCompile Include="Visitor.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Audio.h" />
     <ClInclude Include="DrawableAsset.h" />
     <ClInclude Include="GameBoard.h" />
     <ClInclude Include="GameController.h" />
@@ -155,7 +156,6 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameWorld.h" />
     <ClInclude Include="Graphics.h" />
-    <ClInclude Include="GraphicsLocator.h" />
     <ClInclude Include="GrassTerrain.h" />
     <ClInclude Include="InputComponent.h" />
     <ClInclude Include="Level1.h" />

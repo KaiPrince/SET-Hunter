@@ -2,7 +2,7 @@
 #include "GameBoard.h"
 #include <vector>
 #include "GameObject.h"
-#include "GraphicsLocator.h"
+#include "Graphics.h"
 #include <algorithm>
 #include "GameObject.h"
 #include "AssetFactory.h"

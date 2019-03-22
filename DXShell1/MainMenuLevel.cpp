@@ -1,7 +1,9 @@
 #include "MainMenuLevel.h"
-#include "GraphicsLocator.h"
+#include "Graphics.h"
 #include "GameController.h"
 #include "Level1.h"
+
+#include "Audio.h"
 
 
 
@@ -159,6 +161,9 @@ void MainMenuLevel::Load()
 	mainMenu.push_back(StartButtonLabel);
 	mainMenu.push_back(ExitButton);
 	mainMenu.push_back(ExitButtonLabel);
+
+	//Play Theme Song
+	AudioLocator::GetAudio()->PlayThemeSong();
 }
 
 void MainMenuLevel::Unload()

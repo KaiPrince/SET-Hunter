@@ -2,7 +2,7 @@
 #include "GameObject.h"
 #include "GameBoard.h"
 #include "GameObject.h"
-#include "GraphicsLocator.h"
+#include "Graphics.h"
 
 #include <chrono>
 #include <random>

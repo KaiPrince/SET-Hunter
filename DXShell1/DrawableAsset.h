@@ -20,7 +20,7 @@ public:
 	//TODO: move to assetFactory?
 	enum AssetTypes {
 		GRASS_TERRAIN, ROAD_TERRAIN, CAR_SPRITE, TREE_SPRITE, TREE2_SPRITE, SHRUB_SPRITE, 
-		EXPLOSION_SPRITE, EMPTY_ASSET, MAIN_MENU_BACKGROUND_ASSET, TEXT_ASSET
+		EXPLOSION_SPRITE, EMPTY_ASSET, MAIN_MENU_BACKGROUND_ASSET, TEXT_ASSET, SPY_HUNTER_ART
 	};
 protected: //This is only here because the AssetTypes var must be below its definition.
 	DrawableAsset::AssetTypes type;

@@ -5,6 +5,8 @@ SpriteSheet* AssetFactory::_treeSprite;
 SpriteSheet* AssetFactory::_tree2Sprite;
 SpriteSheet* AssetFactory::_shrubSprite;
 SpriteSheet* AssetFactory::_explosionSprite;
+SpriteSheet* AssetFactory::_spyHunterArt;
+
 DrawableAsset* AssetFactory::_emptySprite = new EmptyAsset(); //TODO: delete?
 
 AssetFactory::AssetFactory(Graphics* graphics)
@@ -17,6 +19,7 @@ AssetFactory::AssetFactory(Graphics* graphics)
 	_tree2Sprite = new SpriteSheet(L"Assets\\tree2.bmp", gfx);
 	_shrubSprite = new SpriteSheet(L"Assets\\shrub1.bmp", gfx);
 	_explosionSprite = new SpriteSheet(L"Assets\\explosion.bmp", gfx);
+	_spyHunterArt = new SpriteSheet(L"Assets\\spy_hunter_artwork.bmp", gfx);
 }
 
 AssetFactory::~AssetFactory()
@@ -58,6 +61,9 @@ DrawableAsset* AssetFactory::CreateDrawableAsset(DrawableAsset::AssetTypes asset
 		break;
 	case DrawableAsset::TEXT_ASSET:
 		asset = new TextAsset();
+		break;
+	case DrawableAsset::SPY_HUNTER_ART:
+		asset = new SpriteSheetAsset(_spyHunterArt, assetType);
 		break;
 	default:
 		asset = _emptySprite;

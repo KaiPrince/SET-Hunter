@@ -5,6 +5,8 @@ The intent of the Graphics class is to handle our DirectX calls, and to be large
 for managing the rendertarget.
 ******************************************************************************************/
 
+Graphics* GraphicsLocator::_graphics;
+
 //Constructor for Graphics class
 Graphics::Graphics()
 {
