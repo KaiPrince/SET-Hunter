@@ -4,12 +4,17 @@
 #include "Observer.h"
 #include "Visitor.h"
 #include "PhysicsComponent.h"
+#include "InputComponent.h"
+#include "GameObjectState.h"
 
 class GameBoard;
 
 class GameObject : public Observable, public VisitorComponent
 {
 	PhysicsComponent* _physicsComponent;
+	InputComponent* _inputComponent;
+
+	GameObjectState* _state;
 
 protected:
 	DrawableAsset* sprite;
@@ -58,9 +63,18 @@ public:
 	void SetSprite(DrawableAsset* sprite) { this->sprite = sprite; }
 
 
+	void UpdateState(GameObjectState * nextState);
+
+	InputComponent* GetInputComponent() { return _inputComponent; }
+	void SetInputComponent(InputComponent* input) { _inputComponent = input; }
+
+	GameObjectState* GetState() { return _state; }
+
 	//-------- Utility Functions -----------------------------
 	bool ContainsPoint(float x, float y);
 
+
+	virtual void HandleInput();
 
 	virtual void Update();
 

@@ -123,7 +123,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Actor.cpp" />
     <ClCompile Include="DrawableAsset.cpp" />
     <ClCompile Include="GameBoard.cpp" />
     <ClCompile Include="GameController.cpp" />
@@ -139,7 +138,7 @@
     <ClCompile Include="MainMenuLevel.cpp" />
     <ClCompile Include="Observer.cpp" />
     <ClCompile Include="PhysicsComponent.cpp" />
-    <ClCompile Include="ActorState.cpp" />
+    <ClCompile Include="GameObjectState.cpp" />
     <ClCompile Include="RoadTerrain.cpp" />
     <ClCompile Include="SpriteSheet.cpp" />
     <ClCompile Include="SpriteSheetAsset.cpp" />
@@ -149,7 +148,6 @@
     <ClCompile Include="Visitor.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Actor.h" />
     <ClInclude Include="DrawableAsset.h" />
     <ClInclude Include="GameBoard.h" />
     <ClInclude Include="GameController.h" />
@@ -164,7 +162,7 @@
     <ClInclude Include="MainMenuLevel.h" />
     <ClInclude Include="PhysicsComponent.h" />
     <ClInclude Include="Observer.h" />
-    <ClInclude Include="ActorState.h" />
+    <ClInclude Include="GameObjectState.h" />
     <ClInclude Include="RoadTerrain.h" />
     <ClInclude Include="SpriteSheet.h" />
     <ClInclude Include="SpriteSheetAsset.h" />

@@ -11,8 +11,8 @@ class MainMenuLevel :
 	public GameLevel, public Observer
 {
 	std::vector<GameObject*> mainMenu; //TODO: replace with composition object.
-	Actor* StartButton; //TODO: move to MainMenu Type object or something.
-	Actor* ExitButton;
+	GameObject* StartButton; //TODO: move to MainMenu Type object or something.
+	GameObject* ExitButton;
 	
 	bool isPlayerDead; //TODO: this is terrible, just ask the state somehow.
 

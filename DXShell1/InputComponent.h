@@ -1,7 +1,7 @@
 #pragma once
 #include "Visitor.h"
 
-class Actor;
+class GameObject;
 class GameObject;
 
 /*
@@ -9,7 +9,7 @@ Class Name: InputComponent
 Purpose: This class encapsulates the input handling behaviour of a game object.
 	This class will respond to inputs from the player.
 */
-class InputComponent : public Visitor
+class InputComponent
 {
 protected:
 	GameObject* object;
@@ -22,9 +22,6 @@ public:
 
 	virtual void HandleInput() = 0;
 
-	// Inherited via Visitor
-	virtual void visit(GameObject * gameobject) override {}
-	virtual void visit(Actor * actor) override {}
 };
 
 class NullInputComponent : public InputComponent
@@ -76,8 +73,5 @@ public:
 
 	virtual void HandleInput();
 
-	// Inherited via InputComponent
-	virtual void visit(GameObject * gameobject) override;
-	virtual void visit(Actor * actor) override;
 };
 

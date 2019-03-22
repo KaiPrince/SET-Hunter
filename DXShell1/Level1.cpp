@@ -21,7 +21,7 @@ void Level1::Load()
 	//	float player_StartX = (float)((gb->boardWidth * gb->squareWidth / 2) - gb->squareWidth);
 	//	float player_StartY = ((float)gb->boardHeight * gb->squareHeight) - gb->squareHeight;
 
-	//	Actor* player = new Actor(player_StartX, player_StartY,
+	//	GameObject* player = new GameObject(player_StartX, player_StartY,
 	//		gb->squareWidth, gb->squareHeight, _assetFactory->CreateDrawableAsset(DrawableAsset::CAR_SPRITE), gb);
 	//	player->SetPhysicsComponent(new PlayerPhysicsComponent(player, world));
 	//	player->SetInputComponent(new PlayerInputComponent(player));
@@ -100,10 +100,10 @@ void Level1::Notify(Observable* subject) {
 
 		switch (player->GetState()->GetType())
 		{
-		case ActorState::ALIVE_STATE:
+		case GameObjectState::ALIVE_STATE:
 			continueRoadScolling = true;
 			break;
-		case ActorState::DEAD_STATE:
+		case GameObjectState::DEAD_STATE:
 			continueRoadScolling = false;
 			break;
 		default:

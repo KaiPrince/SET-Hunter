@@ -2,7 +2,7 @@
 
 #include "Graphics.h"
 #include "GameBoard.h"
-#include "Actor.h"
+#include "GameObject.h"
 #include "InputComponent.h"
 #include "GameWorld.h"
 
@@ -11,7 +11,7 @@ class GameLevel
 protected:
 	static Graphics* gfx;
 	static GameWorld* world;
-	static Actor* player; //TODO: delete in destructor
+	static GameObject* player; //TODO: delete in destructor
 	static AssetFactory* _assetFactory;
 
 public:

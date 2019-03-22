@@ -12,7 +12,6 @@ public:
 	virtual ~Visitor() {}
 
 	virtual void visit(class GameObject* gameobject) = 0;
-	virtual void visit(class Actor* actor) = 0;
 };
 
 class VisitorComponent

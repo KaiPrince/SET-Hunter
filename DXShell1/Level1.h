@@ -1,6 +1,6 @@
 #pragma once
 #include "GameLevel.h"
-#include "ActorState.h"
+#include "GameObjectState.h"
 
 
 class Level1 : public GameLevel, public Observer

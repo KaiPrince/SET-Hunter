@@ -4,7 +4,7 @@
 #include "GameObject.h"
 #include "GraphicsLocator.h"
 #include <algorithm>
-#include "Actor.h"
+#include "GameObject.h"
 #include "AssetFactory.h"
 
 
@@ -20,7 +20,7 @@ GameWorld::GameWorld(AssetFactory* assetFactory)
 
 
 	_gameBoard = gb;
-	_player = new NullActor();
+	_player = new NullGameObject();
 
 	_gameObjects.push_back(_player);
 }
@@ -45,7 +45,7 @@ void GameWorld::SetGameBoard(GameBoard * gameBoard)
 	}
 }
 
-void GameWorld::SetPlayer(Actor * player)
+void GameWorld::SetPlayer(GameObject * player)
 {
 
 	if (player != nullptr) {
@@ -105,22 +105,13 @@ void GameWorld::HandleInput()
 {
 	for (GameObject* gameObject : _gameObjects)
 	{
-		gameObject->accept(*this);
+		gameObject->HandleInput();
 	}
 
 	for (GameObject* uiObject : _uiObjects)
 	{
-		uiObject->accept(*this);
+		uiObject->HandleInput();
 	}
-}
-
-void GameWorld::visit(GameObject * gameobject)
-{
-}
-
-void GameWorld::visit(Actor * actor)
-{
-	actor->HandleInput();
 }
 
 void GameWorld::Update()

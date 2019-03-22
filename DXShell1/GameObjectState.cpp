@@ -1,29 +1,29 @@
-#include "ActorState.h"
-#include "Actor.h"
+#include "GameObjectState.h"
+#include "GameObject.h"
 #include "GameController.h"
 
 
 
-ActorState::ActorState(Actor* player)
+GameObjectState::GameObjectState(GameObject* object)
 {
-	this->_actor = player;
+	this->_object = object;
 }
 
-ActorState::~ActorState()
+GameObjectState::~GameObjectState()
 {
 }
 
-ActorState * AliveState::HandleInput()
+GameObjectState * AliveState::HandleInput()
 {
-	ActorState* nextState = this;
+	GameObjectState* nextState = this;
 
-	_actor->GetInputComponent()->HandleInput();
+	_object->GetInputComponent()->HandleInput();
 
 
 	if (GetKeyState(VK_DOWN) & 0x8000)
 	{
 		// DOWN arrow key is KILL.
-		nextState = new DeadState(_actor);
+		nextState = new DeadState(_object);
 	}
 
 	return nextState;
@@ -32,14 +32,14 @@ ActorState * AliveState::HandleInput()
 void AliveState::Enter()
 {
 	//Reset position
-	float centerOfBoardX = _actor->GetGameBoard()->boardWidth * _actor->GetGameBoard()->squareWidth / 2;
-	float bottomOfBoardY = _actor->GetGameBoard()->boardHeight * _actor->GetGameBoard()->squareHeight;
+	float centerOfBoardX = _object->GetGameBoard()->boardWidth * _object->GetGameBoard()->squareWidth / 2;
+	float bottomOfBoardY = _object->GetGameBoard()->boardHeight * _object->GetGameBoard()->squareHeight;
 
-	_actor->SetXPos(centerOfBoardX - _actor->GetWidth());
-	_actor->SetYPos(bottomOfBoardY);
+	_object->SetXPos(centerOfBoardX - _object->GetWidth());
+	_object->SetYPos(bottomOfBoardY);
 
 	//Reset Sprite
-	_actor->SetSprite(_actor->GetGameBoard()->GetAssetFactory()->CreateDrawableAsset(DrawableAsset::CAR_SPRITE));
+	_object->SetSprite(_object->GetGameBoard()->GetAssetFactory()->CreateDrawableAsset(DrawableAsset::CAR_SPRITE));
 
 	//Reset ScoreTimer
 	using namespace std::chrono;
@@ -50,14 +50,14 @@ void AliveState::Enter()
 	invincibilityCountdown = duration<int, std::milli>(3000);
 
 	//Notify observers
-	_actor->Notify();
+	_object->Notify();
 }
 
-ActorState* AliveState::Update()
+GameObjectState* AliveState::Update()
 {
-	ActorState* nextState = this;
+	GameObjectState* nextState = this;
 
-	_actor->GetPhysicsComponent()->Update();
+	_object->GetPhysicsComponent()->Update();
 
 	//Get delta time
 	using namespace std::chrono;
@@ -65,16 +65,16 @@ ActorState* AliveState::Update()
 	double elapsedTimeInMS = duration<double, std::milli>(currentTime - scoreTimer).count();
 
 	//Transition States
-	if (_actor->IsCollidable() && ((CollidablePhysicsComponent*)_actor->GetPhysicsComponent())->IsCollisionDetected()) {
+	if (_object->IsCollidable() && ((CollidablePhysicsComponent*)_object->GetPhysicsComponent())->IsCollisionDetected()) {
 
 		if (invincibilityCountdown.count() <= 0) {
-			nextState = new DeadState(_actor);
+			nextState = new DeadState(_object);
 		}
 	}
 	else {
 
 		//Object on the road?
-		Square* currentSquare = _actor->GetGameBoard()->FindSquare(_actor->GetXPos() + (_actor->GetWidth() / 2), _actor->GetYPos());
+		Square* currentSquare = _object->GetGameBoard()->FindSquare(_object->GetXPos() + (_object->GetWidth() / 2), _object->GetYPos());
 		if (currentSquare != nullptr && currentSquare->GetTerrain()->GetType() == DrawableAsset::ROAD_TERRAIN) {
 
 
@@ -114,7 +114,7 @@ void AliveState::Leave()
 {
 }
 
-ActorState * AliveState::Draw()
+GameObjectState * AliveState::Draw()
 {
 	//TODO: move this to InvincibleState.
 	if (invincibilityCountdown.count() > 0) { 
@@ -136,7 +136,7 @@ ActorState * AliveState::Draw()
 		const float flashDuration = 500.0f; //TODO: tweak this for better feel.
 		const float interval = invincibilityCountdown.count() / flashDuration;
 		if ((interval < 6 && interval > 5) || (interval < 4 && interval > 3) || (interval < 2 && interval > 1)) {
-			_actor->GetSprite()->Draw(_actor->GetXPos(), _actor->GetYPos(), _actor->GetWidth(), _actor->GetHeight());  //TODO: This is terrible. Use renderComponent?
+			_object->GetSprite()->Draw(_object->GetXPos(), _object->GetYPos(), _object->GetWidth(), _object->GetHeight());  //TODO: This is terrible. Use renderComponent?
 		}
 		else {
 
@@ -145,7 +145,7 @@ ActorState * AliveState::Draw()
 	}
 	else
 	{
-		_actor->GetSprite()->Draw(_actor->GetXPos(), _actor->GetYPos(), _actor->GetWidth(), _actor->GetHeight());  //TODO: This is terrible. Use renderComponent?
+		_object->GetSprite()->Draw(_object->GetXPos(), _object->GetYPos(), _object->GetWidth(), _object->GetHeight());  //TODO: This is terrible. Use renderComponent?
 	}
 
 	return this;
@@ -155,7 +155,7 @@ DeadState::~DeadState()
 {
 }
 
-ActorState * DeadState::HandleInput()
+GameObjectState * DeadState::HandleInput()
 {
 	return this;
 }
@@ -168,15 +168,15 @@ void DeadState::Enter()
 	GameController::SetLives(GameController::GetLives() - 1);
 
 	//Death sprite
-	_actor->SetSprite(_actor->GetGameBoard()->GetAssetFactory()->CreateDrawableAsset(DrawableAsset::EXPLOSION_SPRITE));
+	_object->SetSprite(_object->GetGameBoard()->GetAssetFactory()->CreateDrawableAsset(DrawableAsset::EXPLOSION_SPRITE));
 
 	//Notify observers (Road stops scrolling.)
-	_actor->Notify();
+	_object->Notify();
 }
 
-ActorState* DeadState::Update()
+GameObjectState* DeadState::Update()
 {
-	ActorState* nextState = this;
+	GameObjectState* nextState = this;
 
 	std::clock_t currentTime = clock();
 	double elapsedTimeInMS = std::chrono::duration<double, std::milli>(currentTime - timeOfDeath).count();
@@ -184,7 +184,7 @@ ActorState* DeadState::Update()
 	//Revive player after 3 seconds
 	const int timeUntilRevivalInMS = 3000;
 	if (elapsedTimeInMS >= timeUntilRevivalInMS) {
-		nextState = new AliveState(_actor);
+		nextState = new AliveState(_object);
 	}
 
 	//TODO: add blinking before revivial
@@ -197,9 +197,26 @@ void DeadState::Leave()
 {
 }
 
-ActorState * DeadState::Draw()
+GameObjectState * DeadState::Draw()
 {
-	_actor->GetSprite()->Draw(_actor->GetXPos(), _actor->GetYPos(), _actor->GetWidth(), _actor->GetHeight()); //TODO: This is terrible. Use renderComponent?
+	_object->GetSprite()->Draw(_object->GetXPos(), _object->GetYPos(), _object->GetWidth(), _object->GetHeight()); //TODO: This is terrible. Use renderComponent?
 	return this;
 }
 
+GameObjectState * NullState::HandleInput()
+{
+	_object->GetInputComponent()->HandleInput();
+	return this;
+}
+
+GameObjectState * NullState::Update()
+{
+	_object->GetPhysicsComponent()->Update();
+	return this;
+}
+
+GameObjectState * NullState::Draw()
+{
+	_object->GetSprite()->Draw(_object->GetXPos(), _object->GetYPos(), _object->GetWidth(), _object->GetHeight()); //TODO: This is terrible. Use renderComponent?
+	return this;
+}

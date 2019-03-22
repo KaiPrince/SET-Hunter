@@ -1,7 +1,7 @@
 #include "PhysicsComponent.h"
 #include "GameObject.h"
 #include "GameBoard.h"
-#include "ActorState.h"
+#include "GameObjectState.h"
 #include "Square.h"
 #include "GameWorld.h"
 
@@ -16,14 +16,6 @@ PhysicsComponent::PhysicsComponent(GameObject* obj, GameWorld* world)
 
 
 PhysicsComponent::~PhysicsComponent()
-{
-}
-
-void PhysicsComponent::visit(GameObject * gameobject)
-{
-}
-
-void PhysicsComponent::visit(Actor * actor)
 {
 }
 

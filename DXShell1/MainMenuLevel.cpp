@@ -7,8 +7,8 @@
 
 MainMenuLevel::MainMenuLevel()
 {
-	StartButton = new NullActor();
-	ExitButton = new NullActor();
+	StartButton = new NullGameObject();
+	ExitButton = new NullGameObject();
 
 	isPlayerDead = false; //TODO: remove
 }
@@ -28,7 +28,7 @@ void MainMenuLevel::Load()
 		float player_StartX = (float)((gb->boardWidth * gb->squareWidth / 2) - gb->squareWidth);
 		float player_StartY = ((float)gb->boardHeight * gb->squareHeight) - (gb->squareHeight * 3); //bring it a little off the bottom
 
-		Actor* player = new Actor(player_StartX, player_StartY,
+		GameObject* player = new GameObject(player_StartX, player_StartY,
 			gb->squareWidth, gb->squareHeight, _assetFactory->CreateDrawableAsset(DrawableAsset::CAR_SPRITE), gb);
 		player->SetCollidable(true);
 		player->UpdateState(new AliveState(player));
@@ -104,7 +104,7 @@ void MainMenuLevel::Load()
 	//Start Button
 	UIsprite = new AssetRoundedOutlineDecorator(AssetFactory::_emptySprite);
 
-	this->StartButton = new Actor(0 + (2 * pseudoPixelWidth), ScreenHeight - (4 * pseudoPixelHeight),
+	this->StartButton = new GameObject(0 + (2 * pseudoPixelWidth), ScreenHeight - (4 * pseudoPixelHeight),
 		6 * pseudoPixelWidth, 1 * pseudoPixelHeight, UIsprite, gb);
 	this->StartButton->SetInputComponent(new ClickableInputComponent(this->StartButton));
 	this->StartButton->AddObserver(this);
@@ -124,7 +124,7 @@ void MainMenuLevel::Load()
 	//Exit Button
 	UIsprite = new AssetRoundedOutlineDecorator(AssetFactory::_emptySprite);
 
-	this->ExitButton = new Actor(0 + (2 * pseudoPixelWidth), ScreenHeight - (2 * pseudoPixelHeight),
+	this->ExitButton = new GameObject(0 + (2 * pseudoPixelWidth), ScreenHeight - (2 * pseudoPixelHeight),
 		6 * pseudoPixelWidth, 1 * pseudoPixelHeight, UIsprite, gb);
 	this->ExitButton->SetInputComponent(new ClickableInputComponent(this->ExitButton));
 	this->ExitButton->AddObserver(this);

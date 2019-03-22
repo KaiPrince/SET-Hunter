@@ -40,7 +40,7 @@ For Fun:
 - Create abstract Graphics interface, and nullObject for GraphicsLocator.
 - Change Road filler to use a single triangle geometry and transform or rotate it when drawing.
 
-- Squash Actor into GameObject
+- Squash GameObject into GameObject
 - Make SquareFactory have more responsibility in creating squares
 	- and deleting them
 - Move all collision information to physicsComponent

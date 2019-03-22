@@ -1,5 +1,5 @@
 #include "InputComponent.h"
-#include "Actor.h"
+#include "GameObject.h"
 #include "GameBoard.h"
 #include "GameObject.h"
 #include "GraphicsLocator.h"
@@ -52,15 +52,6 @@ void ClickableInputComponent::HandleInput() {
 			//TODO: Save event information somewhere.
 		}
 	}
-}
-
-void ClickableInputComponent::visit(GameObject * gameobject)
-{
-
-}
-
-void ClickableInputComponent::visit(Actor * actor)
-{
 }
 
 void StayOnRoadInputComponent::HandleInput()
