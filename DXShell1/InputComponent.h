@@ -75,3 +75,9 @@ public:
 
 };
 
+
+/*
+Class Name: SeekMiddleOfRoadInputComponent
+Purpose: This input component pilots the object into the middle of the road.
+*/
+//TODO.
