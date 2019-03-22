@@ -58,10 +58,23 @@ int WINAPI wWinMain(
 	RECT rect = { 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT };//Do these numbers look significant to you? What are they?
 	AdjustWindowRectEx(&rect, WS_OVERLAPPEDWINDOW, false, WS_EX_OVERLAPPEDWINDOW);
 
-	//Below is another important process to understand... what are we doing?
-	//Why is this connected to rect we just defined above?
-	HWND windowhandle = CreateWindowEx(WS_EX_OVERLAPPEDWINDOW, "MainWindow", "SET Hunter", WS_OVERLAPPEDWINDOW, 100, 100,
-		rect.right - rect.left, rect.bottom - rect.top, NULL, NULL, hInstance, 0);
+	// The factory returns the current system DPI. This is also the value it will use
+	// to create its own windows.
+	FLOAT dpiX, dpiY;
+	ID2D1Factory* m_pDirect2dFactory;
+	D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &m_pDirect2dFactory);
+	m_pDirect2dFactory->GetDesktopDpi(&dpiX, &dpiY);
+	m_pDirect2dFactory->Release();
+
+	const int originX = CW_USEDEFAULT; //100;
+	const int originY = CW_USEDEFAULT; //100;
+	const int width = static_cast<UINT>(ceil(WINDOW_WIDTH * dpiX / 96.f)); //rect.right - rect.left;
+	const int height = static_cast<UINT>(ceil(WINDOW_HEIGHT * dpiY / 96.f)); // rect.bottom - rect.top
+
+//Below is another important process to understand... what are we doing?
+//Why is this connected to rect we just defined above?
+	HWND windowhandle = CreateWindowEx(WS_EX_OVERLAPPEDWINDOW, "MainWindow", "SET Hunter", WS_OVERLAPPEDWINDOW, originX, originY,
+		width, height, NULL, NULL, hInstance, 0);
 	if (!windowhandle) return -1;
 
 	graphics = new Graphics();
