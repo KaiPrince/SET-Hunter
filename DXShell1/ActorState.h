@@ -42,7 +42,8 @@ class AliveState : public ActorState
 {
 private:
 	std::chrono::time_point<std::chrono::steady_clock> scoreTimer;
-	std::chrono::duration<int, std::milli> offRoadDelayCountdown;
+	std::chrono::duration<int, std::milli> offRoadDelayCountdown; //Score won't update
+	std::chrono::duration<int, std::milli> invincibilityCountdown; //Can't die
 public:
 	AliveState(Actor* actor) : ActorState(actor) { type = ALIVE_STATE; }
 	virtual ~AliveState() {}

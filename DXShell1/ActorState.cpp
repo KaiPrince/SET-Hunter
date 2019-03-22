@@ -40,6 +40,9 @@ void AliveState::enter()
 	time_point<steady_clock> currentTime = steady_clock::now();
 	scoreTimer = currentTime;
 
+	//Start invincibility countdown 
+	invincibilityCountdown = duration<int, std::milli>(3000);
+
 	//Notify observers
 	_actor->Notify();
 }
@@ -50,20 +53,26 @@ ActorState* AliveState::update()
 
 	_actor->GetPhysicsComponent()->Update();
 
+	//Get delta time
+	using namespace std::chrono;
+	time_point<steady_clock> currentTime = steady_clock::now();
+	double elapsedTimeInMS = duration<double, std::milli>(currentTime - scoreTimer).count();
+
 	//Transition States
 	if (_actor->IsCollidable() && ((CollidablePhysicsComponent*)_actor->GetPhysicsComponent())->IsCollisionDetected()) {
+
+		if (invincibilityCountdown.count() <= 0) {
 		nextState = new DeadState(_actor);
+		}
 	}
 	else {
-		using namespace std::chrono;
-		time_point<steady_clock> currentTime = steady_clock::now();
 
-		//Accumulate Score
+		//Object on the road?
 		Square* currentSquare = _actor->GetGameBoard()->FindSquare(_actor->GetXPos() + (_actor->GetWidth() / 2), _actor->GetYPos());
 		if (currentSquare != nullptr && currentSquare->GetTerrain()->GetType() == DrawableAsset::ROAD_TERRAIN) {
 
-			double elapsedTimeInMS = duration<double, std::milli>(currentTime - scoreTimer).count();
 
+		//Accumulate Score
 			if (offRoadDelayCountdown.count() <= 0) {
 				const double pointsPerMS = 1;
 				GameController::SetScore(GameController::GetScore() + static_cast<unsigned int>(pointsPerMS * elapsedTimeInMS));
@@ -80,6 +89,12 @@ ActorState* AliveState::update()
 
 			//Start off-road delay.
 			offRoadDelayCountdown = duration<int, std::milli>(3000);
+		}
+
+		//Decrement invincibility timer
+		if (invincibilityCountdown.count() > 0) {
+
+			invincibilityCountdown -= duration<int, std::milli>(static_cast<int>(elapsedTimeInMS));
 		}
 
 		//Reset Score timer
