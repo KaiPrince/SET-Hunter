@@ -7,7 +7,7 @@ class SplashScreenLevel :
 	public GameLevel
 {
 	std::chrono::steady_clock::time_point startupTime;
-	float opacity;
+	double opacity;
 
 	SpriteSheet* artwork;
 public:

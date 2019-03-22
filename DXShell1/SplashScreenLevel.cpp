@@ -38,26 +38,35 @@ void SplashScreenLevel::Update()
 
 void SplashScreenLevel::Render()
 {
+	const double fadeInTime = 3.0;
+	const double holdTime = 2.0;
+	const double fadeOutTime = 2.0;
+
+	const double minOpacity = 0.0;
+	const double maxOpacity = 1.0;
+
+
+
 	using namespace std::chrono;
 
 	duration<double> time_span = duration_cast<duration<double>>(steady_clock::now() - startupTime);
 
 	double elapsedTimeInS = time_span.count();
 
-	if (elapsedTimeInS >= 0 && elapsedTimeInS <= 3.0) {
+	if (elapsedTimeInS >= minOpacity && elapsedTimeInS <= fadeInTime) {
 		//fade in
-		opacity = 1.0 - ((1.0 / 3) * elapsedTimeInS);
+		opacity = maxOpacity - ((maxOpacity / fadeInTime) * elapsedTimeInS);
 	}
-	else if (elapsedTimeInS >= 3.1 && elapsedTimeInS <= 4.0) {
+	else if (elapsedTimeInS > fadeInTime && elapsedTimeInS <= fadeInTime + holdTime) {
 		//hold
-		opacity = 0;
+		opacity = minOpacity;
 	}
-	else if (elapsedTimeInS >= 4.1 && elapsedTimeInS <= 6.0)
+	else if (elapsedTimeInS > fadeInTime + holdTime && elapsedTimeInS <= fadeInTime + holdTime + fadeOutTime)
 	{
 		//fade out
-		opacity = (1.0 / 2) * (elapsedTimeInS - 4.1);
+		opacity = (maxOpacity / fadeOutTime) * (elapsedTimeInS - (fadeInTime + holdTime));
 	}
-	else if (elapsedTimeInS >= 6.1)
+	else if (elapsedTimeInS > fadeInTime + holdTime + fadeOutTime)
 	{
 		//switch to main menu.
 		GameController::QueuedNextLevel = new MainMenuLevel();
@@ -66,6 +75,7 @@ void SplashScreenLevel::Render()
 	{
 		//Do nothing.
 	}
+
 	const float screenH = GraphicsLocator::GetGraphics()->Window_Height;
 	const float screenW = GraphicsLocator::GetGraphics()->Window_Width;
 	//artwork->Draw(0.0f, 0.0f, screenW, screenH);
@@ -73,7 +83,7 @@ void SplashScreenLevel::Render()
 	
 
 	//Draw white filter
-	GraphicsLocator::GetGraphics()->FillRect(0.0f, 0.0f, screenW, screenH, 1.0f, 1.0f, 1.0f, opacity);
+	GraphicsLocator::GetGraphics()->FillRect(0.0f, 0.0f, screenW, screenH, 1.0f, 1.0f, 1.0f, static_cast<float>(opacity));
 	
 
 }
