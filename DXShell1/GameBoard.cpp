@@ -459,13 +459,19 @@ void GameBoard::DrawLeftRoadMask(GameBoardTile* leftRoadSquare, GameBoardTile* l
 	float x3 = leftRoadSquare->GetXPos() + leftRoadSquare->GetWidth();
 	float y3 = y1;
 
+	//This smudge factor here is a quick fix for a misalignment problem between the triangles and the tiles.
+	const float smudgeX = 1.0f;
+	const float smudgeY = -1.0f;
+
 	if (x1 < x2) {
 		//right - Top to Top
 		y1 = leftRoadSquare->GetYPos();
 		y2 = leftRoadSquareAbove->GetYPos();
 		x3 = leftRoadSquare->GetXPos() + leftRoadSquare->GetWidth();
 
-		GraphicsLocator::GetGraphics()->DrawTriangle(x1, y1, x2, y2, x3, y3, 0.0f, 0.0f, 0.0f, 1.0f); //TODO: move this out of gameboard.
+		const float smudgeY = 1.0f; //smudge down
+
+		GraphicsLocator::GetGraphics()->DrawTriangle(x1 + smudgeX, y1 + smudgeY, x2 + smudgeX, y2 + smudgeY, x3 + smudgeX, y3 + smudgeY, 0.0f, 0.0f, 0.0f, 1.0f); //TODO: move this out of gameboard.
 	}
 	else if (x1 > x2)
 	{
@@ -474,7 +480,9 @@ void GameBoard::DrawLeftRoadMask(GameBoardTile* leftRoadSquare, GameBoardTile* l
 		y2 = leftRoadSquareAbove->GetYPos() + leftRoadSquareAbove->GetHeight();
 		x3 = leftRoadSquare->GetXPos();
 
-		GraphicsLocator::GetGraphics()->DrawTriangle(x1, y1, x2, y2, x3, y3, 0.0f, 0.0f, 0.0f, 1.0f);
+		const float smudgeY = -1.0f; //smudge up
+
+		GraphicsLocator::GetGraphics()->DrawTriangle(x1 + smudgeX, y1 + smudgeY, x2 + smudgeX, y2 + smudgeY, x3 + smudgeX, y3 + smudgeY, 0.0f, 0.0f, 0.0f, 1.0f);
 	}
 	else {
 		//don't draw
@@ -492,13 +500,18 @@ void GameBoard::DrawRightRoadMask(GameBoardTile* rightRoadSquare, GameBoardTile*
 	float x3 = rightRoadSquare->GetXPos() + rightRoadSquare->GetWidth();
 	float y3 = y1;
 
+	//This smudge factor here is a quick fix for a misalignment problem between the triangles and the tiles.
+	const float smudgeX = -1.0f;
+
 	if (x1 < x2) {
 		//right - Bottom to Bottom
 		y1 = rightRoadSquare->GetYPos() + rightRoadSquare->GetHeight();
 		y2 = rightRoadSquareAbove->GetYPos() + rightRoadSquareAbove->GetHeight();
 		x3 = rightRoadSquare->GetXPos() + rightRoadSquare->GetWidth();
 
-		GraphicsLocator::GetGraphics()->DrawTriangle(x1, y1, x2, y2, x3, y3, 0.0f, 0.0f, 0.0f, 1.0f);
+		const float smudgeY = -1.0f; //smudge up
+
+		GraphicsLocator::GetGraphics()->DrawTriangle(x1 + smudgeX, y1 + smudgeY, x2 + smudgeX, y2 + smudgeY, x3 + smudgeX, y3 + smudgeY, 0.0f, 0.0f, 0.0f, 1.0f); //TODO: move this out of gameboard.
 	}
 	else if (x1 > x2)
 	{
@@ -507,7 +520,9 @@ void GameBoard::DrawRightRoadMask(GameBoardTile* rightRoadSquare, GameBoardTile*
 		y2 = rightRoadSquareAbove->GetYPos();
 		x3 = rightRoadSquare->GetXPos();
 
-		GraphicsLocator::GetGraphics()->DrawTriangle(x1, y1, x2, y2, x3, y3, 0.0f, 0.0f, 0.0f, 1.0f);
+		const float smudgeY = 1.0f; //smudge down
+
+		GraphicsLocator::GetGraphics()->DrawTriangle(x1 + smudgeX, y1 + smudgeY, x2 + smudgeX, y2 + smudgeY, x3 + smudgeX, y3 + smudgeY, 0.0f, 0.0f, 0.0f, 1.0f); //TODO: move this out of gameboard.
 	}
 	else {
 		//don't draw
