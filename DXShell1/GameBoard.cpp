@@ -110,7 +110,14 @@ GameBoardTile * GameBoard::CreateSquare(int column, int row)
 	return output;
 }
 
+/*
+Function Name: ScrollBoard
+Description: This method is used to make the gameboard appear to scroll downwards.
+Params: None.
+Returns: None.
+*/
 void GameBoard::ScrollBoard() {
+	//Set up timers, define constants.
 	using namespace std::chrono;
 	time_point<std::chrono::steady_clock> currentTime = steady_clock::now();
 	double elapsedTimeInMS = duration<double, std::milli>(currentTime - roadTimer).count();
@@ -133,6 +140,7 @@ void GameBoard::ScrollBoard() {
 				{
 					//Free squares on the bottom row
 					if (row == boardHeight - 1 - 1) {
+
 						for (GameBoardTile* obstacle : _plantObstacles) {
 							if (obstacle->GetGbX() == column && obstacle->GetGbY() == row + 1) {
 								RemoveObstacle(obstacle);
