@@ -36,6 +36,8 @@ public:
 	float GetHeight() { return height; }
 	float GetXVelocity() { return xVelocity; }
 	float GetYVelocity() { return yVelocity; }
+
+	DrawableAsset* GetSprite() { return sprite; }
 	bool IsCollidable() { return isCollidable; }
 
 	virtual void SetXPos(float x) { this->x = x; }

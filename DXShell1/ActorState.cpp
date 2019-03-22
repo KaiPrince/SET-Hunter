@@ -15,7 +15,7 @@ ActorState::~ActorState()
 
 ActorState * AliveState::HandleInput()
 {
-	ActorState* nextState = nullptr;
+	ActorState* nextState = this;
 
 	_actor->GetInputComponent()->HandleInput();
 
@@ -23,7 +23,7 @@ ActorState * AliveState::HandleInput()
 	return nextState;
 }
 
-void AliveState::enter()
+void AliveState::Enter()
 {
 	//Reset position
 	float centerOfBoardX = _actor->GetGameBoard()->boardWidth * _actor->GetGameBoard()->squareWidth / 2;
@@ -40,30 +40,39 @@ void AliveState::enter()
 	time_point<steady_clock> currentTime = steady_clock::now();
 	scoreTimer = currentTime;
 
+	//Start invincibility countdown 
+	invincibilityCountdown = duration<int, std::milli>(3000);
+
 	//Notify observers
 	_actor->Notify();
 }
 
-ActorState* AliveState::update()
+ActorState* AliveState::Update()
 {
-	ActorState* nextState = nullptr;
+	ActorState* nextState = this;
 
 	_actor->GetPhysicsComponent()->Update();
 
+	//Get delta time
+	using namespace std::chrono;
+	time_point<steady_clock> currentTime = steady_clock::now();
+	double elapsedTimeInMS = duration<double, std::milli>(currentTime - scoreTimer).count();
+
 	//Transition States
 	if (_actor->IsCollidable() && ((CollidablePhysicsComponent*)_actor->GetPhysicsComponent())->IsCollisionDetected()) {
-		nextState = new DeadState(_actor);
+
+		if (invincibilityCountdown.count() <= 0) {
+			nextState = new DeadState(_actor);
+		}
 	}
 	else {
-		using namespace std::chrono;
-		time_point<steady_clock> currentTime = steady_clock::now();
 
-		//Accumulate Score
+		//Object on the road?
 		Square* currentSquare = _actor->GetGameBoard()->FindSquare(_actor->GetXPos() + (_actor->GetWidth() / 2), _actor->GetYPos());
 		if (currentSquare != nullptr && currentSquare->GetTerrain()->GetType() == DrawableAsset::ROAD_TERRAIN) {
 
-			double elapsedTimeInMS = duration<double, std::milli>(currentTime - scoreTimer).count();
 
+			//Accumulate Score
 			if (offRoadDelayCountdown.count() <= 0) {
 				const double pointsPerMS = 1;
 				GameController::SetScore(GameController::GetScore() + static_cast<unsigned int>(pointsPerMS * elapsedTimeInMS));
@@ -82,11 +91,58 @@ ActorState* AliveState::update()
 			offRoadDelayCountdown = duration<int, std::milli>(3000);
 		}
 
+		//Decrement invincibility timer
+		if (invincibilityCountdown.count() > 0) {
+
+			invincibilityCountdown -= duration<int, std::milli>(static_cast<int>(elapsedTimeInMS));
+		}
+
 		//Reset Score timer
 		scoreTimer = currentTime;
 	}
 
 	return nextState;
+}
+
+void AliveState::Leave()
+{
+}
+
+ActorState * AliveState::Draw()
+{
+	//TODO: move this to InvincibleState.
+	if (invincibilityCountdown.count() > 0) { 
+		//Draw for 500 milliseconds, and then don't draw for 500 milliseconds. Repeat.
+
+		//Draw: 3000 -> 2500, 2000 -> 1500, 1000 -> 500
+		//Don't Draw: 2500 -> 2000, 1500 -> 1000
+
+		//x / 500 = 6; when x = 3000
+		//x / 500 = 5; when x = 2500
+		//x / 500 = 4.2 when x = 2100
+		//x / 500 = 4; when x = 2000
+		//x / 500 = 3; when x = 1500
+		//x / 500 = 2; when x = 1000
+		//x / 500 = 1; when x = 500
+
+		//Draw when x / 500: 5->6, 3->4, 1->2
+
+		const float flashDuration = 500.0f; //TODO: tweak this for better feel.
+		const float interval = invincibilityCountdown.count() / flashDuration;
+		if ((interval < 6 && interval > 5) || (interval < 4 && interval > 3) || (interval < 2 && interval > 1)) {
+			_actor->GetSprite()->Draw(_actor->GetXPos(), _actor->GetYPos(), _actor->GetWidth(), _actor->GetHeight());  //TODO: This is terrible. Use renderComponent?
+		}
+		else {
+
+		}
+
+	}
+	else
+	{
+		_actor->GetSprite()->Draw(_actor->GetXPos(), _actor->GetYPos(), _actor->GetWidth(), _actor->GetHeight());  //TODO: This is terrible. Use renderComponent?
+	}
+
+	return this;
 }
 
 DeadState::~DeadState()
@@ -95,10 +151,10 @@ DeadState::~DeadState()
 
 ActorState * DeadState::HandleInput()
 {
-	return nullptr;
+	return this;
 }
 
-void DeadState::enter()
+void DeadState::Enter()
 {
 	timeOfDeath = clock();
 
@@ -112,9 +168,9 @@ void DeadState::enter()
 	_actor->Notify();
 }
 
-ActorState* DeadState::update()
+ActorState* DeadState::Update()
 {
-	ActorState* nextState = nullptr;
+	ActorState* nextState = this;
 
 	std::clock_t currentTime = clock();
 	double elapsedTimeInMS = std::chrono::duration<double, std::milli>(currentTime - timeOfDeath).count();
@@ -129,4 +185,14 @@ ActorState* DeadState::update()
 	//TODO: don't revive if no lives left.
 
 	return nextState;
+}
+
+void DeadState::Leave()
+{
+}
+
+ActorState * DeadState::Draw()
+{
+	_actor->GetSprite()->Draw(_actor->GetXPos(), _actor->GetYPos(), _actor->GetWidth(), _actor->GetHeight()); //TODO: This is terrible. Use renderComponent?
+	return this;
 }

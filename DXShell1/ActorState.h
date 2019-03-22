@@ -18,9 +18,12 @@ public:
 	ActorState(Actor* player);
 	virtual ~ActorState();
 
+	virtual void Enter() = 0;
+	virtual void Leave() = 0;
+
 	virtual ActorState* HandleInput() = 0;
-	virtual void enter() = 0;
-	virtual ActorState* update() = 0;
+	virtual ActorState* Update() = 0;
+	virtual ActorState* Draw() = 0;
 
 	enum ActorStates
 	{
@@ -42,19 +45,27 @@ class AliveState : public ActorState
 {
 private:
 	std::chrono::time_point<std::chrono::steady_clock> scoreTimer;
-	std::chrono::duration<int, std::milli> offRoadDelayCountdown;
+	std::chrono::duration<int, std::milli> offRoadDelayCountdown; //Score won't update
+	std::chrono::duration<int, std::milli> invincibilityCountdown; //Can't die
 public:
 	AliveState(Actor* actor) : ActorState(actor) { type = ALIVE_STATE; }
 	virtual ~AliveState() {}
 
 	//Transition states
-	virtual ActorState* HandleInput();
+	virtual ActorState* HandleInput() override;
 
 	//Set up
-	virtual void enter();
+	virtual void Enter() override;
 
 	//Update player properties
-	virtual ActorState* update();
+	virtual ActorState* Update() override;
+
+	//On transition out..
+	virtual void Leave() override;
+
+
+	// Inherited via ActorState
+	virtual ActorState * Draw() override;
 
 };
 
@@ -75,10 +86,16 @@ public:
 	virtual ActorState* HandleInput();
 
 	//Player died
-	virtual void enter();
+	virtual void Enter();
 
 	//Update player properties
-	virtual ActorState* update();
+	virtual ActorState* Update();
 
+	//On transition out..
+	virtual void Leave() override;
+
+
+	// Inherited via ActorState
+	virtual ActorState * Draw() override;
 
 };

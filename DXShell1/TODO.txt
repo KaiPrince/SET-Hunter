@@ -48,3 +48,6 @@ For Fun:
 
 - review prototype, type object, and flyweight patterns
 - apply prototype to assetfactory and square factory
+
+- Handle hiDPI scaling
+- Move invincibility countdown from Alivestate into it's own class
