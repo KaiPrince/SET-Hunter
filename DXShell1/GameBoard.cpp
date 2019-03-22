@@ -40,8 +40,8 @@ GameBoard::~GameBoard()
 
 void GameBoard::Init()
 {
-	_grassTerrain = (DrawableAsset*)_assetFactory->CreateDrawableAsset(DrawableAsset::GRASS_TERRAIN);
-	_roadTerrain = (DrawableAsset*)_assetFactory->CreateDrawableAsset(DrawableAsset::ROAD_TERRAIN);
+	_grassTerrain = (DrawableAsset*)_assetFactory->GetAsset(DrawableAsset::GRASS_TERRAIN);
+	_roadTerrain = (DrawableAsset*)_assetFactory->GetAsset(DrawableAsset::ROAD_TERRAIN);
 
 	//Generate initial board layout
 	for (int column = 0; column < boardWidth; column++)
@@ -306,7 +306,7 @@ void GameBoard::placePlants(int row)
 			//	case DrawableAsset::TREE_SPRITE:
 			//	case DrawableAsset::TREE2_SPRITE:
 			//	case DrawableAsset::SHRUB_SPRITE:
-			//		thisSquare->SetAssets(AssetFactory::_emptySprite); //TODO: search through composite and replace only where necessary.
+			//		thisSquare->SetAssets(AssetFactory::GetNullAsset()); //TODO: search through composite and replace only where necessary.
 			//	default:
 			//		break;
 			//	}
@@ -333,11 +333,11 @@ void GameBoard::placePlants(int row)
 					plantAssetType = DrawableAsset::CAR_SPRITE; //TODO: actual error handling
 					break;
 				}
-				//thisSquare->SetAssets(_assetFactory->CreateDrawableAsset(plantAssetType));
+				//thisSquare->SetAssets(_assetFactory->GetAsset(plantAssetType));
 
 				Square* newPlant = _squareFactory->CreateSquare(column, row, thisSquare->GetWidth(), thisSquare->GetHeight());
-				newPlant->SetTerrain(AssetFactory::_emptySprite);
-				newPlant->SetAssets(_assetFactory->CreateDrawableAsset(plantAssetType));
+				newPlant->SetTerrain(AssetFactory::GetNullAsset());
+				newPlant->SetAssets(_assetFactory->GetAsset(plantAssetType));
 				newPlant->SetCollidable(true);
 
 				AddObstacle(newPlant);

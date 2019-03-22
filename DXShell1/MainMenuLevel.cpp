@@ -29,7 +29,7 @@ void MainMenuLevel::Load()
 		float player_StartY = ((float)gb->boardHeight * gb->squareHeight) - (gb->squareHeight * 3); //bring it a little off the bottom
 
 		GameObject* player = new GameObject(player_StartX, player_StartY,
-			gb->squareWidth, gb->squareHeight, _assetFactory->CreateDrawableAsset(DrawableAsset::CAR_SPRITE), gb);
+			gb->squareWidth, gb->squareHeight, _assetFactory->GetAsset(DrawableAsset::CAR_SPRITE), gb);
 		player->SetCollidable(true);
 		player->UpdateState(new AliveState(player));
 		player->SetPhysicsComponent(new PlayerPhysicsComponent(player, world));
@@ -49,14 +49,14 @@ void MainMenuLevel::Load()
 	const float pseudoPixelHeight = ScreenHeight / 10;
 
 	//Background
-	DrawableAsset* UIsprite = new AssetOutlineDecorator(_assetFactory->CreateDrawableAsset(DrawableAsset::MAIN_MENU_BACKGROUND_ASSET));
+	DrawableAsset* UIsprite = new AssetOutlineDecorator(_assetFactory->GetAsset(DrawableAsset::MAIN_MENU_BACKGROUND_ASSET));
 
 	GameObject* background = new GameObject(0.0f, 0.0f, ScreenWidth, ScreenHeight,
 		UIsprite, gb);
 
 
 	//Logo
-	UIsprite = new AssetOutlineDecorator(_assetFactory->CreateDrawableAsset(DrawableAsset::GRASS_TERRAIN));
+	UIsprite = new AssetOutlineDecorator(_assetFactory->GetAsset(DrawableAsset::GRASS_TERRAIN));
 	GameObject* Logo = new GameObject(0 + pseudoPixelWidth, 0 + pseudoPixelHeight,
 		pseudoPixelWidth * 3, pseudoPixelHeight * 4,
 		UIsprite,
@@ -64,7 +64,7 @@ void MainMenuLevel::Load()
 
 
 	//Title
-	TextAsset* textAsset = (TextAsset*)_assetFactory->CreateDrawableAsset(DrawableAsset::TEXT_ASSET);
+	TextAsset* textAsset = (TextAsset*)_assetFactory->GetAsset(DrawableAsset::TEXT_ASSET);
 	textAsset->SetText("SET HUNTER");
 	textAsset->SetUseFancyFont(true);
 	textAsset->SetFontSize(40.0f);
@@ -77,7 +77,7 @@ void MainMenuLevel::Load()
 
 
 	//PlayerName
-	textAsset = (TextAsset*)_assetFactory->CreateDrawableAsset(DrawableAsset::TEXT_ASSET);
+	textAsset = (TextAsset*)_assetFactory->GetAsset(DrawableAsset::TEXT_ASSET);
 	textAsset->SetText("By Agent Kai Prince"); //TODO: global constant
 
 	UIsprite = textAsset;
@@ -88,7 +88,7 @@ void MainMenuLevel::Load()
 
 
 	//Previous Score
-	textAsset = (TextAsset*)_assetFactory->CreateDrawableAsset(DrawableAsset::TEXT_ASSET);
+	textAsset = (TextAsset*)_assetFactory->GetAsset(DrawableAsset::TEXT_ASSET);
 	{
 		char labelText[500];
 		sprintf_s(labelText, 500, "Previous Score: %d", GameController::GetScore());
@@ -102,7 +102,7 @@ void MainMenuLevel::Load()
 		UIsprite, gb);
 
 	//Start Button
-	UIsprite = new AssetRoundedOutlineDecorator(AssetFactory::_emptySprite);
+	UIsprite = new AssetRoundedOutlineDecorator(AssetFactory::GetNullAsset());
 
 	this->StartButton = new GameObject(0 + (2 * pseudoPixelWidth), ScreenHeight - (4 * pseudoPixelHeight),
 		6 * pseudoPixelWidth, 1 * pseudoPixelHeight, UIsprite, gb);
@@ -111,7 +111,7 @@ void MainMenuLevel::Load()
 
 
 	//Start Button Label
-	textAsset = (TextAsset*)_assetFactory->CreateDrawableAsset(DrawableAsset::TEXT_ASSET); //TODO: Center text
+	textAsset = (TextAsset*)_assetFactory->GetAsset(DrawableAsset::TEXT_ASSET); //TODO: Center text
 	textAsset->SetText("Start Game");
 	textAsset->SetUseFancyFont(true);
 	textAsset->SetFontSize(70.0f);
@@ -122,7 +122,7 @@ void MainMenuLevel::Load()
 		originY_startButton - (0.4f * pseudoPixelWidth), StartButton->GetWidth(), StartButton->GetHeight(), textAsset, gb);
 
 	//Exit Button
-	UIsprite = new AssetRoundedOutlineDecorator(AssetFactory::_emptySprite);
+	UIsprite = new AssetRoundedOutlineDecorator(AssetFactory::GetNullAsset());
 
 	this->ExitButton = new GameObject(0 + (2 * pseudoPixelWidth), ScreenHeight - (2 * pseudoPixelHeight),
 		6 * pseudoPixelWidth, 1 * pseudoPixelHeight, UIsprite, gb);
@@ -130,7 +130,7 @@ void MainMenuLevel::Load()
 	this->ExitButton->AddObserver(this);
 
 	//Exit Button Label
-	textAsset = (TextAsset*)_assetFactory->CreateDrawableAsset(DrawableAsset::TEXT_ASSET); //TODO: Center text
+	textAsset = (TextAsset*)_assetFactory->GetAsset(DrawableAsset::TEXT_ASSET); //TODO: Center text
 	textAsset->SetText("Exit Game");
 	textAsset->SetUseFancyFont(true);
 	textAsset->SetFontSize(70.0f);
@@ -220,7 +220,7 @@ void MainMenuLevel::Notify(Observable * subject)
 			//continue road scrolling. Wait 2 seconds and then create a new car.
 			//hide player
 			world->GetPlayer()->SetPhysicsComponent(new NullPhysicsComponent()); //disable collision detection
-			world->GetPlayer()->SetYPos(GraphicsLocator::GetGraphics()->Window_Height * 2); //move off screen
+			world->GetPlayer()->SetYPos(static_cast<float>(GraphicsLocator::GetGraphics()->Window_Height * 2)); //move off screen
 		}
 		else {
 			isPlayerDead = false;

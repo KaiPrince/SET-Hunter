@@ -1,5 +1,7 @@
 #include "AssetFactory.h"
 
+Graphics* AssetFactory::gfx;
+
 SpriteSheet* AssetFactory::_carSprite;
 SpriteSheet* AssetFactory::_treeSprite;
 SpriteSheet* AssetFactory::_tree2Sprite;
@@ -7,9 +9,9 @@ SpriteSheet* AssetFactory::_shrubSprite;
 SpriteSheet* AssetFactory::_explosionSprite;
 SpriteSheet* AssetFactory::_spyHunterArt;
 
-DrawableAsset* AssetFactory::_emptySprite = new EmptyAsset(); //TODO: delete?
+DrawableAsset* AssetFactory::_nullAsset = new NullAsset(); //TODO: delete?
 
-AssetFactory::AssetFactory(Graphics* graphics)
+void AssetFactory::Init(Graphics* graphics)
 {
 	gfx = graphics;
 	DrawableAsset::SetGraphics(graphics);
@@ -24,10 +26,15 @@ AssetFactory::AssetFactory(Graphics* graphics)
 
 AssetFactory::~AssetFactory()
 {
-	//TODO: delete spritesheets
+	if (_carSprite) delete _carSprite;
+	if (_treeSprite) delete _treeSprite;
+	if (_tree2Sprite) delete _tree2Sprite;
+	if (_shrubSprite) delete _shrubSprite;
+	if (_explosionSprite) delete _explosionSprite;
+	if (_spyHunterArt) delete _spyHunterArt;
 }
 
-DrawableAsset* AssetFactory::CreateDrawableAsset(DrawableAsset::AssetTypes assetType)
+DrawableAsset* AssetFactory::GetAsset(DrawableAsset::AssetTypes assetType)
 {
 	DrawableAsset* asset = nullptr;
 	switch (assetType)
@@ -53,8 +60,8 @@ DrawableAsset* AssetFactory::CreateDrawableAsset(DrawableAsset::AssetTypes asset
 	case DrawableAsset::EXPLOSION_SPRITE:
 		asset = new SpriteSheetAsset(_explosionSprite, assetType);
 		break;
-	case DrawableAsset::EMPTY_ASSET:
-		asset = _emptySprite;
+	case DrawableAsset::NULL_ASSET:
+		asset = _nullAsset;
 		break;
 	case DrawableAsset::MAIN_MENU_BACKGROUND_ASSET:
 		asset = new MainMenuBackgroundAsset();
@@ -66,7 +73,7 @@ DrawableAsset* AssetFactory::CreateDrawableAsset(DrawableAsset::AssetTypes asset
 		asset = new SpriteSheetAsset(_spyHunterArt, assetType);
 		break;
 	default:
-		asset = _emptySprite;
+		asset = _nullAsset;
 		break;
 	}
 	return asset;

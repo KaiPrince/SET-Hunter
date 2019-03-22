@@ -21,7 +21,7 @@ Square* SquareFactory::CreateSquare(int x, int y, float width, float height)
 	float yPos = y * height;
 
 	//Give the square default assets
-	DrawableAsset* defaultTerrain = (DrawableAsset*) _assetFactory->CreateDrawableAsset(DrawableAsset::GRASS_TERRAIN);
+	DrawableAsset* defaultTerrain = (DrawableAsset*) _assetFactory->GetAsset(DrawableAsset::GRASS_TERRAIN);
 	Square* square = new Square(xPos, yPos, width, height, defaultTerrain, gb);
 	square->SetGbX(x);
 	square->SetGbY(y);

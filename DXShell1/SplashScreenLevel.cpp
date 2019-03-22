@@ -21,7 +21,7 @@ void SplashScreenLevel::Load()
 	opacity = 1.0f;
 	startupTime = std::chrono::steady_clock::now();
 
-	artwork =  new SpriteSheet(L"Assets\\spy_hunter_artwork.bmp", gfx); //_assetFactory->CreateDrawableAsset(DrawableAsset::SPY_HUNTER_ART);
+	artwork =  new SpriteSheet(L"Assets\\spy_hunter_artwork.bmp", gfx); //_assetFactory->GetAsset(DrawableAsset::SPY_HUNTER_ART);
 	
 
 	//Play Theme Song
@@ -76,8 +76,8 @@ void SplashScreenLevel::Render()
 		//Do nothing.
 	}
 
-	const float screenH = GraphicsLocator::GetGraphics()->Window_Height;
-	const float screenW = GraphicsLocator::GetGraphics()->Window_Width;
+	const float screenH = static_cast<float>(GraphicsLocator::GetGraphics()->Window_Height);
+	const float screenW = static_cast<float>(GraphicsLocator::GetGraphics()->Window_Width);
 	//artwork->Draw(0.0f, 0.0f, screenW, screenH);
 	artwork->Draw();
 	

@@ -4,7 +4,6 @@
 #include <string.h>
 #include <stdio.h>
 #include "GameBoard.h"
-#include "SpriteSheetAsset.h"
 #include "MainMenuLevel.h"
 
 
@@ -22,7 +21,7 @@ void Level1::Load()
 	//	float player_StartY = ((float)gb->boardHeight * gb->squareHeight) - gb->squareHeight;
 
 	//	GameObject* player = new GameObject(player_StartX, player_StartY,
-	//		gb->squareWidth, gb->squareHeight, _assetFactory->CreateDrawableAsset(DrawableAsset::CAR_SPRITE), gb);
+	//		gb->squareWidth, gb->squareHeight, _assetFactory->GetAsset(DrawableAsset::CAR_SPRITE), gb);
 	//	player->SetPhysicsComponent(new PlayerPhysicsComponent(player, world));
 	//	player->SetInputComponent(new PlayerInputComponent(player));
 

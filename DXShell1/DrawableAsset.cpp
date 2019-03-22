@@ -13,11 +13,11 @@ DrawableAsset::~DrawableAsset()
 {
 }
 
-EmptyAsset::EmptyAsset()
+NullAsset::NullAsset()
 {
 }
 
-EmptyAsset::~EmptyAsset()
+NullAsset::~NullAsset()
 {
 }
 

@@ -125,7 +125,7 @@ void PlayerPhysicsComponent::Update() {
 CollidablePhysicsComponent::CollidablePhysicsComponent(GameObject * obj, GameWorld * world) : PhysicsComponent(obj, world)
 {
 	this->_hitbox = new NullGameObject(obj->GetXPos(), obj->GetYPos(), obj->GetWidth(), obj->GetHeight());
-	//this->_hitbox = new GameObject(0.0f, 0.0f, 0.0f, 0.0f, new AssetOutlineDecorator(AssetFactory::_emptySprite), world->GetGameBoard());
+	//this->_hitbox = new GameObject(0.0f, 0.0f, 0.0f, 0.0f, new AssetOutlineDecorator(AssetFactory::GetNullAsset()), world->GetGameBoard());
 	//world->AddGameObject(this->_hitbox);
 }
 

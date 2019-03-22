@@ -18,7 +18,8 @@ public:
 	static void Init(Graphics* graphics)
 	{
 		gfx = graphics;
-		_assetFactory = new AssetFactory(gfx);
+		//_assetFactory = new AssetFactory(gfx);
+		_assetFactory->Init(gfx);
 	}
 
 	virtual void Load() = 0;

@@ -32,7 +32,7 @@ void AliveState::Enter()
 	_object->SetYPos(bottomOfBoardY);
 
 	//Reset Sprite
-	_object->SetSprite(_object->GetGameBoard()->GetAssetFactory()->CreateDrawableAsset(DrawableAsset::CAR_SPRITE));
+	_object->SetSprite(_object->GetGameBoard()->GetAssetFactory()->GetAsset(DrawableAsset::CAR_SPRITE));
 
 	//Reset ScoreTimer
 	using namespace std::chrono;
@@ -161,7 +161,7 @@ void DeadState::Enter()
 	GameController::SetLives(GameController::GetLives() - 1);
 
 	//Death sprite
-	_object->SetSprite(_object->GetGameBoard()->GetAssetFactory()->CreateDrawableAsset(DrawableAsset::EXPLOSION_SPRITE));
+	_object->SetSprite(_object->GetGameBoard()->GetAssetFactory()->GetAsset(DrawableAsset::EXPLOSION_SPRITE));
 
 	//Notify observers (Road stops scrolling.)
 	_object->Notify();

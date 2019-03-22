@@ -6,7 +6,7 @@
 Square::Square(float x, float y, float width, float height, DrawableAsset* terrain, GameBoard* gb)
 	: GameObject(x, y, width, height, (DrawableAsset*)terrain, gb)
 {
-	assets = AssetFactory::_emptySprite;
+	assets = AssetFactory::GetNullAsset();
 }
 
 //Square::Square(int x, int y, float width, float height, TerrainAsset* terrain, GameBoard* gb) 

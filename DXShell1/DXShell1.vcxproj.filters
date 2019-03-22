@@ -39,16 +39,7 @@
     <ClCompile Include="Square.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GrassTerrain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RoadTerrain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="DrawableAsset.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SpriteSheetAsset.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="AssetFactory.cpp">
@@ -110,16 +101,7 @@
     <ClInclude Include="Square.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GrassTerrain.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RoadTerrain.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="DrawableAsset.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SpriteSheetAsset.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AssetFactory.h">

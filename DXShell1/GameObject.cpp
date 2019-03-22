@@ -15,7 +15,7 @@ GameObject::GameObject(float x, float y, float width, float height, DrawableAsse
 		this->sprite = sprite;
 	}
 	else {
-		this->sprite = AssetFactory::_emptySprite;
+		this->sprite = AssetFactory::GetNullAsset();
 	}
 
 	this->gb = gameboard; //TODO: null check
