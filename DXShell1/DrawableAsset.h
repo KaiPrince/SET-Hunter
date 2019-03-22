@@ -1,6 +1,11 @@
 #pragma once
 #include <vector>
 #include "Graphics.h"
+
+/*
+Class Name: DrawableAsset
+Purpose: This interface class is used to represent any asset which can draw itself to the screen.
+*/
 class DrawableAsset
 {
 	static Graphics* gfx;
@@ -29,6 +34,10 @@ public:
 	virtual void Draw(float x, float y, float width, float height) = 0;
 };
 
+/*
+Class Name: Null Asset
+Purpose: This class implements the Null Object pattern.
+*/
 class NullAsset : public DrawableAsset
 {
 public:
@@ -45,6 +54,10 @@ private:
 
 };
 
+/*
+Class Name: MainMenuBackgroundAsset
+Purpose: This class contains instructions on how to draw a main menu background.
+*/
 class MainMenuBackgroundAsset : public DrawableAsset
 {
 public:

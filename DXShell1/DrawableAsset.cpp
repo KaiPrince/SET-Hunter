@@ -7,6 +7,7 @@ Graphics* DrawableAsset::gfx;
 
 DrawableAsset::DrawableAsset()
 {
+	if (gfx == nullptr) gfx = GraphicsLocator::GetGraphics();
 }
 
 DrawableAsset::~DrawableAsset()

@@ -4,6 +4,10 @@
 
 #pragma comment(lib, "Winmm.lib")
 
+/*
+Class Name: Audio
+Purpose: This class encapsulates all audio features of this program.
+*/
 class Audio
 {
 public:
