@@ -27,6 +27,8 @@ public:
 		float xVelocity = 0.0f, float yVelocity = 0.0f);
 	virtual ~Actor();
 
+	void UpdateState(ActorState * nextState);
+
 	InputComponent* GetInputComponent() { return _inputComponent; }
 	void SetInputComponent(InputComponent* input) { _inputComponent = input; }
 

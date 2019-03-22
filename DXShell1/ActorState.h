@@ -99,3 +99,17 @@ public:
 	virtual ActorState * Draw() override;
 
 };
+
+class NullState : public ActorState {
+public:
+
+	NullState(Actor* actor) : ActorState(actor) {}
+	~NullState() {}
+
+	// Inherited via ActorState
+	virtual void Enter() override {}
+	virtual void Leave() override {}
+	virtual ActorState * HandleInput() override { return this; }
+	virtual ActorState * Update() override { return this; }
+	virtual ActorState * Draw() override { return this; }
+};

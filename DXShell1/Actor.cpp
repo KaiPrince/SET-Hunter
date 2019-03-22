@@ -6,7 +6,7 @@ Actor::Actor(float x, float y, float width, float height, DrawableAsset* sprite,
 	float xVelocity, float yVelocity) : GameObject(x, y, width, height, sprite, gameboard,
 		xVelocity, yVelocity)
 {
-	this->_state = new AliveState(this);
+	this->_state = new NullState(this);
 	this->_inputComponent = new NullInputComponent();
 }
 
@@ -16,44 +16,32 @@ Actor::~Actor()
 	delete _state;
 }
 
-void Actor::HandleInput() {
-
-	ActorState* newState = _state->HandleInput();
-	if (newState != nullptr && newState != _state) {
+void Actor::UpdateState(ActorState* nextState) {
+	if (nextState != nullptr && nextState != _state) {
 		//Change state
 		_state->Leave();
 
 		delete _state;
-		_state = newState;
+		_state = nextState;
 
 		_state->Enter();
 	}
+}
+
+void Actor::HandleInput() {
+
+	ActorState* nextState = _state->HandleInput();
+	UpdateState(nextState);
 }
 
 void Actor::Update() {
-	ActorState* newState = _state->Update(); //Update position
-	if (newState != nullptr && newState != _state) {
-		//Change state
-		_state->Leave();
-
-		delete _state;
-		_state = newState;
-
-		_state->Enter();
-	}
+	ActorState* nextState = _state->Update(); //Update position
+	UpdateState(nextState);
 }
 
 void Actor::Draw() {
-	ActorState* newState = _state->Draw(); //Draw
-	if (newState != nullptr && newState != _state) {
-		//Change state
-		_state->Leave();
-
-		delete _state;
-		_state = newState;
-
-		_state->Enter();
-	}
+	ActorState* nextState = _state->Draw(); //Draw
+	UpdateState(nextState);
 }
 
 void Actor::accept(Visitor & visitor)

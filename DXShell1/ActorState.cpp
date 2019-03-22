@@ -20,6 +20,12 @@ ActorState * AliveState::HandleInput()
 	_actor->GetInputComponent()->HandleInput();
 
 
+	if (GetKeyState(VK_DOWN) & 0x8000)
+	{
+		// DOWN arrow key is KILL.
+		nextState = new DeadState(_actor);
+	}
+
 	return nextState;
 }
 
@@ -196,3 +202,4 @@ ActorState * DeadState::Draw()
 	_actor->GetSprite()->Draw(_actor->GetXPos(), _actor->GetYPos(), _actor->GetWidth(), _actor->GetHeight()); //TODO: This is terrible. Use renderComponent?
 	return this;
 }
+

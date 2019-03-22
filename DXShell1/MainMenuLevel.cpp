@@ -9,6 +9,8 @@ MainMenuLevel::MainMenuLevel()
 {
 	StartButton = new NullActor();
 	ExitButton = new NullActor();
+
+	isPlayerDead = false; //TODO: remove
 }
 
 MainMenuLevel::~MainMenuLevel()
@@ -24,13 +26,16 @@ void MainMenuLevel::Load()
 		//Player starts at bottom middle of screen.
 		GameBoard* gb = world->GetGameBoard();
 		float player_StartX = (float)((gb->boardWidth * gb->squareWidth / 2) - gb->squareWidth);
-		float player_StartY = ((float)gb->boardHeight * gb->squareHeight) - gb->squareHeight;
+		float player_StartY = ((float)gb->boardHeight * gb->squareHeight) - (gb->squareHeight * 3); //bring it a little off the bottom
 
 		Actor* player = new Actor(player_StartX, player_StartY,
 			gb->squareWidth, gb->squareHeight, _assetFactory->CreateDrawableAsset(DrawableAsset::CAR_SPRITE), gb);
 		player->SetCollidable(true);
+		player->UpdateState(new AliveState(player));
 		player->SetPhysicsComponent(new PlayerPhysicsComponent(player, world));
 		player->SetInputComponent(new StayOnRoadInputComponent(player));
+
+		player->AddObserver(this);
 
 		world->SetPlayer(player);
 	}
@@ -203,5 +208,27 @@ void MainMenuLevel::Notify(Observable * subject)
 	}
 	else if (subject == this->ExitButton) {
 		GameController::QueueExitGame = true;
+	}
+	else if (subject == world->GetPlayer()) {
+		//TODO: use visitor pattern on playerstate?
+
+		if (!isPlayerDead) {
+			isPlayerDead = true;
+
+			//Player probably died.
+			//continue road scrolling. Wait 2 seconds and then create a new car.
+			//hide player
+			world->GetPlayer()->SetPhysicsComponent(new NullPhysicsComponent()); //disable collision detection
+			world->GetPlayer()->SetYPos(GraphicsLocator::GetGraphics()->Window_Height * 2); //move off screen
+		}
+		else {
+			isPlayerDead = false;
+			//Player probably revived.
+
+			world->GetPlayer()->SetYVelocity(-(world->GetGameBoard()->squareHeight / 4));
+			world->GetPlayer()->SetPhysicsComponent(new PlayerPhysicsComponent(world->GetPlayer(), world));
+
+		}
+
 	}
 }
