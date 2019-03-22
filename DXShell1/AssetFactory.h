@@ -15,6 +15,7 @@ class AssetFactory
 	static SpriteSheet* _tree2Sprite;
 	static SpriteSheet* _shrubSprite;
 	static SpriteSheet* _explosionSprite;
+	static SpriteSheet* _spyHunterArt;
 public:
 	AssetFactory(Graphics* graphics);
 	~AssetFactory();

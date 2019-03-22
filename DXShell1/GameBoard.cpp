@@ -1,6 +1,6 @@
 #include "GameBoard.h"
 #include "GameWorld.h"
-#include "GraphicsLocator.h"
+#include "Graphics.h"
 
 #include <random>
 #include <chrono>
