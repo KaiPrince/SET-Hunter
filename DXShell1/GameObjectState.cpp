@@ -19,13 +19,6 @@ GameObjectState * AliveState::HandleInput()
 
 	_object->GetInputComponent()->HandleInput();
 
-
-	if (GetKeyState(VK_DOWN) & 0x8000)
-	{
-		// DOWN arrow key is KILL.
-		nextState = new DeadState(_object);
-	}
-
 	return nextState;
 }
 

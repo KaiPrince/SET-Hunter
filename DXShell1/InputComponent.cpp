@@ -11,31 +11,48 @@
 
 void PlayerInputComponent::HandleInput() {
 
-	float xVelocity = 0;
-	float yVelocity = 0;
+	const float MaxXVelocity = object->GetGameBoard()->squareHeight / 25; //...in any direction
+	const float MaxYVelocity = MaxXVelocity;
+	const float AccelerationSpeed = MaxXVelocity * 0.5f;
+	const float DeccelerationSpeen = MaxXVelocity * 0.1f; //(Holy shit I can't spell)
+
+	float xVelocity = object->GetXVelocity(); //0;
+	float yVelocity = object->GetYVelocity(); //0;
+
+	//Deacceleration. Velocities work their way back to 0.
+	if (abs(xVelocity) <= DeccelerationSpeen) xVelocity = 0;
+	if (abs(yVelocity) <= DeccelerationSpeen) yVelocity = 0;
+	if (xVelocity < 0) xVelocity += DeccelerationSpeen; else if (xVelocity > 0) xVelocity -= DeccelerationSpeen;
+	if (yVelocity < 0) yVelocity += DeccelerationSpeen; else if (yVelocity > 0) yVelocity -= DeccelerationSpeen;
+
+	//Accelerration 
 	if (GetKeyState(VK_UP) & 0x8000)
 	{
 		// UP arrow key is down.
-		yVelocity += object->GetGameBoard()->squareHeight / 10;
+		yVelocity += AccelerationSpeed;
 	}
 
 	if (GetKeyState(VK_DOWN) & 0x8000)
 	{
 		// DOWN arrow key is down.
-		yVelocity += -(object->GetGameBoard()->squareHeight / 10);
+		yVelocity += -AccelerationSpeed;
 	}
 
 	if (GetKeyState(VK_RIGHT) & 0x8000)
 	{
 		// RIGHT arrow key is down.
-		xVelocity += object->GetGameBoard()->squareWidth / 20; //TODO: make this accelerrate rather than constant speed.
+		xVelocity += AccelerationSpeed;
 	}
 
 	if (GetKeyState(VK_LEFT) & 0x8000)
 	{
 		// LEFT arrow key is down.
-		xVelocity += -(object->GetGameBoard()->squareWidth / 20); //TODO: make this accelerrate rather than constant speed.
+		xVelocity += -AccelerationSpeed;
 	}
+
+	//Enforce Max Velocity cap.
+	if (xVelocity < -MaxXVelocity) xVelocity = -MaxXVelocity; else if (xVelocity > MaxXVelocity) xVelocity = MaxXVelocity;
+	if (yVelocity < -MaxXVelocity) yVelocity = -MaxYVelocity; else if (yVelocity > MaxYVelocity) yVelocity = MaxYVelocity;
 
 	object->SetXVelocity(xVelocity);
 	object->SetYVelocity(yVelocity);

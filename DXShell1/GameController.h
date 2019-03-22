@@ -1,6 +1,7 @@
 #pragma once
 #include "GameLevel.h"
 
+#include <chrono>
 
 /*
 Class Name: GameController
@@ -14,6 +15,8 @@ class GameController
 	static GameLevel* currentLevel;
 	static unsigned int _score;
 	static int _lives;
+
+	static std::chrono::high_resolution_clock::time_point lastUpdateTimePoint; //When the last update finished.
 
 public:
 	static bool Loading;
@@ -32,4 +35,6 @@ public:
 
 	static int GetLives();
 	static void SetLives(int lives);
+
+	static float GetDeltaTime() { return std::chrono::duration<float, std::milli>(std::chrono::high_resolution_clock::now() - lastUpdateTimePoint).count(); }
 };

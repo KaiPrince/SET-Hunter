@@ -7,6 +7,8 @@ bool GameController::QueueExitGame;
 unsigned int GameController::_score;
 int GameController::_lives;
 
+std::chrono::high_resolution_clock::time_point GameController::lastUpdateTimePoint;
+
 void GameController::Init()
 {
 	Loading = true;
@@ -16,6 +18,8 @@ void GameController::Init()
 	currentLevel = 0;
 	_score = 0;
 	_lives = 3;
+
+	lastUpdateTimePoint = std::chrono::high_resolution_clock::now();
 }
 
 void GameController::LoadInitialLevel(GameLevel* lev)
@@ -46,6 +50,7 @@ void GameController::Update()
 {
 	if (Loading) return; //nice! Do not update or render if the scene is loading.
 	currentLevel->Update();
+	lastUpdateTimePoint = std::chrono::high_resolution_clock::now();
 }
 
 void GameController::HandleInput()
