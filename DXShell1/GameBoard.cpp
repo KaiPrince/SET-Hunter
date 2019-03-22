@@ -15,7 +15,6 @@ GameBoard::GameBoard(float squareWidth, float squareHeight, AssetFactory* assetF
 	this->_world = world;
 
 
-
 	for each (GameBoardTile* square in squares)
 	{
 		square = nullptr;
@@ -25,6 +24,10 @@ GameBoard::GameBoard(float squareWidth, float squareHeight, AssetFactory* assetF
 	_squareFactory = new TileFactory(this, _assetFactory);
 	_grassTerrain = nullptr;
 	_roadTerrain = nullptr;
+
+	roadTimer = std::chrono::steady_clock::now();
+	roadShift = 0;
+	verticalOffset = 0.0f;
 }
 
 
@@ -66,9 +69,6 @@ void GameBoard::Init()
 
 	placePlants();
 
-	roadTimer = std::chrono::steady_clock::now();
-	roadShift = 0;
-	verticalOffset = 0.0f;
 }
 
 GameBoardTile * GameBoard::FindSquare(float xPos, float yPos)

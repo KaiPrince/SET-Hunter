@@ -24,6 +24,7 @@ GameObject::GameObject(float x, float y, float width, float height, DrawableAsse
 	this->yVelocity = yVelocity;
 
 	this->_physicsComponent = new NullPhysicsComponent();
+	this->isCollidable = false;
 
 	this->_state = new NullState(this);
 	this->_inputComponent = new NullInputComponent();

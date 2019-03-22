@@ -3,10 +3,12 @@
 #include "GameObject.h"
 
 
-GameBoardTile::GameBoardTile(float x, float y, float width, float height, DrawableAsset* terrain, GameBoard* gb)
+GameBoardTile::GameBoardTile(float x, float y, float width, float height, DrawableAsset* terrain, GameBoard* gb, int column, int row)
 	: GameObject(x, y, width, height, (DrawableAsset*)terrain, gb)
 {
 	assets = AssetFactory::GetNullAsset();
+	gbX = column;
+	gbY = row;
 }
 
 //GameBoardTile::GameBoardTile(int x, int y, float width, float height, TerrainAsset* terrain, GameBoard* gb) 

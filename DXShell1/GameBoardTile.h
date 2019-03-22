@@ -17,7 +17,7 @@ class GameBoardTile : public GameObject
 	int gbX;
 	int gbY;
 public:
-	GameBoardTile(float x, float y, float width, float height, DrawableAsset* terrain, GameBoard* gb);
+	GameBoardTile(float x, float y, float width, float height, DrawableAsset* terrain, GameBoard* gb, int column = 0, int row = 0);
 	//GameBoardTile(int x, int y, float width, float height, TerrainAsset* terrain, GameBoard* gb);
 	~GameBoardTile();
 
