@@ -19,25 +19,40 @@ Actor::~Actor()
 void Actor::HandleInput() {
 
 	ActorState* newState = _state->HandleInput();
-	if (newState != nullptr) {
+	if (newState != nullptr && newState != _state) {
 		//Change state
+		_state->Leave();
 
 		delete _state;
 		_state = newState;
 
-		_state->enter();
+		_state->Enter();
 	}
 }
 
 void Actor::Update() {
-	ActorState* newState = _state->update(); //Update position
-	if (newState != nullptr) {
+	ActorState* newState = _state->Update(); //Update position
+	if (newState != nullptr && newState != _state) {
 		//Change state
+		_state->Leave();
 
 		delete _state;
 		_state = newState;
 
-		_state->enter();
+		_state->Enter();
+	}
+}
+
+void Actor::Draw() {
+	ActorState* newState = _state->Draw(); //Draw
+	if (newState != nullptr && newState != _state) {
+		//Change state
+		_state->Leave();
+
+		delete _state;
+		_state = newState;
+
+		_state->Enter();
 	}
 }
 

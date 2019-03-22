@@ -46,6 +46,8 @@ public:
 
 	virtual void Update();
 
+	void Draw() override;
+
 	// Inherited via VisitorComponent
 	virtual void accept(Visitor & visitor) override;
 };
