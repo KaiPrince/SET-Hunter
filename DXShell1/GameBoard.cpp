@@ -114,13 +114,14 @@ void GameBoard::ScrollBoard() {
 	using namespace std::chrono;
 	time_point<std::chrono::steady_clock> currentTime = steady_clock::now();
 	double elapsedTimeInMS = duration<double, std::milli>(currentTime - roadTimer).count();
-	const double roadScollingDelayInMS = 1;
+	const double roadScrollingDelayInMS = 1;
+	const float roadScrollingSpeed = squareHeight / 10;
 
 	//Scroll roadway
-	if (elapsedTimeInMS >= roadScollingDelayInMS) {
+	if (elapsedTimeInMS >= roadScrollingDelayInMS) {
 		roadTimer = currentTime;
 
-		verticalOffset += squareHeight / 20;
+		verticalOffset += roadScrollingSpeed;
 		if (verticalOffset >= 0) {
 			verticalOffset = -squareHeight;
 
