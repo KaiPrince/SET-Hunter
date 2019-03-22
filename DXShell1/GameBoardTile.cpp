@@ -1,15 +1,15 @@
-#include "Square.h"
+#include "GameBoardTile.h"
 #include "GameBoard.h"
 #include "GameObject.h"
 
 
-Square::Square(float x, float y, float width, float height, DrawableAsset* terrain, GameBoard* gb)
+GameBoardTile::GameBoardTile(float x, float y, float width, float height, DrawableAsset* terrain, GameBoard* gb)
 	: GameObject(x, y, width, height, (DrawableAsset*)terrain, gb)
 {
 	assets = AssetFactory::GetNullAsset();
 }
 
-//Square::Square(int x, int y, float width, float height, TerrainAsset* terrain, GameBoard* gb) 
+//GameBoardTile::GameBoardTile(int x, int y, float width, float height, TerrainAsset* terrain, GameBoard* gb) 
 //	: GameObject(x * width, y * height, width, height, (DrawableAsset*) terrain, gb)
 //{
 //
@@ -17,39 +17,39 @@ Square::Square(float x, float y, float width, float height, DrawableAsset* terra
 //}
 
 
-Square::~Square()
+GameBoardTile::~GameBoardTile()
 {
 }
 
-void Square::SetTerrain(DrawableAsset * terrain)
+void GameBoardTile::SetTerrain(DrawableAsset * terrain)
 {
 	this->sprite = terrain;
 }
 
-DrawableAsset * Square::GetTerrain()
+DrawableAsset * GameBoardTile::GetTerrain()
 {
 	return (DrawableAsset*) sprite;
 }
 
-void Square::SetAssets(DrawableAsset * assets)
+void GameBoardTile::SetAssets(DrawableAsset * assets)
 {
 	this->assets = assets;
 }
 
-DrawableAsset * Square::GetAssets()
+DrawableAsset * GameBoardTile::GetAssets()
 {
 	return assets;
 }
 
-int Square::GetGbX() {
+int GameBoardTile::GetGbX() {
 	return this->gbX;
 }
 
-int Square::GetGbY() {
+int GameBoardTile::GetGbY() {
 	return this->gbY;
 }
 
-void Square::SetGbX(int x) {
+void GameBoardTile::SetGbX(int x) {
 	if (x > 0 && x < this->GetGameBoard()->boardWidth)
 	{
 		this->gbX = x;
@@ -60,7 +60,7 @@ void Square::SetGbX(int x) {
 	}
 }
 
-void Square::SetGbY(int y) {
+void GameBoardTile::SetGbY(int y) {
 	if (y > 0 && y < this->GetGameBoard()->boardHeight) 
 	{
 		this->gbY = y;
@@ -72,14 +72,14 @@ void Square::SetGbY(int y) {
 }
 
 
-//void Square::SetRectBoundary(int x, int y, float width, float height) {
+//void GameBoardTile::SetRectBoundary(int x, int y, float width, float height) {
 //	this->x = x;
 //	this->y = y;
 //	this->width = width;
 //	this->height = height;
 //}
 //
-//bool Square::ContainsPoint(float x, float y)
+//bool GameBoardTile::ContainsPoint(float x, float y)
 //{
 //	if (x >= this->GetXPos() && x <= this->GetXPos() + this->GetWidth() &&
 //		y >= this->GetYPos() && y <= this->GetYPos() + this->GetHeight()) {
@@ -91,7 +91,7 @@ void Square::SetGbY(int y) {
 //	}
 //}
 
-void Square::Draw()
+void GameBoardTile::Draw()
 {
 	sprite->Draw(x, y, width, height);
 	if (assets != nullptr)

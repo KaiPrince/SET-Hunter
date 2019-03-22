@@ -16,13 +16,13 @@ GameBoard::GameBoard(float squareWidth, float squareHeight, AssetFactory* assetF
 
 
 
-	for each (Square* square in squares)
+	for each (GameBoardTile* square in squares)
 	{
 		square = nullptr;
 	};
 
 	_assetFactory = assetFactory;
-	_squareFactory = new SquareFactory(this, _assetFactory);
+	_squareFactory = new TileFactory(this, _assetFactory);
 	_grassTerrain = nullptr;
 	_roadTerrain = nullptr;
 }
@@ -30,7 +30,7 @@ GameBoard::GameBoard(float squareWidth, float squareHeight, AssetFactory* assetF
 
 GameBoard::~GameBoard()
 {
-	for each (Square* square in squares)
+	for each (GameBoardTile* square in squares)
 	{
 		delete square;
 	};
@@ -49,7 +49,7 @@ void GameBoard::Init()
 		for (int row = 0; row < boardHeight; row++)
 		{
 			squares[column][row] = CreateSquare(column, row);
-			Square* thisSquare = squares[column][row];
+			GameBoardTile* thisSquare = squares[column][row];
 
 			//Left third or right third
 			if (column + 1 <= boardWidth / 3 || column + 1 > boardWidth - (boardWidth / 3))
@@ -71,15 +71,15 @@ void GameBoard::Init()
 	verticalOffset = 0.0f;
 }
 
-Square * GameBoard::FindSquare(float xPos, float yPos)
+GameBoardTile * GameBoard::FindSquare(float xPos, float yPos)
 {
-	Square* output = squares[0][0];
+	GameBoardTile* output = squares[0][0];
 
 	for (int column = 0; column < boardWidth; column++)
 	{
 		for (int row = 0; row < boardHeight; row++)
 		{
-			Square* thisSquare = squares[column][row];
+			GameBoardTile* thisSquare = squares[column][row];
 			if (thisSquare->ContainsPoint(xPos, yPos)) {
 				output = thisSquare;
 				break;
@@ -95,9 +95,9 @@ void GameBoard::SetAssetFactory(AssetFactory * assetFactory)
 	_assetFactory = assetFactory;
 }
 
-Square * GameBoard::CreateSquare(int column, int row)
+GameBoardTile * GameBoard::CreateSquare(int column, int row)
 {
-	Square* output = nullptr;
+	GameBoardTile* output = nullptr;
 
 	//input validation
 	if (column >= 0 && column <= this->boardWidth &&
@@ -133,7 +133,7 @@ void GameBoard::ScrollBoard() {
 				{
 					//Free squares on the bottom row
 					if (row == boardHeight - 1 - 1) {
-						for (Square* obstacle : _plantObstacles) {
+						for (GameBoardTile* obstacle : _plantObstacles) {
 							if (obstacle->GetGbX() == column && obstacle->GetGbY() == row + 1) {
 								RemoveObstacle(obstacle);
 							}
@@ -144,12 +144,12 @@ void GameBoard::ScrollBoard() {
 					}
 
 					//Move square down
-					Square* thisSquare = squares[column][row];
+					GameBoardTile* thisSquare = squares[column][row];
 					thisSquare->SetGbY(thisSquare->GetGbY() + 1);
 					squares[column][row + 1] = thisSquare; //Shift pointer
 
 					//Move Obstacles down
-					for (Square* obstacle : _plantObstacles) {
+					for (GameBoardTile* obstacle : _plantObstacles) {
 						if (obstacle->GetGbX() == column && obstacle->GetGbY() == row) {
 							obstacle->SetGbY(obstacle->GetGbY() + 1);
 						}
@@ -217,7 +217,7 @@ void GameBoard::ScrollBoard() {
 			for (int column = 0, row = 0; column < boardWidth; column++)
 			{
 				squares[column][row] = CreateSquare(column, row);
-				Square* thisSquare = squares[column][row];
+				GameBoardTile* thisSquare = squares[column][row];
 
 
 				//Place road
@@ -244,13 +244,13 @@ void GameBoard::ScrollBoard() {
 		{
 			for (int row = 0; row < boardHeight; row++)
 			{
-				Square* thisSquare = squares[column][row];
+				GameBoardTile* thisSquare = squares[column][row];
 
 				//Add vertical offset to square
 				thisSquare->SetYPos((thisSquare->GetGbY() * squareHeight) + verticalOffset);
 
 				//Keep obstacles in track with their squares
-				for (Square* obstacle : _plantObstacles) {
+				for (GameBoardTile* obstacle : _plantObstacles) {
 					if (obstacle->GetGbX() == column && obstacle->GetGbY() == row) {
 						obstacle->SetYPos(thisSquare->GetYPos());
 					}
@@ -284,11 +284,11 @@ void GameBoard::placePlants(int row)
 
 	for (int column = 0; column < boardWidth; column++)
 	{
-		Square* thisSquare = squares[column][row];
+		GameBoardTile* thisSquare = squares[column][row];
 
 		if (thisSquare->GetTerrain()->GetType() == DrawableAsset::GRASS_TERRAIN) {
 
-			for (Square* plant : _plantObstacles)
+			for (GameBoardTile* plant : _plantObstacles)
 			{
 
 				//clear any current plants
@@ -335,7 +335,7 @@ void GameBoard::placePlants(int row)
 				}
 				//thisSquare->SetAssets(_assetFactory->GetAsset(plantAssetType));
 
-				Square* newPlant = _squareFactory->CreateSquare(column, row, thisSquare->GetWidth(), thisSquare->GetHeight());
+				GameBoardTile* newPlant = _squareFactory->CreateSquare(column, row, thisSquare->GetWidth(), thisSquare->GetHeight());
 				newPlant->SetTerrain(AssetFactory::GetNullAsset());
 				newPlant->SetAssets(_assetFactory->GetAsset(plantAssetType));
 				newPlant->SetCollidable(true);
@@ -348,13 +348,13 @@ void GameBoard::placePlants(int row)
 	}
 }
 
-void GameBoard::AddObstacle(Square * obstacle)
+void GameBoard::AddObstacle(GameBoardTile * obstacle)
 {
 	_plantObstacles.push_back(obstacle);
 	_world->AddGameObject(obstacle);
 }
 
-void GameBoard::RemoveObstacle(Square * obstacle)
+void GameBoard::RemoveObstacle(GameBoardTile * obstacle)
 {
 	if (obstacle != nullptr) {
 		_world->RemoveGameObject(obstacle);
@@ -368,7 +368,7 @@ void GameBoard::Draw() {
 	{
 		for (int row = 0; row < boardHeight; row++)
 		{
-			Square* thisSquare = squares[column][row];
+			GameBoardTile* thisSquare = squares[column][row];
 
 			thisSquare->Draw();
 
@@ -386,10 +386,10 @@ void GameBoard::Draw() {
 void GameBoard::DrawRoadMask()
 {
 
-	Square* leftRoadSquare = nullptr;
-	Square* leftRoadSquareAbove = nullptr;
-	Square* rightRoadSquare = nullptr;
-	Square* rightRoadSquareAbove = nullptr;
+	GameBoardTile* leftRoadSquare = nullptr;
+	GameBoardTile* leftRoadSquareAbove = nullptr;
+	GameBoardTile* rightRoadSquare = nullptr;
+	GameBoardTile* rightRoadSquareAbove = nullptr;
 	for (int row = 0; row < boardHeight; row++)
 	{
 		//Find left Road tile
@@ -413,13 +413,13 @@ void GameBoard::DrawRoadMask()
 	}
 }
 
-Square* GameBoard::FindLeftRoadSquare(int row)
+GameBoardTile* GameBoard::FindLeftRoadSquare(int row)
 {
-	Square* output = nullptr;
+	GameBoardTile* output = nullptr;
 	//Find left Road tile
 	for (int column = 0; column < boardWidth; column++)
 	{
-		Square* thisSquare = squares[column][row];
+		GameBoardTile* thisSquare = squares[column][row];
 
 		if (thisSquare->GetTerrain()->GetType() == DrawableAsset::ROAD_TERRAIN) {
 			output = thisSquare;
@@ -431,12 +431,12 @@ Square* GameBoard::FindLeftRoadSquare(int row)
 	return output;
 }
 
-Square* GameBoard::FindRightRoadSquare(int row) {
-	Square* output = nullptr;
+GameBoardTile* GameBoard::FindRightRoadSquare(int row) {
+	GameBoardTile* output = nullptr;
 
 	for (int column = boardWidth - 1; column >= 0; column--)
 	{
-		Square* thisSquare = squares[column][row];
+		GameBoardTile* thisSquare = squares[column][row];
 
 		if (thisSquare->GetTerrain()->GetType() == DrawableAsset::ROAD_TERRAIN) {
 			output = thisSquare;
@@ -448,7 +448,7 @@ Square* GameBoard::FindRightRoadSquare(int row) {
 	return output;
 }
 
-void GameBoard::DrawLeftRoadMask(Square* leftRoadSquare, Square* leftRoadSquareAbove)
+void GameBoard::DrawLeftRoadMask(GameBoardTile* leftRoadSquare, GameBoardTile* leftRoadSquareAbove)
 {
 	float x1 = leftRoadSquare->GetXPos();
 	float x2 = leftRoadSquareAbove->GetXPos();
@@ -481,7 +481,7 @@ void GameBoard::DrawLeftRoadMask(Square* leftRoadSquare, Square* leftRoadSquareA
 	}
 }
 
-void GameBoard::DrawRightRoadMask(Square* rightRoadSquare, Square* rightRoadSquareAbove)
+void GameBoard::DrawRightRoadMask(GameBoardTile* rightRoadSquare, GameBoardTile* rightRoadSquareAbove)
 {
 	float x1 = rightRoadSquare->GetXPos() + rightRoadSquare->GetWidth();
 	float x2 = rightRoadSquareAbove->GetXPos() + rightRoadSquareAbove->GetWidth();

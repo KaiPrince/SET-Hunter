@@ -74,7 +74,7 @@ void Level1::Render()
 	//DEBUG
 	int sX = 0;
 	int sY = 0;
-	Square* test = world->GetGameBoard()->FindSquare(player->GetXPos() + (player->GetWidth() / 2), player->GetYPos());
+	GameBoardTile* test = world->GetGameBoard()->FindSquare(player->GetXPos() + (player->GetWidth() / 2), player->GetYPos());
 	if (test != nullptr) {
 		sX = test->GetGbX();
 		sY = test->GetGbY();

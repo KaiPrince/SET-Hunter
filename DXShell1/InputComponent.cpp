@@ -75,7 +75,7 @@ void StayOnRoadInputComponent::HandleInput()
 {
 	GameBoard* gb = object->GetGameBoard();
 	int rowAbove = gb->FindSquare(object->GetXPos(), object->GetYPos())->GetGbY() - 3;
-	Square* leftRoadSquare = gb->FindLeftRoadSquare(rowAbove);
+	GameBoardTile* leftRoadSquare = gb->FindLeftRoadSquare(rowAbove);
 
 	/*unsigned seed = (unsigned int)std::chrono::system_clock::now().time_since_epoch().count();
 	std::default_random_engine generator(seed);
@@ -83,7 +83,7 @@ void StayOnRoadInputComponent::HandleInput()
 	std::uniform_int_distribution<int> dice_randomRoadOffset(0, gb->roadWidth);*/
 
 
-	Square* targetSquare = gb->GetSquare(leftRoadSquare->GetGbX() + (gb->roadWidth / 2), rowAbove);
+	GameBoardTile* targetSquare = gb->GetSquare(leftRoadSquare->GetGbX() + (gb->roadWidth / 2), rowAbove);
 
 	float newXVelocity = (targetSquare->GetXPos() - object->GetXPos()) / 100.0f;
 	const float movingThreshold = 0.0f; //Threshold for future tuning.

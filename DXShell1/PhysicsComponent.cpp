@@ -2,7 +2,7 @@
 #include "GameObject.h"
 #include "GameBoard.h"
 #include "GameObjectState.h"
-#include "Square.h"
+#include "GameBoardTile.h"
 #include "GameWorld.h"
 
 #include "DrawableAsset.h"
@@ -38,7 +38,7 @@ void CollidablePhysicsComponent::DetectCollisionsAs(GameObject* obj) {
 	{
 		for (int row = 0; row < gb->boardHeight; row++)
 		{
-			Square* thisSquare = gb->squares[column][row];
+			GameBoardTile* thisSquare = gb->squares[column][row];
 			if (thisSquare->IsCollidable() && CheckIntersection(obj, thisSquare)) {
 
 				//Set collision flag

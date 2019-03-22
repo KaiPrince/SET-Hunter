@@ -1,6 +1,6 @@
 #pragma once
 #include "DrawableAsset.h"
-#include "SquareFactory.h"
+#include "TileFactory.h"
 #include "AssetFactory.h"
 #include <ctime>
 #include <chrono>
@@ -13,7 +13,7 @@ Purpose: This class is used to manage the Squares of the level
 class GameBoard
 {
 
-	SquareFactory* _squareFactory;
+	TileFactory* _squareFactory;
 	AssetFactory* _assetFactory;
 	GameWorld* _world;
 
@@ -22,12 +22,12 @@ class GameBoard
 	int roadShift; //Shifts the road to the right
 	float verticalOffset;
 
-	std::vector<Square*> _plantObstacles; //Plants
+	std::vector<GameBoardTile*> _plantObstacles; //Plants
 	void placePlants();
 	void placePlants(int row);
 
-	void AddObstacle(Square* obstacle);
-	void RemoveObstacle(Square* obstacle);
+	void AddObstacle(GameBoardTile* obstacle);
+	void RemoveObstacle(GameBoardTile* obstacle);
 
 	void DrawRoadMask();
 
@@ -45,26 +45,26 @@ public:
 	//TODO: make this private, getters only.
 	float squareWidth;
 	float squareHeight;
-	Square* squares[boardWidth][boardHeight];
+	GameBoardTile* squares[boardWidth][boardHeight];
 
-	Square** GetSquares() { return *squares; }
-	std::vector<Square*>& GetObstacles() { return _plantObstacles; }
-	Square* GetSquare(int column, int row) { return squares[column][row]; }
+	GameBoardTile** GetSquares() { return *squares; }
+	std::vector<GameBoardTile*>& GetObstacles() { return _plantObstacles; }
+	GameBoardTile* GetSquare(int column, int row) { return squares[column][row]; }
 	AssetFactory* GetAssetFactory() { return _assetFactory; }
 
 	void SetAssetFactory(AssetFactory* assetFactory);
 	DrawableAsset* _grassTerrain;
 	DrawableAsset* _roadTerrain;
 
-	Square* CreateSquare(int column, int row);
-	Square* FindSquare(float xPos, float yPos);
+	GameBoardTile* CreateSquare(int column, int row);
+	GameBoardTile* FindSquare(float xPos, float yPos);
 
 	void ScrollBoard();
 
 	void Draw();
-	Square* FindLeftRoadSquare(int row);
-	Square * FindRightRoadSquare(int row);
-	void DrawLeftRoadMask(Square * leftRoadSquare, Square * leftRoadSquareAbove);
-	void DrawRightRoadMask(Square * rightRoadSquare, Square * rightRoadSquareAbove);
+	GameBoardTile* FindLeftRoadSquare(int row);
+	GameBoardTile * FindRightRoadSquare(int row);
+	void DrawLeftRoadMask(GameBoardTile * leftRoadSquare, GameBoardTile * leftRoadSquareAbove);
+	void DrawRightRoadMask(GameBoardTile * rightRoadSquare, GameBoardTile * rightRoadSquareAbove);
 };
 
