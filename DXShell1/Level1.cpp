@@ -66,13 +66,13 @@ void Level1::Render()
 	//DEBUG
 	//gfx->DrawRect((float)column * gb->squareWidth, (float)row * gb->squareHeight, (float)gb->squareWidth, (float)gb->squareHeight, 0.0f, 0.0f, 0.0f, 1.0f);
 
-	/*char ScoreMessage[500] = "";
+	char ScoreMessage[500] = "";
 	gfx->WriteText(0, 0, 200.0f, 100.0f, 10.0f, ScoreMessage, sprintf_s(ScoreMessage, 500, "Score: %u\n Lives %d\n",
-		GameController::GetScore(), GameController::GetLives()));*/
+		GameController::GetScore(), GameController::GetLives()));
 
 
 	//DEBUG
-	int sX = 0;
+	/*int sX = 0;
 	int sY = 0;
 	GameBoardTile* test = world->GetGameBoard()->FindSquare(player->GetXPos() + (player->GetWidth() / 2), player->GetYPos());
 	if (test != nullptr) {
@@ -85,7 +85,8 @@ void Level1::Render()
 
 	char msg[500] = "";
 	gfx->WriteText(0, 0, 200.0f, 100.0f, 10.0f, msg, sprintf_s(msg, 500, "X Velocity: %2.2g\nY Velocity: %2.2f", player->GetXVelocity(), player->GetYVelocity()));
-}
+	*/
+	}
 
 void Level1::HandleInput()
 {
