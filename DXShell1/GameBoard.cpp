@@ -73,7 +73,7 @@ void GameBoard::Init()
 
 Square * GameBoard::FindSquare(float xPos, float yPos)
 {
-	Square* output = nullptr;
+	Square* output = squares[0][0];
 
 	for (int column = 0; column < boardWidth; column++)
 	{

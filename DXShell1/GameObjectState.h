@@ -27,13 +27,11 @@ public:
 
 	enum ActorStates
 	{
-		ALIVE_STATE, DEAD_STATE
+		ALIVE_STATE, DEAD_STATE, NULL_STATE, INVINCIBLE_STATE
 	};
-protected: //This is only here because the ActorStates var must be below its definition.
-	GameObjectState::ActorStates type;
 
 public:
-	GameObjectState::ActorStates GetType() { return type; }
+	virtual GameObjectState::ActorStates GetType() = 0;
 };
 
 /*
@@ -46,10 +44,11 @@ class AliveState : public GameObjectState
 private:
 	std::chrono::time_point<std::chrono::steady_clock> scoreTimer;
 	std::chrono::duration<int, std::milli> offRoadDelayCountdown; //Score won't update
-	std::chrono::duration<int, std::milli> invincibilityCountdown; //Can't die
 public:
-	AliveState(GameObject* object) : GameObjectState(object) { type = ALIVE_STATE; }
+	AliveState(GameObject* object) : GameObjectState(object) {}
 	virtual ~AliveState() {}
+
+	virtual GameObjectState::ActorStates GetType() { return GameObjectState::ALIVE_STATE; }
 
 	//Transition states
 	virtual GameObjectState* HandleInput() override;
@@ -79,8 +78,10 @@ class DeadState : public GameObjectState
 private:
 	std::clock_t timeOfDeath;
 public:
-	DeadState(GameObject* object) : GameObjectState(object) { type = DEAD_STATE; }
+	DeadState(GameObject* object) : GameObjectState(object) { }
 	virtual ~DeadState();
+
+	virtual GameObjectState::ActorStates GetType() { return GameObjectState::DEAD_STATE; }
 
 	//Transition states
 	virtual GameObjectState* HandleInput();
@@ -111,10 +112,46 @@ public:
 	NullState(GameObject* object) : GameObjectState(object) {}
 	~NullState() {}
 
+	virtual GameObjectState::ActorStates GetType() { return GameObjectState::NULL_STATE; }
+
 	// Inherited via GameObjectState
 	virtual void Enter() override {}
 	virtual void Leave() override {}
 	virtual GameObjectState * HandleInput() override;
 	virtual GameObjectState * Update() override;
 	virtual GameObjectState * Draw() override;
+};
+
+/*
+Class Name: InvincibleState
+Purpose: This class represents the state of the object being alive.
+	In this state, the player can move, receive damage and interact with other game objects.
+*/
+class InvincibleState : public GameObjectState
+{
+private:
+	std::chrono::time_point<std::chrono::steady_clock> timeOfRevival;
+	std::chrono::duration<float, std::milli> invincibilityCountdown; //Can't die
+public:
+	InvincibleState(GameObject* object) : GameObjectState(object) {}
+	virtual ~InvincibleState() {}
+
+	virtual GameObjectState::ActorStates GetType() { return GameObjectState::INVINCIBLE_STATE; }
+
+	//Transition states
+	virtual GameObjectState* HandleInput() override;
+
+	//Set up
+	virtual void Enter() override;
+
+	//Update player properties
+	virtual GameObjectState* Update() override;
+
+	//On transition out..
+	virtual void Leave() override;
+
+
+	// Inherited via GameObjectState
+	virtual GameObjectState * Draw() override;
+
 };

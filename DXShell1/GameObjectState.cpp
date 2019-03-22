@@ -24,12 +24,7 @@ GameObjectState * AliveState::HandleInput()
 
 void AliveState::Enter()
 {
-	//Reset position
-	float centerOfBoardX = _object->GetGameBoard()->boardWidth * _object->GetGameBoard()->squareWidth / 2;
-	float bottomOfBoardY = _object->GetGameBoard()->boardHeight * _object->GetGameBoard()->squareHeight;
-
-	_object->SetXPos(centerOfBoardX - _object->GetWidth());
-	_object->SetYPos(bottomOfBoardY);
+	
 
 	//Reset Sprite
 	_object->SetSprite(_object->GetGameBoard()->GetAssetFactory()->GetAsset(DrawableAsset::CAR_SPRITE));
@@ -39,8 +34,6 @@ void AliveState::Enter()
 	time_point<steady_clock> currentTime = steady_clock::now();
 	scoreTimer = currentTime;
 
-	//Start invincibility countdown 
-	invincibilityCountdown = duration<int, std::milli>(3000);
 
 	//Notify observers
 	_object->Notify();
@@ -58,11 +51,9 @@ GameObjectState* AliveState::Update()
 	double elapsedTimeInMS = duration<double, std::milli>(currentTime - scoreTimer).count();
 
 	//Transition States
-	if (_object->IsCollidable() && ((CollidablePhysicsComponent*)_object->GetPhysicsComponent())->IsCollisionDetected()) {
+	if (_object->IsCollidable() && static_cast<CollidablePhysicsComponent*>(_object->GetPhysicsComponent())->IsCollisionDetected()) {
 
-		if (invincibilityCountdown.count() <= 0) {
-			nextState = new DeadState(_object);
-		}
+		nextState = new DeadState(_object);
 	}
 	else {
 
@@ -80,9 +71,6 @@ GameObjectState* AliveState::Update()
 				offRoadDelayCountdown -= duration<int, std::milli>(static_cast<int>(elapsedTimeInMS));
 			}
 
-
-
-
 		}
 		else {
 
@@ -90,11 +78,6 @@ GameObjectState* AliveState::Update()
 			offRoadDelayCountdown = duration<int, std::milli>(3000);
 		}
 
-		//Decrement invincibility timer
-		if (invincibilityCountdown.count() > 0) {
-
-			invincibilityCountdown -= duration<int, std::milli>(static_cast<int>(elapsedTimeInMS));
-		}
 
 		//Reset Score timer
 		scoreTimer = currentTime;
@@ -109,8 +92,144 @@ void AliveState::Leave()
 
 GameObjectState * AliveState::Draw()
 {
-	//TODO: move this to InvincibleState.
-	if (invincibilityCountdown.count() > 0) { 
+	_object->GetSprite()->Draw(_object->GetXPos(), _object->GetYPos(), _object->GetWidth(), _object->GetHeight()); //TODO: This is terrible. Use renderComponent?
+	return this;
+}
+
+DeadState::~DeadState()
+{
+}
+
+GameObjectState * DeadState::HandleInput()
+{
+	//Don't actually handle input. You're dead.
+	return this;
+}
+
+void DeadState::Enter()
+{
+	timeOfDeath = clock();
+
+	//-1 life
+	GameController::SetLives(GameController::GetLives() - 1);
+
+	//Death sprite
+	_object->SetSprite(_object->GetGameBoard()->GetAssetFactory()->GetAsset(DrawableAsset::EXPLOSION_SPRITE));
+
+	//Notify observers (Road stops scrolling.)
+	_object->Notify();
+}
+
+GameObjectState* DeadState::Update()
+{
+	GameObjectState* nextState = this;
+
+	std::clock_t currentTime = clock();
+	double elapsedTimeInMS = std::chrono::duration<double, std::milli>(currentTime - timeOfDeath).count();
+
+	//Revive player after 3 seconds
+	const int timeUntilRevivalInMS = 3000;
+	if (elapsedTimeInMS >= timeUntilRevivalInMS) {
+		nextState = new InvincibleState(_object); // AliveState(_object);
+	}
+
+	return nextState;
+}
+
+void DeadState::Leave()
+{
+}
+
+GameObjectState * DeadState::Draw()
+{
+	_object->GetSprite()->Draw(_object->GetXPos(), _object->GetYPos(), _object->GetWidth(), _object->GetHeight()); //TODO: This is terrible. Use renderComponent?
+	return this;
+}
+
+GameObjectState * NullState::HandleInput()
+{
+	_object->GetInputComponent()->HandleInput();
+	return this;
+}
+
+GameObjectState * NullState::Update()
+{
+	_object->GetPhysicsComponent()->Update();
+	return this;
+}
+
+GameObjectState * NullState::Draw()
+{
+	_object->GetSprite()->Draw(_object->GetXPos(), _object->GetYPos(), _object->GetWidth(), _object->GetHeight()); //TODO: This is terrible. Use renderComponent?
+	return this;
+}
+
+GameObjectState * InvincibleState::HandleInput()
+{
+	_object->GetInputComponent()->HandleInput();
+	return this;
+}
+
+void InvincibleState::Enter()
+{
+	//Reset position
+	float centerOfBoardX = _object->GetGameBoard()->boardWidth * _object->GetGameBoard()->squareWidth / 2;
+	float bottomOfBoardY = _object->GetGameBoard()->boardHeight * _object->GetGameBoard()->squareHeight;
+
+	_object->SetXPos(centerOfBoardX - _object->GetWidth());
+	_object->SetYPos(bottomOfBoardY);
+
+	//Reset Sprite
+	_object->SetSprite(_object->GetGameBoard()->GetAssetFactory()->GetAsset(DrawableAsset::CAR_SPRITE));
+
+	//Reset ScoreTimer
+	using namespace std::chrono;
+	time_point<steady_clock> currentTime = steady_clock::now();
+	timeOfRevival = currentTime;
+
+	invincibilityCountdown = duration<float, std::milli>(3000.0f);
+
+	//Notify observers (Road continues scrolling.)
+	_object->Notify();
+
+}
+
+GameObjectState * InvincibleState::Update()
+{
+	GameObjectState* nextState = this;
+
+	_object->GetPhysicsComponent()->Update();
+
+	//Get delta time
+	using namespace std::chrono;
+	time_point<steady_clock> currentTime = steady_clock::now();
+	float elapsedTimeInMS = GameController::GetDeltaTime(); //duration<float, std::milli>(currentTime - timeOfRevival).count();
+
+
+	//Decrement invincibility timer
+	if (invincibilityCountdown.count() > 0) {
+
+		invincibilityCountdown -= duration<float, std::milli>(elapsedTimeInMS);
+	}
+
+	if (invincibilityCountdown.count() <= 0) {
+		//Transition to Alive State
+		nextState = new AliveState(_object);
+	}
+
+	//Reset Score timer
+	timeOfRevival = currentTime;
+
+	return nextState;
+}
+
+void InvincibleState::Leave()
+{
+}
+
+GameObjectState * InvincibleState::Draw()
+{
+	if (invincibilityCountdown.count() > 0) {
 		//Draw for 500 milliseconds, and then don't draw for 500 milliseconds. Repeat.
 
 		//Draw: 3000 -> 2500, 2000 -> 1500, 1000 -> 500
@@ -141,75 +260,5 @@ GameObjectState * AliveState::Draw()
 		_object->GetSprite()->Draw(_object->GetXPos(), _object->GetYPos(), _object->GetWidth(), _object->GetHeight());  //TODO: This is terrible. Use renderComponent?
 	}
 
-	return this;
-}
-
-DeadState::~DeadState()
-{
-}
-
-GameObjectState * DeadState::HandleInput()
-{
-	return this;
-}
-
-void DeadState::Enter()
-{
-	timeOfDeath = clock();
-
-	//-1 life
-	GameController::SetLives(GameController::GetLives() - 1);
-
-	//Death sprite
-	_object->SetSprite(_object->GetGameBoard()->GetAssetFactory()->GetAsset(DrawableAsset::EXPLOSION_SPRITE));
-
-	//Notify observers (Road stops scrolling.)
-	_object->Notify();
-}
-
-GameObjectState* DeadState::Update()
-{
-	GameObjectState* nextState = this;
-
-	std::clock_t currentTime = clock();
-	double elapsedTimeInMS = std::chrono::duration<double, std::milli>(currentTime - timeOfDeath).count();
-
-	//Revive player after 3 seconds
-	const int timeUntilRevivalInMS = 3000;
-	if (elapsedTimeInMS >= timeUntilRevivalInMS) {
-		nextState = new AliveState(_object);
-	}
-
-	//TODO: add blinking before revivial
-	//TODO: don't revive if no lives left.
-
-	return nextState;
-}
-
-void DeadState::Leave()
-{
-}
-
-GameObjectState * DeadState::Draw()
-{
-	_object->GetSprite()->Draw(_object->GetXPos(), _object->GetYPos(), _object->GetWidth(), _object->GetHeight()); //TODO: This is terrible. Use renderComponent?
-	return this;
-}
-
-GameObjectState * NullState::HandleInput()
-{
-	_object->GetInputComponent()->HandleInput();
-	return this;
-}
-
-GameObjectState * NullState::Update()
-{
-	_object->GetPhysicsComponent()->Update();
-	return this;
-}
-
-GameObjectState * NullState::Draw()
-{
-	_object->GetSprite()->Draw(_object->GetXPos(), _object->GetYPos(), _object->GetWidth(), _object->GetHeight()); //TODO: This is terrible. Use renderComponent?
 	return this;
 }

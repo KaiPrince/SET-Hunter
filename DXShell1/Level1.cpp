@@ -104,6 +104,9 @@ void Level1::Notify(Observable* subject) {
 		case GameObjectState::DEAD_STATE:
 			continueRoadScolling = false;
 			break;
+		case GameObjectState::INVINCIBLE_STATE:
+			continueRoadScolling = true;
+			break;
 		default:
 			break;
 		}
