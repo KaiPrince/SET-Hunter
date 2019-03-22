@@ -3,8 +3,6 @@
 #include "GameController.h"
 #include "Level1.h"
 
-#include "Audio.h"
-
 
 
 MainMenuLevel::MainMenuLevel()
@@ -162,8 +160,6 @@ void MainMenuLevel::Load()
 	mainMenu.push_back(ExitButton);
 	mainMenu.push_back(ExitButtonLabel);
 
-	//Play Theme Song
-	AudioLocator::GetAudio()->PlayThemeSong();
 }
 
 void MainMenuLevel::Unload()

@@ -2,8 +2,7 @@
 #include <WinUser.h>
 #include <Windowsx.h>
 #include "Graphics.h"
-#include "Level1.h"
-#include "MainMenuLevel.h"
+#include "SplashScreenLevel.h"
 #include "GameController.h"
 #include <string.h>
 #include <stdio.h>
@@ -81,7 +80,7 @@ int WINAPI wWinMain(
 
 
 	ShowWindow(windowhandle, nCmdShow);
-	GameController::LoadInitialLevel(new MainMenuLevel());
+	GameController::LoadInitialLevel(new SplashScreenLevel());
 
 #pragma region GameLoop
 	//Below, we have essentially an infinite loop that will keep the window running and will dispatch/show messages

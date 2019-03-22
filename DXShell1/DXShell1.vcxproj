@@ -140,6 +140,7 @@
     <ClCompile Include="PhysicsComponent.cpp" />
     <ClCompile Include="GameObjectState.cpp" />
     <ClCompile Include="RoadTerrain.cpp" />
+    <ClCompile Include="SplashScreenLevel.cpp" />
     <ClCompile Include="SpriteSheet.cpp" />
     <ClCompile Include="SpriteSheetAsset.cpp" />
     <ClCompile Include="Square.cpp" />
@@ -164,6 +165,7 @@
     <ClInclude Include="Observer.h" />
     <ClInclude Include="GameObjectState.h" />
     <ClInclude Include="RoadTerrain.h" />
+    <ClInclude Include="SplashScreenLevel.h" />
     <ClInclude Include="SpriteSheet.h" />
     <ClInclude Include="SpriteSheetAsset.h" />
     <ClInclude Include="Square.h" />
