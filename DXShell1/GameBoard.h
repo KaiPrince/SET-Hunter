@@ -8,7 +8,7 @@
 
 /*
 Class Name: GameBoard
-Purpose: This class is used to manage the Squares of the level
+Purpose: This class is used to manage the Tiles of the level
 */
 class GameBoard
 {

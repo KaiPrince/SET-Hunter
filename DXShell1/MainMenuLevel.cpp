@@ -30,7 +30,6 @@ void MainMenuLevel::Load()
 
 		GameObject* player = new GameObject(player_StartX, player_StartY,
 			gb->squareWidth, gb->squareHeight, _assetFactory->GetAsset(DrawableAsset::CAR_SPRITE), gb);
-		player->SetCollidable(true);
 		player->UpdateState(new AliveState(player));
 		player->SetPhysicsComponent(new PlayerPhysicsComponent(player, world));
 		player->SetInputComponent(new StayOnRoadInputComponent(player));
@@ -49,14 +48,14 @@ void MainMenuLevel::Load()
 	const float pseudoPixelHeight = ScreenHeight / 10;
 
 	//Background
-	DrawableAsset* UIsprite = new AssetOutlineDecorator(_assetFactory->GetAsset(DrawableAsset::MAIN_MENU_BACKGROUND_ASSET));
+	DrawableAsset* UIsprite = _assetFactory->GetAsset(DrawableAsset::MAIN_MENU_BACKGROUND_ASSET);
 
 	GameObject* background = new GameObject(0.0f, 0.0f, ScreenWidth, ScreenHeight,
 		UIsprite, gb);
 
 
 	//Logo
-	UIsprite = new AssetOutlineDecorator(_assetFactory->GetAsset(DrawableAsset::SPY_HUNTER_ART));
+	UIsprite = new AssetRoundedOutlineDecorator(_assetFactory->GetAsset(DrawableAsset::NULL_ASSET));
 	GameObject* Logo = new GameObject(0 + pseudoPixelWidth, 0 + pseudoPixelHeight,
 		pseudoPixelWidth * 3, pseudoPixelHeight * 4,
 		UIsprite,

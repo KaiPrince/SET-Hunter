@@ -9,6 +9,12 @@
 
 class GameBoard;
 
+/*
+Class Name: GameObject
+Purpose: This class represents any object with a position, and height and width.
+	GameObjects can also have an InputComponent, PhysicsComponent, and State.
+	GameObjects also have a sprite which represents them visually on the screen.
+*/
 class GameObject : public Observable, public VisitorComponent
 {
 	PhysicsComponent* _physicsComponent;

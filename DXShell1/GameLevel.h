@@ -6,6 +6,11 @@
 #include "InputComponent.h"
 #include "GameWorld.h"
 
+/*
+Class Name: GameLevel
+Purpose: This class represents the base for each level in the game.
+	Static shared objects are kept here.
+*/
 class GameLevel
 {
 protected:
