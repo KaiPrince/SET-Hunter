@@ -346,7 +346,8 @@ void GameBoard::placePlants(int row)
 				GameBoardTile* newPlant = _squareFactory->CreateSquare(column, row, thisSquare->GetWidth(), thisSquare->GetHeight());
 				newPlant->SetTerrain(AssetFactory::GetNullAsset());
 				newPlant->SetAssets(_assetFactory->GetAsset(plantAssetType));
-				newPlant->SetCollidable(true);
+				newPlant->SetPhysicsComponent(new CollidablePhysicsComponent(newPlant, _world));
+
 
 				AddObstacle(newPlant);
 

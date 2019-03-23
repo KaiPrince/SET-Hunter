@@ -11,19 +11,19 @@
 
 void PlayerInputComponent::HandleInput() {
 
-	const float MaxXVelocity = object->GetGameBoard()->squareHeight / 25; //...in any direction
+	const float MaxXVelocity = object->GetGameBoard()->squareHeight / 25;
 	const float MaxYVelocity = MaxXVelocity;
 	const float AccelerationSpeed = MaxXVelocity * 0.5f;
-	const float DeccelerationSpeen = MaxXVelocity * 0.1f; //(Holy shit I can't spell)
+	const float DeccelerationSpeed = MaxXVelocity * 0.1f;
 
 	float xVelocity = object->GetXVelocity(); //0;
 	float yVelocity = object->GetYVelocity(); //0;
 
 	//Deacceleration. Velocities work their way back to 0.
-	if (abs(xVelocity) <= DeccelerationSpeen) xVelocity = 0;
-	if (abs(yVelocity) <= DeccelerationSpeen) yVelocity = 0;
-	if (xVelocity < 0) xVelocity += DeccelerationSpeen; else if (xVelocity > 0) xVelocity -= DeccelerationSpeen;
-	if (yVelocity < 0) yVelocity += DeccelerationSpeen; else if (yVelocity > 0) yVelocity -= DeccelerationSpeen;
+	if (abs(xVelocity) <= DeccelerationSpeed) xVelocity = 0;
+	if (abs(yVelocity) <= DeccelerationSpeed) yVelocity = 0;
+	if (xVelocity < 0) xVelocity += DeccelerationSpeed; else if (xVelocity > 0) xVelocity -= DeccelerationSpeed;
+	if (yVelocity < 0) yVelocity += DeccelerationSpeed; else if (yVelocity > 0) yVelocity -= DeccelerationSpeed;
 
 	//Accelerration 
 	if (GetKeyState(VK_UP) & 0x8000)

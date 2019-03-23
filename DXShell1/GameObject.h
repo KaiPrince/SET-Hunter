@@ -28,7 +28,6 @@ protected:
 	float xVelocity;
 	float yVelocity;
 
-	bool isCollidable;
 public:
 	GameObject(float x, float y, float width, float height, DrawableAsset* sprite, GameBoard* gameboard,
 		float xVelocity = 0.0f, float yVelocity = 0.0f);
@@ -43,7 +42,6 @@ public:
 	float GetYVelocity() { return yVelocity; }
 
 	DrawableAsset* GetSprite() { return sprite; }
-	bool IsCollidable() { return isCollidable; }
 
 	virtual void SetXPos(float x) { this->x = x; }
 	virtual void SetYPos(float y) { this->y = y; }
@@ -51,7 +49,6 @@ public:
 	void SetHeight(float height) { this->height = height; }
 	void SetXVelocity(float xVelocity) { this->xVelocity = xVelocity; }
 	void SetYVelocity(float yVelocity) { this->yVelocity = yVelocity; }
-	void SetCollidable(bool isCollidable) { this->isCollidable = isCollidable; }
 
 
 

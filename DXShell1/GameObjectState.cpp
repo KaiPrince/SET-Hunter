@@ -51,7 +51,7 @@ GameObjectState* AliveState::Update()
 	double elapsedTimeInMS = duration<double, std::milli>(currentTime - scoreTimer).count();
 
 	//Transition States
-	if (_object->IsCollidable() && static_cast<CollidablePhysicsComponent*>(_object->GetPhysicsComponent())->IsCollisionDetected()) {
+	if (dynamic_cast<CollidablePhysicsComponent*>(_object->GetPhysicsComponent()) && static_cast<CollidablePhysicsComponent*>(_object->GetPhysicsComponent())->IsCollisionDetected()) {
 
 		nextState = new DeadState(_object);
 	}

@@ -167,18 +167,26 @@ class SpriteSheetAsset :
 {
 	SpriteSheet* sprite;
 	DrawableAsset::AssetTypes type;
+	bool useChromaKey;
 public:
 	SpriteSheetAsset(SpriteSheet* sprite, DrawableAsset::AssetTypes assetType) : DrawableAsset() {
 
 		this->sprite = sprite;
 		this->type = assetType;
+		this->useChromaKey = true;
 	}
 	virtual ~SpriteSheetAsset() {}
 
 	virtual DrawableAsset::AssetTypes GetType() override { return this->type; }
+	virtual void SetUseChromaKey(bool tf) { this->useChromaKey = tf; }
 
 	virtual void Draw(float x, float y, float width, float height) {
-		sprite->Draw(x, y, width, height);
+		if (useChromaKey) {
+			sprite->Draw(x, y, width, height);
+		}
+		else {
+			sprite->DrawWithoutChromaKey(x, y, width, height);
+		}
 	}
 };
 

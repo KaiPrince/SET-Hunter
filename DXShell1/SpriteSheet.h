@@ -22,4 +22,6 @@ public:
 
 	void Draw(float x, float y, float width, float height);
 
+	void DrawWithoutChromaKey(float x, float y, float width, float height);
+
 };

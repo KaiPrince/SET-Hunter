@@ -14,20 +14,6 @@ void Level1::Load()
 
 	continueRoadScolling = true;
 
-	//{
-	//	//Player starts at bottom middle of screen.
-	//	GameBoard* gb = world->GetGameBoard();
-	//	float player_StartX = (float)((gb->boardWidth * gb->squareWidth / 2) - gb->squareWidth);
-	//	float player_StartY = ((float)gb->boardHeight * gb->squareHeight) - gb->squareHeight;
-
-	//	GameObject* player = new GameObject(player_StartX, player_StartY,
-	//		gb->squareWidth, gb->squareHeight, _assetFactory->GetAsset(DrawableAsset::CAR_SPRITE), gb);
-	//	player->SetPhysicsComponent(new PlayerPhysicsComponent(player, world));
-	//	player->SetInputComponent(new PlayerInputComponent(player));
-
-	//	world->SetPlayer(player);
-	//}
-
 	player = world->GetPlayer();
 	player->AddObserver(this);
 }
@@ -62,9 +48,6 @@ void Level1::Render()
 	gfx->ClearScreen(0.0f, 0.0f, 0.0f);
 
 	world->Draw();
-
-	//DEBUG
-	//gfx->DrawRect((float)column * gb->squareWidth, (float)row * gb->squareHeight, (float)gb->squareWidth, (float)gb->squareHeight, 0.0f, 0.0f, 0.0f, 1.0f);
 
 	char ScoreMessage[500] = "";
 	gfx->WriteText(0, 0, 200.0f, 100.0f, 10.0f, ScoreMessage, sprintf_s(ScoreMessage, 500, "Score: %u\n Lives %d\n",

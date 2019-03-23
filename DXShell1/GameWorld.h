@@ -12,6 +12,7 @@ class AssetFactory;
 /*
 Class Name: GameWorld
 Purpose: This class aggregates all GameObjects in the world, plus the gameboard.
+	When the GameLoop runs, this class will call process input, update, and draw on all its objects.
 	This class will be used by the PhysicsComponent for the purposes of collision detection.
 */
 class GameWorld

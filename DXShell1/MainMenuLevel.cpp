@@ -56,7 +56,7 @@ void MainMenuLevel::Load()
 
 
 	//Logo
-	UIsprite = new AssetOutlineDecorator(_assetFactory->GetAsset(DrawableAsset::GRASS_TERRAIN));
+	UIsprite = new AssetOutlineDecorator(_assetFactory->GetAsset(DrawableAsset::SPY_HUNTER_ART));
 	GameObject* Logo = new GameObject(0 + pseudoPixelWidth, 0 + pseudoPixelHeight,
 		pseudoPixelWidth * 3, pseudoPixelHeight * 4,
 		UIsprite,
@@ -111,7 +111,7 @@ void MainMenuLevel::Load()
 
 
 	//Start Button Label
-	textAsset = (TextAsset*)_assetFactory->GetAsset(DrawableAsset::TEXT_ASSET); //TODO: Center text
+	textAsset = (TextAsset*)_assetFactory->GetAsset(DrawableAsset::TEXT_ASSET);
 	textAsset->SetText("Start Game");
 	textAsset->SetUseFancyFont(true);
 	textAsset->SetFontSize(70.0f);
@@ -130,7 +130,7 @@ void MainMenuLevel::Load()
 	this->ExitButton->AddObserver(this);
 
 	//Exit Button Label
-	textAsset = (TextAsset*)_assetFactory->GetAsset(DrawableAsset::TEXT_ASSET); //TODO: Center text
+	textAsset = (TextAsset*)_assetFactory->GetAsset(DrawableAsset::TEXT_ASSET);
 	textAsset->SetText("Exit Game");
 	textAsset->SetUseFancyFont(true);
 	textAsset->SetFontSize(70.0f);

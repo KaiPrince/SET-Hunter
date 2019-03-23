@@ -123,3 +123,9 @@ void SpriteSheet::Draw(float x, float y, float width, float height)
 		D2D1::Point2F(x, y)
 		);
 }
+
+void SpriteSheet::DrawWithoutChromaKey(float x, float y, float width, float height)
+{
+	scaleEffect->SetInput(0, bmp);
+	this->Draw(x, y, width, height);
+}

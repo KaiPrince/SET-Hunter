@@ -70,8 +70,13 @@ DrawableAsset* AssetFactory::GetAsset(DrawableAsset::AssetTypes assetType)
 		asset = new TextAsset();
 		break;
 	case DrawableAsset::SPY_HUNTER_ART:
-		asset = new SpriteSheetAsset(_spyHunterArt, assetType);
+	{ //Scope brackets added to prevent error C2361
+		SpriteSheetAsset* spyHunterAsset = new SpriteSheetAsset(_spyHunterArt, assetType);
+		spyHunterAsset->SetUseChromaKey(false);
+
+		asset = spyHunterAsset;
 		break;
+	}
 	default:
 		asset = _nullAsset;
 		break;

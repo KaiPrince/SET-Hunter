@@ -22,7 +22,7 @@ public:
 	PhysicsComponent(GameObject* obj, GameWorld* world);
 	virtual ~PhysicsComponent();
 
-
+	virtual bool IsCollidable() = 0;
 
 	virtual void Update() = 0; //NOTE: all derived classes must call on their decorated component.
 
@@ -34,8 +34,8 @@ public:
 	NullPhysicsComponent() : PhysicsComponent(nullptr, nullptr) {}
 	~NullPhysicsComponent() {}
 
-	void Update() override { /*Do nothing*/ }
-
+	virtual void Update() override { /*Do nothing*/ }
+	virtual bool IsCollidable() override { return false; }
 
 private:
 
@@ -59,6 +59,7 @@ public:
 		return _collisionObjects;
 	}
 
+	virtual bool IsCollidable() override { return true; }
 	virtual bool IsCollisionDetected() {
 		if (!_collisionObjects.empty()) {
 			return true;

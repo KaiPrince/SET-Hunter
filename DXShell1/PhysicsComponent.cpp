@@ -39,7 +39,7 @@ void CollidablePhysicsComponent::DetectCollisionsAs(GameObject* obj) {
 		for (int row = 0; row < gb->boardHeight; row++)
 		{
 			GameBoardTile* thisSquare = gb->squares[column][row];
-			if (thisSquare->IsCollidable() && CheckIntersection(obj, thisSquare)) {
+			if (dynamic_cast<CollidablePhysicsComponent*>(thisSquare->GetPhysicsComponent()) && CheckIntersection(obj, thisSquare)) {
 
 				//Set collision flag
 				this->_collisionObjects.push_back(thisSquare);
@@ -49,7 +49,7 @@ void CollidablePhysicsComponent::DetectCollisionsAs(GameObject* obj) {
 
 	for each (GameObject* objectInGameWorld in _world->GetGameObjects())
 	{
-		if (objectInGameWorld != _obj && objectInGameWorld->IsCollidable() && CheckIntersection(obj, objectInGameWorld)) {
+		if (objectInGameWorld != _obj && dynamic_cast<CollidablePhysicsComponent*>(objectInGameWorld->GetPhysicsComponent()) && CheckIntersection(obj, objectInGameWorld)) {
 			//Set collision flag
 			this->_collisionObjects.push_back(objectInGameWorld);
 
