@@ -124,6 +124,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Audio.cpp" />
+    <ClCompile Include="CollisionResolutionStrategy.cpp" />
     <ClCompile Include="DrawableAsset.cpp" />
     <ClCompile Include="GameBoard.cpp" />
     <ClCompile Include="GameController.cpp" />
@@ -147,6 +148,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Audio.h" />
+    <ClInclude Include="CollisionResolutionStrategy.h" />
     <ClInclude Include="DrawableAsset.h" />
     <ClInclude Include="GameBoard.h" />
     <ClInclude Include="GameController.h" />
