@@ -88,7 +88,7 @@ void DirectXAudio::playSound(Sounds soundType)
 		//PlaySound(TEXT("Sounds/explosion.wav"), NULL, SND_ASYNC | SND_FILENAME);
 		break;
 	case Audio::LASER:
-		PlaySound(TEXT("Sounds/shoot.wav"), NULL, SND_ASYNC | SND_FILENAME);
+		_laserSprite->Play();
 		break;	
 	default:
 		break;
