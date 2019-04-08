@@ -72,9 +72,6 @@
     <ClCompile Include="Level1.cpp">
       <Filter>Levels</Filter>
     </ClCompile>
-    <ClCompile Include="Visitor.cpp">
-      <Filter>Design Patterns</Filter>
-    </ClCompile>
     <ClCompile Include="Observer.cpp">
       <Filter>Design Patterns</Filter>
     </ClCompile>
@@ -136,9 +133,6 @@
     </ClInclude>
     <ClInclude Include="SplashScreenLevel.h">
       <Filter>Levels</Filter>
-    </ClInclude>
-    <ClInclude Include="Visitor.h">
-      <Filter>Design Patterns</Filter>
     </ClInclude>
     <ClInclude Include="Observer.h">
       <Filter>Design Patterns</Filter>

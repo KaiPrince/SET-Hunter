@@ -53,3 +53,10 @@ For Fun:
 
 - Handle hiDPI scaling
 - Move invincibility countdown from Alivestate into it's own class
+
+- Change NullObjects into singletons.
+- Split NullGameObject into EmptyGameObject
+
+- Remove hitboxes when plants are deleted at bottom of screen.
+- Change hitboxes to be relative to its object, rather than absolute position.
+- Fix unexprected tiles receiving lots of unnecessary collisions

@@ -1,25 +1,28 @@
 #include "CollisionResolutionStrategy.h"
 #include "GameObject.h"
+#include "GameObjectState.h"
 
+NullCollisionStrategy* NullCollisionStrategy::_singleton;
 
-
-
-
-
-CollisionResolutionStrategy::CollisionResolutionStrategy(GameObject* obj)
+void PlayerCollisionStrategy::CollideWith(GameObject* collidedObj)
 {
-	this->_obj = obj;
+	collidedObj->GetPhysicsComponent()->GetCollisionStrategy()->accept(this);
 }
 
-CollisionResolutionStrategy::~CollisionResolutionStrategy()
+void PlayerCollisionStrategy::visit(DeathTouchCollisionStrategy* component)
+{
+	//Die.
+	if (_obj->GetState()->GetType() == GameObjectState::ALIVE_STATE)
+	{
+		_obj->UpdateState(new DeadState(_obj));
+	}
+}
+
+NullCollisionStrategy::NullCollisionStrategy() : CollisionResolutionStrategy(nullptr)
 {
 }
 
-void PlayerCollisionStrategy::CollideWith(GameObject* obj)
+void DeathTouchCollisionStrategy::CollideWith(GameObject* collidedObj)
 {
-
-}
-
-NullCollisionStrategy::NullCollisionStrategy() : CollisionResolutionStrategy(new NullGameObject())
-{
+	collidedObj->GetPhysicsComponent()->GetCollisionStrategy()->accept(this);
 }

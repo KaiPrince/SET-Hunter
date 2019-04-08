@@ -6,6 +6,8 @@
 #include <algorithm>
 #include "GameObject.h"
 #include "AssetFactory.h"
+#include "CollisionResolutionStrategy.h"
+#include "PhysicsComponent.h"
 
 
 
@@ -119,5 +121,14 @@ void GameWorld::Update()
 
 	for (GameObject* gameObject : _gameObjects) {
 		gameObject->Update();
+
+
+		if (gameObject->GetPhysicsComponent()->IsCollidable() && gameObject->GetPhysicsComponent()->IsCollisionDetected())
+		{
+			for (GameObject* collidedGameObject : gameObject->GetPhysicsComponent()->GetCollisionObjects())
+			{
+				gameObject->GetPhysicsComponent()->GetCollisionStrategy()->CollideWith(collidedGameObject);
+			}
+		}
 	}
 }

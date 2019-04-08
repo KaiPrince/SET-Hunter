@@ -1,5 +1,4 @@
 #pragma once
-#include "Visitor.h"
 
 class GameObject;
 class GameObject;

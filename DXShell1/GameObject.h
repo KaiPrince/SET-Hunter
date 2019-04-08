@@ -2,7 +2,6 @@
 #include "DrawableAsset.h"
 //#include "GameBoard.h"
 #include "Observer.h"
-#include "Visitor.h"
 #include "PhysicsComponent.h"
 #include "InputComponent.h"
 #include "GameObjectState.h"
@@ -15,7 +14,7 @@ Purpose: This class represents any object with a position, and height and width.
 	GameObjects can also have an InputComponent, PhysicsComponent, and State.
 	GameObjects also have a sprite which represents them visually on the screen.
 */
-class GameObject : public Observable, public VisitorComponent
+class GameObject : public Observable
 {
 	PhysicsComponent* _physicsComponent;
 	InputComponent* _inputComponent;
@@ -37,6 +36,8 @@ protected:
 public:
 	GameObject(float x, float y, float width, float height, DrawableAsset* sprite, GameBoard* gameboard,
 		float xVelocity = 0.0f, float yVelocity = 0.0f);
+	GameObject(float x, float y, float width, float height, DrawableAsset* sprite, GameBoard* gameboard,
+		float xVelocity, float yVelocity, PhysicsComponent* physics, InputComponent* input, GameObjectState* state);
 	virtual ~GameObject();
 
 	//------- Getters and Setters for Properties ------------
@@ -82,13 +83,11 @@ public:
 	virtual void Update();
 
 	virtual void Draw();
-
-	// Inherited via VisitorComponent
-	virtual void accept(Visitor & visitor) override;
 };
 
 class NullGameObject : public GameObject
 {
+	static NullGameObject* _singleton;
 public:
 	NullGameObject() : GameObject(0.0f, 0.0f, 0.0f, 0.0f, nullptr, nullptr) {}
 	NullGameObject(float x, float y, float width, float height) : GameObject(x, y, width, height, nullptr, nullptr) {}
@@ -97,7 +96,12 @@ public:
 	virtual void Update() override {}
 	virtual void Draw() override {}
 
-	virtual void accept(Visitor & visitor) override {}
+	static NullGameObject* GetSingleton() {
+		if (!_singleton) {
+			_singleton = new NullGameObject();
+		}
+		return _singleton;
+	}
 
 private:
 

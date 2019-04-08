@@ -2,6 +2,7 @@
 #include "Graphics.h"
 #include "GameController.h"
 #include "Level1.h"
+#include "CollisionResolutionStrategy.h"
 
 
 
@@ -33,6 +34,7 @@ void MainMenuLevel::Load()
 		player->UpdateState(new AliveState(player));
 		player->SetPhysicsComponent(new PlayerPhysicsComponent(player, world));
 		player->SetInputComponent(new StayOnRoadInputComponent(player));
+		player->GetPhysicsComponent()->SetCollisionStrategy(new PlayerCollisionStrategy(player));
 
 		player->AddObserver(this);
 

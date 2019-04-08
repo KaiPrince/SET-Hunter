@@ -144,7 +144,6 @@
     <ClCompile Include="GameBoardTile.cpp" />
     <ClCompile Include="TileFactory.cpp" />
     <ClCompile Include="AssetFactory.cpp" />
-    <ClCompile Include="Visitor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Audio.h" />
@@ -167,7 +166,6 @@
     <ClInclude Include="GameBoardTile.h" />
     <ClInclude Include="TileFactory.h" />
     <ClInclude Include="AssetFactory.h" />
-    <ClInclude Include="Visitor.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\playercar.bmp" />

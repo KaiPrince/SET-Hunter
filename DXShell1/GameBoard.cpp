@@ -2,6 +2,8 @@
 #include "GameWorld.h"
 #include "Graphics.h"
 
+#include "CollisionResolutionStrategy.h"
+
 #include <random>
 #include <chrono>
 #include <ctime>
@@ -347,6 +349,7 @@ void GameBoard::placePlants(int row)
 				newPlant->SetTerrain(AssetFactory::GetNullAsset());
 				newPlant->SetAssets(_assetFactory->GetAsset(plantAssetType));
 				newPlant->SetPhysicsComponent(new CollidablePhysicsComponent(newPlant, _world));
+				newPlant->GetPhysicsComponent()->SetCollisionStrategy(new DeathTouchCollisionStrategy(newPlant));
 
 
 				AddObstacle(newPlant);

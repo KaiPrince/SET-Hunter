@@ -2,7 +2,6 @@
 #include <vector>
 //#include "GameObject.h"
 //#include "GameBoard.h"
-#include "Visitor.h"
 
 class GameObject;
 class GameBoard;

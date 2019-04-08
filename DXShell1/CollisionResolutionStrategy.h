@@ -9,16 +9,30 @@ Purpose: This abstract class is defines the interface for CollisionResolution cl
 	is detected.
 	Their responsibility is to define the new X/Y position and velocity; as well as cause state changes or update object
 	properties.
-	NOTE: This class family uses the Strategy design pattern.
+	NOTE: This class family uses the Strategy and Visitor design patterns.
 */
 class CollisionResolutionStrategy
 {
+protected:
 	GameObject* _obj;
+
 public:
-	CollisionResolutionStrategy(GameObject* obj);
-	virtual ~CollisionResolutionStrategy();
+	CollisionResolutionStrategy(GameObject* obj) { this->_obj = obj; }
+	virtual ~CollisionResolutionStrategy() {}
 
 	virtual void CollideWith(GameObject* obj) = 0;
+
+
+	// Inherited via Visitor
+	virtual void visit(class DeathTouchCollisionStrategy* component) = 0;
+	virtual void visit(class PlayerCollisionStrategy* component) = 0;
+	virtual void visit(class NullCollisionStrategy* component) = 0;
+	//virtual void visit(class CollisionResolutionStrategy* component) = 0;
+
+
+	// Inherited via VisitorComponent
+	virtual void accept(CollisionResolutionStrategy* visitor) = 0;
+
 };
 
 /*
@@ -27,15 +41,33 @@ Purpose: This class adheres to the Null Object Pattern.
 */
 class NullCollisionStrategy : public CollisionResolutionStrategy
 {
+	static NullCollisionStrategy* _singleton;
 public:
 	NullCollisionStrategy();
 	~NullCollisionStrategy() {}
 
+	// Inherited via CollisionResolutionStrategy
+	virtual void CollideWith(GameObject* collidedObj) override {}
+
+	// Inherited via Visitor
+	//virtual void visit(CollisionResolutionStrategy* component) override {}
+	virtual void visit(DeathTouchCollisionStrategy* component) override {}
+	virtual void visit(NullCollisionStrategy* component) override {}
+	virtual void visit(PlayerCollisionStrategy* component) override {}
+
+	// Inherited via VisitorComponent
+	virtual void accept(CollisionResolutionStrategy* visitor) override { visitor->visit(this); }
+
+	static NullCollisionStrategy* GetInstance() {
+		if (!_singleton) {
+			_singleton = new NullCollisionStrategy();
+		}
+		return _singleton;
+	}
+
 private:
 
 
-	// Inherited via CollisionResolutionStrategy
-	virtual void CollideWith(GameObject* obj) override {}
 
 };
 
@@ -49,8 +81,44 @@ public:
 	PlayerCollisionStrategy(GameObject* obj) : CollisionResolutionStrategy(obj) {}
 	~PlayerCollisionStrategy() {}
 
-	virtual void CollideWith(GameObject* obj) override;
 
+	virtual void CollideWith(GameObject* collidedObj) override;
+
+
+	// Inherited via Visitor
+	virtual void visit(DeathTouchCollisionStrategy* component);
+	virtual void visit(PlayerCollisionStrategy* component) override {}
+	virtual void visit(NullCollisionStrategy* component) override {}
+
+
+	// Inherited via VisitorComponent
+	virtual void accept(CollisionResolutionStrategy* visitor) override { visitor->visit(this); }
+
+private:
+
+};
+
+/*
+Class Name: DeathTouchCollisionStrategy
+Purpose: Anything that touches me dies.
+*/
+class DeathTouchCollisionStrategy : public CollisionResolutionStrategy
+{
+public:
+	DeathTouchCollisionStrategy(GameObject* obj) : CollisionResolutionStrategy(obj) {}
+	~DeathTouchCollisionStrategy() {}
+
+
+	virtual void CollideWith(GameObject* collidedObj) override;
+
+
+	// Inherited via Visitor
+	virtual void visit(DeathTouchCollisionStrategy* component) override {}
+	virtual void visit(NullCollisionStrategy* component) override {}
+	virtual void visit(PlayerCollisionStrategy* component) override {}
+
+	// Inherited via VisitorComponent
+	virtual void accept(CollisionResolutionStrategy* visitor) override { visitor->visit(this); }
 private:
 
 };

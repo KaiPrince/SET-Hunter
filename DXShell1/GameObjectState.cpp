@@ -13,7 +13,7 @@ GameObjectState::~GameObjectState()
 {
 }
 
-GameObjectState * AliveState::HandleInput()
+GameObjectState* AliveState::HandleInput()
 {
 	GameObjectState* nextState = this;
 
@@ -24,7 +24,7 @@ GameObjectState * AliveState::HandleInput()
 
 void AliveState::Enter()
 {
-	
+
 
 	//Reset Sprite
 	_object->SetSprite(_object->GetGameBoard()->GetAssetFactory()->GetAsset(DrawableAsset::CAR_SPRITE));
@@ -50,38 +50,30 @@ GameObjectState* AliveState::Update()
 	time_point<steady_clock> currentTime = steady_clock::now();
 	double elapsedTimeInMS = duration<double, std::milli>(currentTime - scoreTimer).count();
 
-	//Transition States
-	if (dynamic_cast<CollidablePhysicsComponent*>(_object->GetPhysicsComponent()) && static_cast<CollidablePhysicsComponent*>(_object->GetPhysicsComponent())->IsCollisionDetected()) {
+	//Object on the road?
+	GameBoardTile * currentSquare = _object->GetGameBoard()->FindSquare(_object->GetXPos() + (_object->GetWidth() / 2), _object->GetYPos());
+	if (currentSquare != nullptr && currentSquare->GetTerrain()->GetType() == DrawableAsset::ROAD_TERRAIN) {
 
-		nextState = new DeadState(_object);
+
+		//Accumulate Score
+		if (offRoadDelayCountdown.count() <= 0) {
+			const double pointsPerMS = 1;
+			GameController::SetScore(GameController::GetScore() + static_cast<unsigned int>(pointsPerMS * elapsedTimeInMS));
+		}
+		else {
+			offRoadDelayCountdown -= duration<int, std::milli>(static_cast<int>(elapsedTimeInMS));
+		}
+
 	}
 	else {
 
-		//Object on the road?
-		GameBoardTile* currentSquare = _object->GetGameBoard()->FindSquare(_object->GetXPos() + (_object->GetWidth() / 2), _object->GetYPos());
-		if (currentSquare != nullptr && currentSquare->GetTerrain()->GetType() == DrawableAsset::ROAD_TERRAIN) {
-
-
-			//Accumulate Score
-			if (offRoadDelayCountdown.count() <= 0) {
-				const double pointsPerMS = 1;
-				GameController::SetScore(GameController::GetScore() + static_cast<unsigned int>(pointsPerMS * elapsedTimeInMS));
-			}
-			else {
-				offRoadDelayCountdown -= duration<int, std::milli>(static_cast<int>(elapsedTimeInMS));
-			}
-
-		}
-		else {
-
-			//Start off-road delay.
-			offRoadDelayCountdown = duration<int, std::milli>(3000);
-		}
-
-
-		//Reset Score timer
-		scoreTimer = currentTime;
+		//Start off-road delay.
+		offRoadDelayCountdown = duration<int, std::milli>(3000);
 	}
+
+
+	//Reset Score timer
+	scoreTimer = currentTime;
 
 	return nextState;
 }
@@ -90,7 +82,7 @@ void AliveState::Leave()
 {
 }
 
-GameObjectState * AliveState::Draw()
+GameObjectState* AliveState::Draw()
 {
 	_object->GetSprite()->Draw(_object->GetXPos(), _object->GetYPos(), _object->GetWidth(), _object->GetHeight()); //TODO: This is terrible. Use renderComponent?
 	return this;
@@ -100,7 +92,7 @@ DeadState::~DeadState()
 {
 }
 
-GameObjectState * DeadState::HandleInput()
+GameObjectState* DeadState::HandleInput()
 {
 	//Don't actually handle input. You're dead.
 	return this;
@@ -140,31 +132,31 @@ void DeadState::Leave()
 {
 }
 
-GameObjectState * DeadState::Draw()
+GameObjectState* DeadState::Draw()
 {
 	_object->GetSprite()->Draw(_object->GetXPos(), _object->GetYPos(), _object->GetWidth(), _object->GetHeight()); //TODO: This is terrible. Use renderComponent?
 	return this;
 }
 
-GameObjectState * NullState::HandleInput()
+GameObjectState* NullState::HandleInput()
 {
 	_object->GetInputComponent()->HandleInput();
 	return this;
 }
 
-GameObjectState * NullState::Update()
+GameObjectState* NullState::Update()
 {
 	_object->GetPhysicsComponent()->Update();
 	return this;
 }
 
-GameObjectState * NullState::Draw()
+GameObjectState* NullState::Draw()
 {
 	_object->GetSprite()->Draw(_object->GetXPos(), _object->GetYPos(), _object->GetWidth(), _object->GetHeight()); //TODO: This is terrible. Use renderComponent?
 	return this;
 }
 
-GameObjectState * InvincibleState::HandleInput()
+GameObjectState* InvincibleState::HandleInput()
 {
 	_object->GetInputComponent()->HandleInput();
 	return this;
@@ -194,7 +186,7 @@ void InvincibleState::Enter()
 
 }
 
-GameObjectState * InvincibleState::Update()
+GameObjectState* InvincibleState::Update()
 {
 	GameObjectState* nextState = this;
 
@@ -227,7 +219,7 @@ void InvincibleState::Leave()
 {
 }
 
-GameObjectState * InvincibleState::Draw()
+GameObjectState* InvincibleState::Draw()
 {
 	if (invincibilityCountdown.count() > 0) {
 		//Draw for 500 milliseconds, and then don't draw for 500 milliseconds. Repeat.

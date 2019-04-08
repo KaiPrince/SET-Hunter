@@ -23,10 +23,34 @@ GameObject::GameObject(float x, float y, float width, float height, DrawableAsse
 	this->xVelocity = xVelocity;
 	this->yVelocity = yVelocity;
 
-	this->_physicsComponent = new NullPhysicsComponent();
+	this->_physicsComponent = NullPhysicsComponent::GetSingleton();
 
 	this->_state = new NullState(this);
 	this->_inputComponent = new NullInputComponent();
+}
+
+GameObject::GameObject(float x, float y, float width, float height, DrawableAsset* sprite, GameBoard* gameboard, float xVelocity, float yVelocity, PhysicsComponent* physics, InputComponent* input, GameObjectState* state)
+{
+	this->x = x;
+	this->y = y;
+	this->width = width;
+	this->height = height;
+	if (sprite != nullptr) {
+		this->sprite = sprite;
+	}
+	else {
+		this->sprite = AssetFactory::GetNullAsset();
+	}
+
+	this->gb = gameboard; //TODO: null check
+
+	this->xVelocity = xVelocity;
+	this->yVelocity = yVelocity;
+
+	this->_physicsComponent = physics;
+
+	this->_state = state;
+	this->_inputComponent = input;
 }
 
 
@@ -40,11 +64,6 @@ void GameObject::Draw() {
 	GameObjectState* nextState = _state->Draw();
 	UpdateState(nextState);
 	//sprite->Draw(x, y, width, height);
-}
-
-void GameObject::accept(Visitor & visitor)
-{
-	visitor.visit(this);
 }
 
 void GameObject::Update() {
@@ -67,7 +86,7 @@ bool GameObject::ContainsPoint(float x, float y)
 }
 
 void GameObject::UpdateState(GameObjectState* nextState) {
-	if (nextState != nullptr && nextState != _state) {
+	if (nextState != nullptr && nextState != _state && nextState->GetType() != _state->GetType()) {
 		//Change state
 		_state->Leave();
 
