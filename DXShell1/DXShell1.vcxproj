@@ -139,6 +139,7 @@
     <ClCompile Include="Observer.cpp" />
     <ClCompile Include="PhysicsComponent.cpp" />
     <ClCompile Include="GameObjectState.cpp" />
+    <ClCompile Include="soundclass.cpp" />
     <ClCompile Include="SplashScreenLevel.cpp" />
     <ClCompile Include="SpriteSheet.cpp" />
     <ClCompile Include="GameBoardTile.cpp" />
@@ -161,6 +162,7 @@
     <ClInclude Include="PhysicsComponent.h" />
     <ClInclude Include="Observer.h" />
     <ClInclude Include="GameObjectState.h" />
+    <ClInclude Include="soundclass.h" />
     <ClInclude Include="SplashScreenLevel.h" />
     <ClInclude Include="SpriteSheet.h" />
     <ClInclude Include="GameBoardTile.h" />

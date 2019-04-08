@@ -89,7 +89,7 @@ int WINAPI wWinMain(
 	}
 	GraphicsLocator::Provide(graphics);
 
-	audio = new DirectXAudio();
+	audio = new DirectXAudio(windowhandle);
 	AudioLocator::Provide(audio);
 
 
