@@ -2,19 +2,54 @@
 #include <Windows.h>
 #include <Mmsystem.h>
 
+#include <dsound.h>
+#include <stdio.h>
+
 #pragma comment(lib, "Winmm.lib")
+#pragma comment(lib, "dsound.lib")
+#pragma comment(lib, "dxguid.lib")
 
 /*
 Class Name: Audio
-Purpose: This class encapsulates all audio features of this program.
+Purpose: This interface class encapsulates all audio features of this program.
 */
 class Audio
 {
 public:
-	Audio();
-	~Audio();
+	virtual ~Audio() {}
 
-	void PlayThemeSong() { PlaySound(TEXT("music.wav"), NULL, SND_ASYNC | SND_FILENAME); }
+	enum Sounds
+	{
+		MAIN_THEME, EXPLOSION, LASER
+	};
+
+	virtual void playSound(int soundID) = 0; //Note: must be camel case, because of naming conflict with DirectX
+	virtual void playSound(Sounds soundType) = 0;
+	virtual void stopSound(int soundID) = 0;
+	virtual void stopAllSounds() = 0;
+
+	virtual void PlayThemeSong() { playSound(Sounds::MAIN_THEME); }
+};
+
+class DirectXAudio : public Audio
+{
+public:
+	DirectXAudio() {}
+	~DirectXAudio() { stopAllSounds(); }
+
+	// Inherited via Audio
+	virtual void playSound(int soundID) override;
+	virtual void playSound(Sounds soundType) override;
+
+	virtual void stopSound(int soundID) override;
+
+	virtual void stopAllSounds() override;
+
+private:
+
+	
+
+
 };
 
 /*

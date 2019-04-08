@@ -1,6 +1,7 @@
 #include "GameObjectState.h"
 #include "GameObject.h"
 #include "GameController.h"
+#include "Audio.h"
 
 
 
@@ -107,6 +108,8 @@ void DeadState::Enter()
 
 	//Death sprite
 	_object->SetSprite(_object->GetGameBoard()->GetAssetFactory()->GetAsset(DrawableAsset::EXPLOSION_SPRITE));
+	//Death sound
+	AudioLocator::GetAudio()->playSound(Audio::EXPLOSION);
 
 	//Notify observers (Road stops scrolling.)
 	_object->Notify();

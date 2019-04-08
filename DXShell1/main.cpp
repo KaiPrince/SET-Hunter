@@ -2,6 +2,7 @@
 #include <WinUser.h>
 #include <Windowsx.h>
 #include "Graphics.h"
+#include "Audio.h"
 #include "SplashScreenLevel.h"
 #include "GameController.h"
 #include <string.h>
@@ -10,6 +11,7 @@
 #include <chrono>
 
 Graphics* graphics;
+Audio* audio;
 
 /*
 Your Mission: Document the following code. What do all these components do?
@@ -86,6 +88,9 @@ int WINAPI wWinMain(
 		return -1;
 	}
 	GraphicsLocator::Provide(graphics);
+
+	audio = new DirectXAudio();
+	AudioLocator::Provide(audio);
 
 
 	GameController::Init();
