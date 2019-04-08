@@ -61,6 +61,11 @@ void AudioSprite::Play()
 	_soundClass->PlayWaveFile(_sound);
 }
 
+void AudioSprite::Stop()
+{
+	_soundClass->StopWaveFile(_sound);
+}
+
 void DirectXAudio::playSound(int soundID)
 {
 }
@@ -71,7 +76,10 @@ void DirectXAudio::stopSound(int soundID)
 
 void DirectXAudio::stopAllSounds()
 {
-	PlaySound(NULL, 0, 0);
+	//PlaySound(NULL, 0, 0);
+	_mainThemeSprite->Stop();
+	_explosionSprite->Stop();
+	_laserSprite->Stop();
 }
 
 

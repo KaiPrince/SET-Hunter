@@ -65,6 +65,7 @@ public:
 	~AudioSprite();
 
 	void Play();
+	void Stop();
 
 };
 

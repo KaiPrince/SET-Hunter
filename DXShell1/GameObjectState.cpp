@@ -108,7 +108,9 @@ void DeadState::Enter()
 
 	//Death sprite
 	_object->SetSprite(_object->GetGameBoard()->GetAssetFactory()->GetAsset(DrawableAsset::EXPLOSION_SPRITE));
+
 	//Death sound
+	AudioLocator::GetAudio()->stopAllSounds();
 	AudioLocator::GetAudio()->playSound(Audio::EXPLOSION);
 
 	//Notify observers (Road stops scrolling.)
@@ -133,6 +135,7 @@ GameObjectState* DeadState::Update()
 
 void DeadState::Leave()
 {
+	AudioLocator::GetAudio()->PlayThemeSong();
 }
 
 GameObjectState* DeadState::Draw()
