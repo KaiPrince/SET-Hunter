@@ -60,3 +60,6 @@ For Fun:
 - Remove hitboxes when plants are deleted at bottom of screen.
 - Change hitboxes to be relative to its object, rather than absolute position.
 - Fix unexprected tiles receiving lots of unnecessary collisions
+
+- Rename Soundclass
+- Simplify SpriteSheet creation. Remove factory?

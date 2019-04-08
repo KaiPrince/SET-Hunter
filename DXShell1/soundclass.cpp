@@ -8,7 +8,6 @@ SoundClass::SoundClass()
 {
 	m_DirectSound = 0;
 	m_primaryBuffer = 0;
-	m_secondaryBuffer1 = 0;
 }
 
 
@@ -34,28 +33,12 @@ bool SoundClass::Initialize(HWND hwnd)
 		return false;
 	}
 
-	// Load a wave audio file onto a secondary buffer.
-	result = LoadWaveFile("Sounds/main_theme.wav", &m_secondaryBuffer1);
-	if(!result)
-	{
-		return false;
-	}
-
-	// Play the wave file now that it has been loaded.
-	result = PlayWaveFile();
-	if(!result)
-	{
-		return false;
-	}
-
 	return true;
 }
 
 
 void SoundClass::Shutdown()
 {
-	// Release the secondary buffer.
-	ShutdownWaveFile(&m_secondaryBuffer1);
 
 	// Shutdown the Direct Sound API.
 	ShutdownDirectSound();
@@ -306,40 +289,28 @@ bool SoundClass::LoadWaveFile(char* filename, IDirectSoundBuffer8** secondaryBuf
 }
 
 
-void SoundClass::ShutdownWaveFile(IDirectSoundBuffer8** secondaryBuffer)
-{
-	// Release the secondary sound buffer.
-	if(*secondaryBuffer)
-	{
-		(*secondaryBuffer)->Release();
-		*secondaryBuffer = 0;
-	}
 
-	return;
-}
-
-
-bool SoundClass::PlayWaveFile()
+bool SoundClass::PlayWaveFile(IDirectSoundBuffer8* sound)
 {
 	HRESULT result;
 
 
 	// Set position at the beginning of the sound buffer.
-	result = m_secondaryBuffer1->SetCurrentPosition(0);
+	result = sound->SetCurrentPosition(0);
 	if(FAILED(result))
 	{
 		return false;
 	}
 
 	// Set volume of the buffer to 100%.
-	result = m_secondaryBuffer1->SetVolume(DSBVOLUME_MAX);
+	result = sound->SetVolume(DSBVOLUME_MAX);
 	if(FAILED(result))
 	{
 		return false;
 	}
 
-	// Play the contents of the secondary sound buffer.
-	result = m_secondaryBuffer1->Play(0, 0, 0);
+	// Play the contents of the sound buffer.
+	result = sound->Play(0, 0, 0);
 	if(FAILED(result))
 	{
 		return false;

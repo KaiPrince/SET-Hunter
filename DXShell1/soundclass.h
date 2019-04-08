@@ -1,6 +1,11 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Filename: soundclass.h
 ///////////////////////////////////////////////////////////////////////////////
+
+/*
+Credit: http://www.rastertek.com/dx11tut14.html
+*/
+
 #ifndef _SOUNDCLASS_H_
 #define _SOUNDCLASS_H_
 
@@ -53,19 +58,18 @@ public:
 	bool Initialize(HWND);
 	void Shutdown();
 
+	bool LoadWaveFile(char*, IDirectSoundBuffer8**);
+	bool PlayWaveFile(IDirectSoundBuffer8* sound);
+
 private:
 	bool InitializeDirectSound(HWND);
 	void ShutdownDirectSound();
 
-	bool LoadWaveFile(char*, IDirectSoundBuffer8**);
-	void ShutdownWaveFile(IDirectSoundBuffer8**);
 
-	bool PlayWaveFile();
 
 private:
 	IDirectSound8* m_DirectSound;
 	IDirectSoundBuffer* m_primaryBuffer;
-	IDirectSoundBuffer8* m_secondaryBuffer1;
 };
 
 #endif
