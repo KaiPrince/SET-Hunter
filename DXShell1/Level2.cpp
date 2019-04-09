@@ -7,6 +7,7 @@
 #include "MainMenuLevel.h"
 #include "Audio.h"
 #include "GameObjectState.h"
+#include "CollisionResolutionStrategy.h"
 
 
 
@@ -34,7 +35,7 @@ void Level2::Load()
 	enemy->SetInputComponent(new StayOnRoadInputComponent(enemy));
 	enemy->SetPhysicsComponent(new CollidablePhysicsComponent(enemy, world));
 	enemy->UpdateState(new ShootPlayerState(enemy));
-	//enemy->GetPhysicsComponent()->SetCollisionStrategy(new )
+	enemy->GetPhysicsComponent()->SetCollisionStrategy(new DeathTouchCollisionStrategy(enemy));
 
 	world->AddGameObject(enemy);
 }
