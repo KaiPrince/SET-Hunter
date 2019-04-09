@@ -82,10 +82,9 @@ public:
 	~DirectXAudio();
 
 	// Inherited via Audio
-	virtual void playSound(int soundID) override;
 	virtual void playSound(Sounds soundType) override;
 
-	virtual void stopSound(int soundID) override;
+	virtual void stopSound(Sounds soundType) override;
 
 	virtual void stopAllSounds() override;
 

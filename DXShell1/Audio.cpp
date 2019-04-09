@@ -66,17 +66,8 @@ void AudioSprite::Stop()
 	_soundClass->StopWaveFile(_sound);
 }
 
-void DirectXAudio::playSound(int soundID)
-{
-}
-
-void DirectXAudio::stopSound(int soundID)
-{
-}
-
 void DirectXAudio::stopAllSounds()
 {
-	//PlaySound(NULL, 0, 0);
 	_mainThemeSprite->Stop();
 	_explosionSprite->Stop();
 	_laserSprite->Stop();
@@ -88,16 +79,32 @@ void DirectXAudio::playSound(Sounds soundType)
 	switch (soundType)
 	{
 	case Audio::MAIN_THEME:
-		//PlaySound(TEXT("Sounds/main_theme.wav"), NULL, SND_ASYNC | SND_FILENAME | SND_LOOP);
 		_mainThemeSprite->Play();
 		break;
 	case Audio::EXPLOSION:
 		_explosionSprite->Play();
-		//PlaySound(TEXT("Sounds/explosion.wav"), NULL, SND_ASYNC | SND_FILENAME);
 		break;
 	case Audio::LASER:
 		_laserSprite->Play();
 		break;	
+	default:
+		break;
+	}
+}
+
+void DirectXAudio::stopSound(Sounds soundType)
+{
+	switch (soundType)
+	{
+	case Audio::MAIN_THEME:
+		_mainThemeSprite->Stop();
+		break;
+	case Audio::EXPLOSION:
+		_explosionSprite->Stop();
+		break;
+	case Audio::LASER:
+		_laserSprite->Stop();
+		break;
 	default:
 		break;
 	}
