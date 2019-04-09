@@ -130,6 +130,21 @@ private:
 
 };
 
+class AssetBackgroundRectangleDecorator : public DrawableAsset
+{
+	DrawableAsset* _asset;
+public:
+	AssetBackgroundRectangleDecorator(DrawableAsset* asset) : DrawableAsset() {
+		_asset = asset;
+	}
+	virtual ~AssetBackgroundRectangleDecorator() {}
+
+	virtual DrawableAsset::AssetTypes GetType() override { return _asset->GetType(); } //Decorators have a transparent type.
+
+	virtual void Draw(float x, float y, float width, float height) override;
+private:
+};
+
 class RoadTerrain :
 	public DrawableAsset
 {

@@ -63,3 +63,5 @@ For Fun:
 
 - Rename Soundclass
 - Simplify SpriteSheet creation. Remove factory?
+
+- Add colour config to asset decorators.

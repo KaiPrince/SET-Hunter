@@ -51,3 +51,10 @@ void AssetRoundedOutlineDecorator::Draw(float x, float y, float width, float hei
 
 	GetGraphics()->DrawRoundRect(x, y, width, height, 10.0f, 10.0f, 0.0f, 0.0f, 0.0f, 1.0f);
 }
+
+void AssetBackgroundRectangleDecorator::Draw(float x, float y, float width, float height)
+{
+	GetGraphics()->FillRect(x, y, width, height, 1.0f, 1.0f, 1.0f, 0.2f);
+
+	_asset->Draw(x, y, width, height);
+}

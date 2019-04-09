@@ -87,6 +87,9 @@
     <ClCompile Include="soundclass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Level2.cpp">
+      <Filter>Levels</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Graphics.h">
@@ -151,6 +154,9 @@
     </ClInclude>
     <ClInclude Include="soundclass.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Level2.h">
+      <Filter>Levels</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

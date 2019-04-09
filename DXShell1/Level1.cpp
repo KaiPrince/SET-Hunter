@@ -1,6 +1,7 @@
 #include "GameController.h"
 #include "Graphics.h"
 #include "Level1.h"
+#include "Level2.h"
 #include <string.h>
 #include <stdio.h>
 #include "GameBoard.h"
@@ -12,19 +13,30 @@ void Level1::Load()
 	//Create World
 	//world = new GameWorld(_assetFactory);
 
-	continueRoadScolling = true;
+	this->continueRoadScolling = true;
 
 	player = world->GetPlayer();
 	player->AddObserver(this);
+
+	scoreAsset = static_cast<TextAsset*>(_assetFactory->GetAsset(DrawableAsset::TEXT_ASSET));
+	DrawableAsset* backgroundDecoratedAsset = new AssetBackgroundRectangleDecorator(scoreAsset);
+
+	this->scoreHUD = new GameObject(0, 0, 200.0f, 100.0f, backgroundDecoratedAsset, world->GetGameBoard());
+	world->AddUIObject(this->scoreHUD);
+
 }
 
 
 void Level1::Unload()
 {
 	player->RemoveObserver(this);
+
+	world->RemoveUIObject(this->scoreHUD);
+
+	delete this->scoreHUD;
 	
 	//Delete World
-	delete world;
+	//delete world;
 }
 
 
@@ -41,6 +53,12 @@ void Level1::Update()
 	if (GameController::GetLives() <= 0) {
 		GameController::QueuedNextLevel = new MainMenuLevel();
 	}
+	else if (GameController::GetScore() >= 15000) {
+		GameController::QueuedNextLevel = new Level2();
+	}
+	else {
+		//No level change needed.
+	}
 }
 
 void Level1::Render()
@@ -50,8 +68,10 @@ void Level1::Render()
 	world->Draw();
 
 	char ScoreMessage[500] = "";
-	gfx->WriteText(0, 0, 200.0f, 100.0f, 10.0f, ScoreMessage, sprintf_s(ScoreMessage, 500, "Score: %u\n Lives %d\n",
-		GameController::GetScore(), GameController::GetLives()));
+	sprintf_s(ScoreMessage, 500, "Score: %u\n Lives %d\n",
+		GameController::GetScore(), GameController::GetLives());
+
+	this->scoreAsset->SetText(ScoreMessage);
 
 
 	//DEBUG

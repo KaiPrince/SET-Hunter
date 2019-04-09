@@ -134,6 +134,7 @@
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="InputComponent.cpp" />
     <ClCompile Include="Level1.cpp" />
+    <ClCompile Include="Level2.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenuLevel.cpp" />
     <ClCompile Include="Observer.cpp" />
@@ -158,6 +159,7 @@
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="InputComponent.h" />
     <ClInclude Include="Level1.h" />
+    <ClInclude Include="Level2.h" />
     <ClInclude Include="MainMenuLevel.h" />
     <ClInclude Include="PhysicsComponent.h" />
     <ClInclude Include="Observer.h" />
