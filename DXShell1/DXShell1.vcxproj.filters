@@ -91,7 +91,7 @@
       <Filter>Levels</Filter>
     </ClCompile>
     <ClCompile Include="Command.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Design Patterns</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -161,11 +161,11 @@
     <ClInclude Include="Level2.h">
       <Filter>Levels</Filter>
     </ClInclude>
-    <ClInclude Include="Command.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Constants.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Command.h">
+      <Filter>Design Patterns</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

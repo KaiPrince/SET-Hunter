@@ -1,4 +1,5 @@
 #include "GameController.h"
+#include "Audio.h"
 
 GameLevel* GameController::currentLevel;
 bool GameController::Loading;
@@ -50,6 +51,7 @@ void GameController::Update()
 {
 	if (Loading) return; //nice! Do not update or render if the scene is loading.
 	currentLevel->Update();
+	AudioLocator::GetAudio()->Update();
 	lastUpdateTimePoint = std::chrono::high_resolution_clock::now();
 }
 

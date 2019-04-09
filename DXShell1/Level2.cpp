@@ -24,8 +24,7 @@ Level2::~Level2()
 void Level2::Load()
 {
 	//Change Theme
-	AudioLocator::GetAudio()->stopSound(Audio::MAIN_THEME);
-	AudioLocator::GetAudio()->playSound(Audio::LEVEL2_THEME);
+	AudioLocator::GetAudio()->changeSound(Audio::MAIN_THEME, Audio::LEVEL2_THEME);
 
 	player = world->GetPlayer();
 	player->AddObserver(this);

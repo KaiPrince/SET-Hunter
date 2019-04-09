@@ -5,6 +5,7 @@
 #pragma comment(lib, "Winmm.lib")
 
 #include "soundclass.h"
+#include "Command.h"
 
 /*
 Class Name: Audio
@@ -23,9 +24,12 @@ public:
 	//Note: must be camel case, because of naming conflict with DirectX
 	virtual void playSound(Sounds soundType) = 0;
 	virtual void stopSound(Sounds soundType) = 0;
+	virtual void changeSound(Sounds stopSound, Sounds startSound) = 0;
 	virtual void stopAllSounds() = 0;
 
 	virtual void PlayThemeSong() { playSound(Sounds::MAIN_THEME); }
+
+	virtual void Update() = 0;
 };
 
 /*
@@ -67,6 +71,9 @@ public:
 	void Play();
 	void Stop();
 
+	long GetVolume();
+	void SetVolume(long vol);
+
 };
 
 
@@ -76,7 +83,28 @@ Purpose: This is a concrete implementation of the audio interface, using DirectX
 */
 class DirectXAudio : public Audio
 {
+	const int kCrossFadeDurationInMS = 3000;
+	const long kCrossFadeInStep = 100;
+	const long kCrossFadeOutStep = 100;
+	const long kCrossFadeMax = DSBVOLUME_MAX;
+	const long kCrossFadeMin = DSBVOLUME_MIN;
+
 	SoundClass* _soundClass;
+
+	AudioSprite* _crossfadeOut;
+	AudioSprite* _crossfadeIn;
+
+	AudioSprite* _mainThemeSprite;
+	AudioSprite* _explosionSprite;
+	AudioSprite* _laserSprite;
+	AudioSprite* _level2Theme;
+
+	AudioSprite* getSpriteFromType(Sounds soundType);
+
+	// Inherited via Audio
+	virtual void changeSound(Sounds stopSound, Sounds startSound) override;
+
+
 public:
 	DirectXAudio(HWND windowHandle);
 	~DirectXAudio();
@@ -88,12 +116,6 @@ public:
 
 	virtual void stopAllSounds() override;
 
-private:
-
-	AudioSprite* _mainThemeSprite;
-	AudioSprite* _explosionSprite;
-	AudioSprite* _laserSprite;
-	AudioSprite* _level2Theme;
-
+	virtual void Update() override;
 
 };

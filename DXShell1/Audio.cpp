@@ -1,12 +1,16 @@
 #include "Audio.h"
+#include <cassert>
 
 
 Audio* AudioLocator::_audio;
 
 DirectXAudio::DirectXAudio(HWND windowHandle)
 {
-	_soundClass = new SoundClass(); 
+	_soundClass = new SoundClass();
 	_soundClass->Initialize(windowHandle);
+
+	_crossfadeIn = nullptr;
+	_crossfadeOut = nullptr;
 
 	_mainThemeSprite = new AudioSprite("Sounds/main_theme.wav", _soundClass);
 	_explosionSprite = new AudioSprite("Sounds/explosion.wav", _soundClass);
@@ -68,11 +72,90 @@ void AudioSprite::Stop()
 	_soundClass->StopWaveFile(_sound);
 }
 
+long AudioSprite::GetVolume()
+{
+	long output = -1;
+
+	HRESULT result = _sound->GetVolume(&output);
+	assert(result == DS_OK);
+
+	return output;
+}
+
+void AudioSprite::SetVolume(long vol)
+{
+	HRESULT result = _sound->SetVolume(vol);
+	assert(result == DS_OK);
+}
+
 void DirectXAudio::stopAllSounds()
 {
 	_mainThemeSprite->Stop();
 	_explosionSprite->Stop();
 	_laserSprite->Stop();
+}
+
+void DirectXAudio::Update()
+{
+	//Cross-fade sounds if necessary.
+	if (_crossfadeIn != nullptr) {
+
+		if (_crossfadeIn->GetVolume() < kCrossFadeMax) {
+
+			_crossfadeIn->SetVolume(_crossfadeIn->GetVolume() + kCrossFadeInStep);
+
+		}
+		else {
+			_crossfadeIn = nullptr;
+		}
+	}
+
+	if (_crossfadeOut != nullptr) {
+
+		if (_crossfadeOut->GetVolume() > kCrossFadeMin) {
+
+			_crossfadeOut->SetVolume(_crossfadeOut->GetVolume() - kCrossFadeOutStep);
+
+		}
+		else {
+			_crossfadeOut->Stop();
+			_crossfadeOut = nullptr;
+		}
+	}
+}
+
+AudioSprite* DirectXAudio::getSpriteFromType(Sounds soundType)
+{
+	AudioSprite* output = nullptr;
+
+	switch (soundType)
+	{
+
+	case MAIN_THEME:
+		output = _mainThemeSprite;
+		break;
+	case EXPLOSION:
+		output = _explosionSprite;
+		break;
+	case LASER:
+		output = _laserSprite;
+		break;
+	case LEVEL2_THEME:
+		output = _level2Theme;
+		break;
+	default:
+		throw; //ERROR: Unexpected/Invalid Enum
+		break;
+	}
+	return output;
+}
+
+void DirectXAudio::changeSound(Sounds stopSound, Sounds startSound)
+{
+	this->_crossfadeOut = getSpriteFromType(stopSound);
+	this->_crossfadeIn = getSpriteFromType(startSound);
+
+	this->_crossfadeIn->Play();
 }
 
 
@@ -88,7 +171,7 @@ void DirectXAudio::playSound(Sounds soundType)
 		break;
 	case Audio::LASER:
 		_laserSprite->Play();
-		break;	
+		break;
 	case Audio::LEVEL2_THEME:
 		_level2Theme->Play();
 		break;
