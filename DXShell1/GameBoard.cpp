@@ -371,6 +371,8 @@ void GameBoard::RemoveObstacle(GameBoardTile * obstacle)
 	if (obstacle != nullptr) {
 		_world->RemoveGameObject(obstacle);
 		_plantObstacles.erase(std::remove(_plantObstacles.begin(), _plantObstacles.end(), obstacle), _plantObstacles.end());
+
+		delete obstacle;
 	}
 }
 

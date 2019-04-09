@@ -21,7 +21,7 @@ void Level1::Load()
 	scoreAsset = static_cast<TextAsset*>(_assetFactory->GetAsset(DrawableAsset::TEXT_ASSET));
 	DrawableAsset* backgroundDecoratedAsset = new AssetBackgroundRectangleDecorator(scoreAsset);
 
-	this->scoreHUD = new GameObject(0, 0, 200.0f, 100.0f, backgroundDecoratedAsset, world);
+	this->scoreHUD = new GameObject(0, 0, 100.0f, 50.0f, backgroundDecoratedAsset, world);
 	world->AddUIObject(this->scoreHUD);
 
 }

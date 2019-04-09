@@ -20,6 +20,8 @@ PhysicsComponent::PhysicsComponent(GameObject* obj, GameWorld* world)
 
 	//non-collidable by default.
 	//this->_hitbox = new NullGameObject(obj->GetXPos(), obj->GetYPos(), obj->GetWidth(), obj->GetHeight());
+
+	//DEBUG TODO: remove.
 	this->_hitbox = new GameObject(0.0f, 0.0f, 0.0f, 0.0f, new AssetOutlineDecorator(AssetFactory::GetNullAsset()), world);
 	world->AddUIObject(this->_hitbox);
 }
@@ -35,6 +37,12 @@ PhysicsComponent::PhysicsComponent(GameObject* obj, GameWorld* world, GameObject
 
 PhysicsComponent::~PhysicsComponent()
 {
+
+	//DEBUG TODO: remove.
+	this->_world->RemoveUIObject(_hitbox);
+
+	delete _hitbox;
+
 }
 
 void PhysicsComponent::DetectCollisions()

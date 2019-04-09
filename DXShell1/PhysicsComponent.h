@@ -91,7 +91,7 @@ class CollidablePhysicsComponent : public PhysicsComponent
 
 public:
 	CollidablePhysicsComponent(GameObject* obj, GameWorld* world);
-	virtual ~CollidablePhysicsComponent() {}
+	virtual ~CollidablePhysicsComponent() { }
 
 
 	virtual bool IsCollidable() override { return true; }

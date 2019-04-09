@@ -27,7 +27,7 @@ GameObject::GameObject(float x, float y, float width, float height, DrawableAsse
 	this->_physicsComponent = NullPhysicsComponent::GetSingleton();
 
 	this->_state = new NullState(this);
-	this->_inputComponent = new NullInputComponent();
+	this->_inputComponent = new NullInputComponent(); //Note: if this is ever changed to a singleton class, add delete safeguard in destructor.
 }
 
 GameObject::GameObject(float x, float y, float width, float height, DrawableAsset* sprite, GameWorld* gameworld, float xVelocity, float yVelocity, PhysicsComponent* physics, InputComponent* input, GameObjectState* state)
@@ -58,6 +58,8 @@ GameObject::GameObject(float x, float y, float width, float height, DrawableAsse
 GameObject::~GameObject()
 {
 	delete _state;
+	if (_physicsComponent != NullPhysicsComponent::GetSingleton()) delete _physicsComponent;
+	delete _inputComponent;
 }
 
 void GameObject::Draw() {
