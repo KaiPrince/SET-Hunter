@@ -6,6 +6,7 @@
 #include "GameBoard.h"
 #include "MainMenuLevel.h"
 #include "Audio.h"
+#include "GameObjectState.h"
 
 
 
@@ -32,6 +33,7 @@ void Level2::Load()
 	GameObject* enemy = new GameObject(400, 500, 50, 100, _assetFactory->GetAsset(DrawableAsset::ENEMY_CAR), world);
 	enemy->SetInputComponent(new StayOnRoadInputComponent(enemy));
 	enemy->SetPhysicsComponent(new CollidablePhysicsComponent(enemy, world));
+	enemy->UpdateState(new ShootPlayerState(enemy));
 	//enemy->GetPhysicsComponent()->SetCollisionStrategy(new )
 
 	world->AddGameObject(enemy);

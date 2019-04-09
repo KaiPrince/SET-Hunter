@@ -3,6 +3,8 @@
 #include "GameController.h"
 #include "Audio.h"
 
+#include "AssetFactory.h" //TODO: remove
+
 
 
 GameObjectState::GameObjectState(GameObject* object)
@@ -261,7 +263,7 @@ GameObjectState* InvincibleState::Draw()
 
 GameObjectState* ShootPlayerState::HandleInput()
 {
-	_object->HandleInput();
+	_object->GetInputComponent()->HandleInput();
 	return this;
 }
 
@@ -273,7 +275,11 @@ GameObjectState* ShootPlayerState::Update()
 {
 	GameObject* player = _object->GetGameWorld()->GetPlayer();
 
-	//GameObject* newRocket = new GameObject(_object->GetXPos(), _object->GetYPos(), 20, 50, ) //TODO: use prototype pattern.
+	//GameObject* newRocket = new GameObject(_object->GetXPos(), _object->GetYPos(), 20, 50, AssetFactory::GetAsset(DrawableAsset::ROCKET_SPRITE), _object->GetGameWorld(), 0.0f, -10.0f); //TODO: use prototype pattern.
+	//newRocket->SetPhysicsComponent(new CollidablePhysicsComponent(newRocket, _object->GetGameWorld()));
+	//_object->GetGameWorld()->AddGameObject(newRocket);
+
+	_object->GetPhysicsComponent()->Update();
 	return this;
 }
 
@@ -283,5 +289,6 @@ void ShootPlayerState::Leave()
 
 GameObjectState* ShootPlayerState::Draw()
 {
-	return nullptr;
+	_object->GetSprite()->Draw(_object->GetXPos(), _object->GetYPos(), _object->GetWidth(), _object->GetHeight());
+	return this;
 }
