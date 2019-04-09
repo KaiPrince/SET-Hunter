@@ -105,11 +105,12 @@ void PlayerPhysicsComponent::Update() {
 
 
 	//Create clone gameObject with altered hitbox.
-	float oneThirdWidth = _obj->GetWidth() / 3;
-	float heightDifference = _obj->GetHeight() / 5;
-	ChangeHitbox(_obj->GetXPos() + oneThirdWidth, _obj->GetYPos() + heightDifference, oneThirdWidth, _obj->GetHeight() - heightDifference);
+	//float oneThirdWidth = _obj->GetWidth() / 3;
+	//float heightDifference = _obj->GetHeight() / 5;
+	//ChangeHitbox(_obj->GetXPos() + oneThirdWidth, _obj->GetYPos() + heightDifference, oneThirdWidth, _obj->GetHeight() - heightDifference);
 
 	//CollidablePhysicsComponent::Update();
+	ResetHitbox();
 	DetectCollisionsAs(_hitbox);
 
 
@@ -161,6 +162,12 @@ void CollidablePhysicsComponent::Update()
 {
 	ResetHitbox();
 	DetectCollisionsAs(_hitbox);
+
+	float newXPos = _obj->GetXPos() + _obj->GetXVelocity();
+	float newYPos = _obj->GetYPos() - _obj->GetYVelocity(); // Because y axis is inverted.
+
+	_obj->SetXPos(newXPos);
+	_obj->SetYPos(newYPos);
 }
 
 void CollidablePhysicsComponent::ResetHitbox()
