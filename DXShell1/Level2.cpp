@@ -29,7 +29,7 @@ void Level2::Load()
 	player->AddObserver(this);
 
 	//Spawn 5 enemies.
-	GameObject* enemy = new GameObject(400, 500, 50, 100, _assetFactory->GetAsset(DrawableAsset::ENEMY_CAR), world->GetGameBoard());
+	GameObject* enemy = new GameObject(400, 500, 50, 100, _assetFactory->GetAsset(DrawableAsset::ENEMY_CAR), world);
 	enemy->SetInputComponent(new StayOnRoadInputComponent(enemy));
 	enemy->SetPhysicsComponent(new CollidablePhysicsComponent(enemy, world));
 	//enemy->GetPhysicsComponent()->SetCollisionStrategy(new )

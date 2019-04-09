@@ -7,6 +7,7 @@
 #include "GameObjectState.h"
 
 class GameBoard;
+class GameWorld;
 
 /*
 Class Name: GameObject
@@ -23,7 +24,7 @@ class GameObject : public Observable
 
 protected:
 	DrawableAsset* sprite;
-	GameBoard* gb;
+	GameWorld* world;
 
 	float x;
 	float y;
@@ -34,9 +35,9 @@ protected:
 	float yVelocity;
 
 public:
-	GameObject(float x, float y, float width, float height, DrawableAsset* sprite, GameBoard* gameboard,
+	GameObject(float x, float y, float width, float height, DrawableAsset* sprite, GameWorld* gameworld,
 		float xVelocity = 0.0f, float yVelocity = 0.0f);
-	GameObject(float x, float y, float width, float height, DrawableAsset* sprite, GameBoard* gameboard,
+	GameObject(float x, float y, float width, float height, DrawableAsset* sprite, GameWorld* gameworld,
 		float xVelocity, float yVelocity, PhysicsComponent* physics, InputComponent* input, GameObjectState* state);
 	virtual ~GameObject();
 
@@ -60,9 +61,10 @@ public:
 
 
 	//-------- Getters and Setters for Components ------------
-	GameBoard* GetGameBoard() { return gb; }
+	GameBoard* GetGameBoard();
+	GameWorld* GetGameWorld() { return world; }
 	PhysicsComponent* GetPhysicsComponent() { return _physicsComponent; }
-	void SetGameBoard(GameBoard* gb) { this->gb = gb; }
+	void SetGameWorld(GameWorld* world) { this->world = world; }
 	void SetPhysicsComponent(PhysicsComponent* physics) { _physicsComponent = physics; }
 	void SetSprite(DrawableAsset* sprite) { this->sprite = sprite; }
 

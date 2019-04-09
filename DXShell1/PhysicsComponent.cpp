@@ -20,7 +20,7 @@ PhysicsComponent::PhysicsComponent(GameObject* obj, GameWorld* world)
 
 	//non-collidable by default.
 	//this->_hitbox = new NullGameObject(obj->GetXPos(), obj->GetYPos(), obj->GetWidth(), obj->GetHeight());
-	this->_hitbox = new GameObject(0.0f, 0.0f, 0.0f, 0.0f, new AssetOutlineDecorator(AssetFactory::GetNullAsset()), world->GetGameBoard());
+	this->_hitbox = new GameObject(0.0f, 0.0f, 0.0f, 0.0f, new AssetOutlineDecorator(AssetFactory::GetNullAsset()), world);
 	world->AddUIObject(this->_hitbox);
 }
 

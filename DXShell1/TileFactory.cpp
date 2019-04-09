@@ -1,10 +1,11 @@
 #include "TileFactory.h"
 #include "GameBoard.h"
 #include "AssetFactory.h"
+#include "GameWorld.h"
 
 
 
-TileFactory::TileFactory(GameBoard* gb, AssetFactory* assetFactory)
+TileFactory::TileFactory(GameWorld* gb, AssetFactory* assetFactory)
 { 
 	this->gb = gb;
 	this->_assetFactory = assetFactory;

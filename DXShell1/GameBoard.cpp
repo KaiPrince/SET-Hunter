@@ -23,7 +23,7 @@ GameBoard::GameBoard(float squareWidth, float squareHeight, AssetFactory* assetF
 	};
 
 	_assetFactory = assetFactory;
-	_squareFactory = new TileFactory(this, _assetFactory);
+	_squareFactory = new TileFactory(world, _assetFactory);
 	_grassTerrain = nullptr;
 	_roadTerrain = nullptr;
 

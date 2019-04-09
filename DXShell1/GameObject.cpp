@@ -1,10 +1,11 @@
 #include "GameObject.h"
 #include "AssetFactory.h"
 #include "GameObjectState.h"
+#include "GameWorld.h"
 
 
 
-GameObject::GameObject(float x, float y, float width, float height, DrawableAsset* sprite, GameBoard* gameboard,
+GameObject::GameObject(float x, float y, float width, float height, DrawableAsset* sprite, GameWorld* gameworld,
 	float xVelocity, float yVelocity)
 {
 	this->x = x;
@@ -18,7 +19,7 @@ GameObject::GameObject(float x, float y, float width, float height, DrawableAsse
 		this->sprite = AssetFactory::GetNullAsset();
 	}
 
-	this->gb = gameboard; //TODO: null check
+	this->world = gameworld; //TODO: null check
 
 	this->xVelocity = xVelocity;
 	this->yVelocity = yVelocity;
@@ -29,7 +30,7 @@ GameObject::GameObject(float x, float y, float width, float height, DrawableAsse
 	this->_inputComponent = new NullInputComponent();
 }
 
-GameObject::GameObject(float x, float y, float width, float height, DrawableAsset* sprite, GameBoard* gameboard, float xVelocity, float yVelocity, PhysicsComponent* physics, InputComponent* input, GameObjectState* state)
+GameObject::GameObject(float x, float y, float width, float height, DrawableAsset* sprite, GameWorld* gameworld, float xVelocity, float yVelocity, PhysicsComponent* physics, InputComponent* input, GameObjectState* state)
 {
 	this->x = x;
 	this->y = y;
@@ -42,7 +43,7 @@ GameObject::GameObject(float x, float y, float width, float height, DrawableAsse
 		this->sprite = AssetFactory::GetNullAsset();
 	}
 
-	this->gb = gameboard; //TODO: null check
+	this->world = gameworld; //TODO: null check
 
 	this->xVelocity = xVelocity;
 	this->yVelocity = yVelocity;
@@ -83,6 +84,11 @@ bool GameObject::ContainsPoint(float x, float y)
 	{
 		return false;
 	}
+}
+
+GameBoard* GameObject::GetGameBoard()
+{
+	return world->GetGameBoard();
 }
 
 void GameObject::UpdateState(GameObjectState* nextState) {

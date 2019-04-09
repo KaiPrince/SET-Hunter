@@ -30,7 +30,7 @@ void MainMenuLevel::Load()
 		float player_StartY = ((float)gb->boardHeight * gb->squareHeight) - (gb->squareHeight * 3); //bring it a little off the bottom
 
 		GameObject* player = new GameObject(player_StartX, player_StartY,
-			gb->squareWidth / 2, gb->squareHeight, _assetFactory->GetAsset(DrawableAsset::CAR_SPRITE), gb);
+			gb->squareWidth / 2, gb->squareHeight, _assetFactory->GetAsset(DrawableAsset::CAR_SPRITE), world);
 		player->UpdateState(new AliveState(player));
 		player->SetPhysicsComponent(new PlayerPhysicsComponent(player, world));
 		player->SetInputComponent(new StayOnRoadInputComponent(player));
@@ -53,7 +53,7 @@ void MainMenuLevel::Load()
 	DrawableAsset* UIsprite = _assetFactory->GetAsset(DrawableAsset::MAIN_MENU_BACKGROUND_ASSET);
 
 	GameObject* background = new GameObject(0.0f, 0.0f, ScreenWidth, ScreenHeight,
-		UIsprite, gb);
+		UIsprite, world);
 
 
 	//Logo
@@ -61,7 +61,7 @@ void MainMenuLevel::Load()
 	GameObject* Logo = new GameObject(0 + pseudoPixelWidth, 0 + pseudoPixelHeight,
 		pseudoPixelWidth * 3, pseudoPixelHeight * 4,
 		UIsprite,
-		gb);
+		world);
 
 
 	//Title
@@ -74,7 +74,7 @@ void MainMenuLevel::Load()
 
 	GameObject* Title = new GameObject(ScreenWidth - (5 * pseudoPixelWidth), 0 + pseudoPixelHeight,
 		4 * pseudoPixelWidth, 1 * pseudoPixelHeight,
-		UIsprite, gb);
+		UIsprite, world);
 
 
 	//PlayerName
@@ -85,7 +85,7 @@ void MainMenuLevel::Load()
 
 	GameObject* PlayerName = new GameObject(Title->GetXPos(), Title->GetYPos() + pseudoPixelHeight,
 		4 * pseudoPixelWidth, 1 * pseudoPixelHeight,
-		UIsprite, gb);
+		UIsprite, world);
 
 
 	//Previous Score
@@ -100,13 +100,13 @@ void MainMenuLevel::Load()
 
 	GameObject* PreviousScoreLabel = new GameObject(PlayerName->GetXPos(), PlayerName->GetYPos() + pseudoPixelHeight,
 		4 * pseudoPixelWidth, 1 * pseudoPixelHeight,
-		UIsprite, gb);
+		UIsprite, world);
 
 	//Start Button
 	UIsprite = new AssetRoundedOutlineDecorator(AssetFactory::GetNullAsset());
 
 	this->StartButton = new GameObject(0 + (2 * pseudoPixelWidth), ScreenHeight - (4 * pseudoPixelHeight),
-		6 * pseudoPixelWidth, 1 * pseudoPixelHeight, UIsprite, gb);
+		6 * pseudoPixelWidth, 1 * pseudoPixelHeight, UIsprite, world);
 	this->StartButton->SetInputComponent(new ClickableInputComponent(this->StartButton));
 	this->StartButton->AddObserver(this);
 
@@ -120,13 +120,13 @@ void MainMenuLevel::Load()
 	const float originX_startButton = StartButton->GetXPos() + (StartButton->GetWidth() / 2);
 	const float originY_startButton = StartButton->GetYPos();
 	GameObject* StartButtonLabel = new GameObject(originX_startButton - (1 * pseudoPixelWidth),
-		originY_startButton - (0.4f * pseudoPixelWidth), StartButton->GetWidth(), StartButton->GetHeight(), textAsset, gb);
+		originY_startButton - (0.4f * pseudoPixelWidth), StartButton->GetWidth(), StartButton->GetHeight(), textAsset, world);
 
 	//Exit Button
 	UIsprite = new AssetRoundedOutlineDecorator(AssetFactory::GetNullAsset());
 
 	this->ExitButton = new GameObject(0 + (2 * pseudoPixelWidth), ScreenHeight - (2 * pseudoPixelHeight),
-		6 * pseudoPixelWidth, 1 * pseudoPixelHeight, UIsprite, gb);
+		6 * pseudoPixelWidth, 1 * pseudoPixelHeight, UIsprite, world);
 	this->ExitButton->SetInputComponent(new ClickableInputComponent(this->ExitButton));
 	this->ExitButton->AddObserver(this);
 
@@ -139,7 +139,7 @@ void MainMenuLevel::Load()
 	const float originX_exitButton = ExitButton->GetXPos() + (ExitButton->GetWidth() / 2);
 	const float originY_exitButton = ExitButton->GetYPos();
 	GameObject* ExitButtonLabel = new GameObject(originX_exitButton - (1 * pseudoPixelWidth),
-		originY_exitButton - (0.4f * pseudoPixelWidth), ExitButton->GetWidth(), ExitButton->GetHeight(), textAsset, gb);
+		originY_exitButton - (0.4f * pseudoPixelWidth), ExitButton->GetWidth(), ExitButton->GetHeight(), textAsset, world);
 
 	world->AddUIObject(background);
 	world->AddUIObject(Logo);
