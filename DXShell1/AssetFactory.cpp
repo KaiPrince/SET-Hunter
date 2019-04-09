@@ -8,6 +8,7 @@ SpriteSheet* AssetFactory::_tree2Sprite;
 SpriteSheet* AssetFactory::_shrubSprite;
 SpriteSheet* AssetFactory::_explosionSprite;
 SpriteSheet* AssetFactory::_spyHunterArt;
+SpriteSheet* AssetFactory::_enemyCar;
 
 DrawableAsset* AssetFactory::_nullAsset = new NullAsset(); //TODO: delete?
 
@@ -22,6 +23,7 @@ void AssetFactory::Init(Graphics* graphics)
 	_shrubSprite = new SpriteSheet(L"Assets\\shrub1.bmp", gfx);
 	_explosionSprite = new SpriteSheet(L"Assets\\explosion.bmp", gfx);
 	_spyHunterArt = new SpriteSheet(L"Assets\\spy_hunter_artwork.bmp", gfx);
+	_enemyCar = new SpriteSheet(L"Assets\\enemycar.bmp", gfx);
 }
 
 AssetFactory::~AssetFactory()
@@ -32,6 +34,7 @@ AssetFactory::~AssetFactory()
 	if (_shrubSprite) delete _shrubSprite;
 	if (_explosionSprite) delete _explosionSprite;
 	if (_spyHunterArt) delete _spyHunterArt;
+	if (_enemyCar) delete _enemyCar;
 }
 
 DrawableAsset* AssetFactory::GetAsset(DrawableAsset::AssetTypes assetType)
@@ -77,6 +80,9 @@ DrawableAsset* AssetFactory::GetAsset(DrawableAsset::AssetTypes assetType)
 		asset = spyHunterAsset;
 		break;
 	}
+	case DrawableAsset::ENEMY_CAR:
+		asset = new SpriteSheetAsset(_enemyCar, assetType);
+		break;
 	default:
 		asset = _nullAsset;
 		break;

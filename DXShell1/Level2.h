@@ -6,6 +6,8 @@ class Level2 :
 
 	bool continueRoadScolling; //TODO: move this to GameBoard class?
 
+
+
 public:
 	Level2();
 	virtual ~Level2();

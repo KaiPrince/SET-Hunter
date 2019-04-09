@@ -30,7 +30,7 @@ void MainMenuLevel::Load()
 		float player_StartY = ((float)gb->boardHeight * gb->squareHeight) - (gb->squareHeight * 3); //bring it a little off the bottom
 
 		GameObject* player = new GameObject(player_StartX, player_StartY,
-			gb->squareWidth, gb->squareHeight, _assetFactory->GetAsset(DrawableAsset::CAR_SPRITE), gb);
+			gb->squareWidth / 2, gb->squareHeight, _assetFactory->GetAsset(DrawableAsset::CAR_SPRITE), gb);
 		player->UpdateState(new AliveState(player));
 		player->SetPhysicsComponent(new PlayerPhysicsComponent(player, world));
 		player->SetInputComponent(new StayOnRoadInputComponent(player));

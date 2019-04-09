@@ -427,6 +427,8 @@ void GameBoard::DrawRoadMask()
 
 GameBoardTile* GameBoard::FindLeftRoadSquare(int row)
 {
+	if (row < 0) row = 0; //Safeguard.
+
 	GameBoardTile* output = nullptr;
 	//Find left Road tile
 	for (int column = 0; column < boardWidth; column++)
