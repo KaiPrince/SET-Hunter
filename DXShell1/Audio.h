@@ -20,9 +20,9 @@ public:
 		MAIN_THEME, EXPLOSION, LASER
 	};
 
-	virtual void playSound(int soundID) = 0; //Note: must be camel case, because of naming conflict with DirectX
+	//Note: must be camel case, because of naming conflict with DirectX
 	virtual void playSound(Sounds soundType) = 0;
-	virtual void stopSound(int soundID) = 0;
+	virtual void stopSound(Sounds soundType) = 0;
 	virtual void stopAllSounds() = 0;
 
 	virtual void PlayThemeSong() { playSound(Sounds::MAIN_THEME); }
