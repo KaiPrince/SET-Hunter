@@ -19,11 +19,11 @@ PhysicsComponent::PhysicsComponent(GameObject* obj, GameWorld* world)
 	this->_collisionStrategy = new NullCollisionStrategy();
 
 	//non-collidable by default.
-	//this->_hitbox = new NullGameObject(obj->GetXPos(), obj->GetYPos(), obj->GetWidth(), obj->GetHeight());
+	this->_hitbox = new NullGameObject(obj->GetXPos(), obj->GetYPos(), obj->GetWidth(), obj->GetHeight());
 
 	//DEBUG TODO: remove.
-	this->_hitbox = new GameObject(0.0f, 0.0f, 0.0f, 0.0f, new AssetOutlineDecorator(AssetFactory::GetNullAsset()), world);
-	world->AddUIObject(this->_hitbox);
+	/*this->_hitbox = new GameObject(0.0f, 0.0f, 0.0f, 0.0f, new AssetOutlineDecorator(AssetFactory::GetNullAsset()), world);
+	world->AddUIObject(this->_hitbox);*/
 }
 
 PhysicsComponent::PhysicsComponent(GameObject* obj, GameWorld* world, GameObject* hitbox, CollisionResolutionStrategy* collisionStrategy)
@@ -39,7 +39,7 @@ PhysicsComponent::~PhysicsComponent()
 {
 
 	//DEBUG TODO: remove.
-	this->_world->RemoveUIObject(_hitbox);
+	//this->_world->RemoveUIObject(_hitbox);
 
 	delete _hitbox;
 
