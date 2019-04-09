@@ -17,7 +17,7 @@ public:
 
 	enum Sounds
 	{
-		MAIN_THEME, EXPLOSION, LASER
+		MAIN_THEME, EXPLOSION, LASER, LEVEL2_THEME
 	};
 
 	//Note: must be camel case, because of naming conflict with DirectX
@@ -93,6 +93,7 @@ private:
 	AudioSprite* _mainThemeSprite;
 	AudioSprite* _explosionSprite;
 	AudioSprite* _laserSprite;
+	AudioSprite* _level2Theme;
 
 
 };

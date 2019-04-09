@@ -11,6 +11,7 @@ DirectXAudio::DirectXAudio(HWND windowHandle)
 	_mainThemeSprite = new AudioSprite("Sounds/main_theme.wav", _soundClass);
 	_explosionSprite = new AudioSprite("Sounds/explosion.wav", _soundClass);
 	_laserSprite = new AudioSprite("Sounds/shoot.wav", _soundClass);
+	_level2Theme = new AudioSprite("Sounds/old_friends_theme.wav", _soundClass);
 }
 
 DirectXAudio::~DirectXAudio()
@@ -20,6 +21,7 @@ DirectXAudio::~DirectXAudio()
 	if (_mainThemeSprite) { delete _mainThemeSprite; }
 	if (_explosionSprite) { delete _explosionSprite; }
 	if (_laserSprite) { delete _laserSprite; }
+	if (_level2Theme) { delete _level2Theme; }
 
 	_soundClass->Shutdown();
 
@@ -87,6 +89,9 @@ void DirectXAudio::playSound(Sounds soundType)
 	case Audio::LASER:
 		_laserSprite->Play();
 		break;	
+	case Audio::LEVEL2_THEME:
+		_level2Theme->Play();
+		break;
 	default:
 		break;
 	}
