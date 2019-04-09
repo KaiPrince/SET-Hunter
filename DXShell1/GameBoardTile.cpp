@@ -95,7 +95,11 @@ void GameBoardTile::SetGbY(int y) {
 
 void GameBoardTile::Draw()
 {
-	sprite->Draw(x, y, width, height);
+
+	float smudgeX = 3; //temp fix for gapping problem where a few pixels between squares are unfilled.
+	float smudgeY = 3; //TODO: replace with screen size dynamic solution.
+
+	sprite->Draw(x, y, width + smudgeX, height + smudgeY);
 	if (assets != nullptr)
 	assets->Draw(x, y, width, height);
 }

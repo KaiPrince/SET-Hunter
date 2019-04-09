@@ -19,6 +19,8 @@ class AssetFactory
 	static SpriteSheet* _spyHunterArt;
 	static SpriteSheet* _enemyCar;
 	static SpriteSheet* _rocket;
+	static SpriteSheet* _road;
+	static SpriteSheet* _grass;
 
 
 	static DrawableAsset* _nullAsset;

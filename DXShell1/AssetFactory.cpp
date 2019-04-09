@@ -10,6 +10,8 @@ SpriteSheet* AssetFactory::_explosionSprite;
 SpriteSheet* AssetFactory::_spyHunterArt;
 SpriteSheet* AssetFactory::_enemyCar;
 SpriteSheet* AssetFactory::_rocket;
+SpriteSheet* AssetFactory::_road;
+SpriteSheet* AssetFactory::_grass;
 
 DrawableAsset* AssetFactory::_nullAsset = new NullAsset(); //TODO: delete?
 
@@ -26,6 +28,8 @@ void AssetFactory::Init(Graphics* graphics)
 	_spyHunterArt = new SpriteSheet(L"Assets\\spy_hunter_artwork.bmp", gfx);
 	_enemyCar = new SpriteSheet(L"Assets\\enemycar.bmp", gfx);
 	_rocket = new SpriteSheet(L"Assets\\rocket.bmp", gfx);
+	_road = new SpriteSheet(L"Assets\\road.bmp", gfx);
+	_grass = new SpriteSheet(L"Assets\\grass.bmp", gfx);
 }
 
 AssetFactory::~AssetFactory()
@@ -38,6 +42,8 @@ AssetFactory::~AssetFactory()
 	if (_spyHunterArt) delete _spyHunterArt;
 	if (_enemyCar) delete _enemyCar;
 	if (_rocket) delete _rocket;
+	if (_road) delete _road;
+	if (_grass) delete _grass;
 }
 
 DrawableAsset* AssetFactory::GetAsset(DrawableAsset::AssetTypes assetType)
@@ -46,10 +52,10 @@ DrawableAsset* AssetFactory::GetAsset(DrawableAsset::AssetTypes assetType)
 	switch (assetType)
 	{
 	case DrawableAsset::GRASS_TERRAIN:
-		asset = new GrassTerrain();
+		asset = new SpriteSheetAsset(_grass, assetType);
 		break;
 	case DrawableAsset::ROAD_TERRAIN:
-		asset = new RoadTerrain();
+		asset = new SpriteSheetAsset(_road, assetType);
 		break;
 	case DrawableAsset::CAR_SPRITE:
 		asset = new SpriteSheetAsset(_carSprite, assetType); //TODO: make static (flyweight)

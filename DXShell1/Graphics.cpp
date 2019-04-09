@@ -144,10 +144,8 @@ void Graphics::FillRect(float x, float y, float width, float height, float r, fl
 {
 	brush->SetColor(D2D1::ColorF(r, g, b, a));
 
-	float smudgeX = 3; //temp fix for gapping problem where a few pixels between squares are unfilled.
-	float smudgeY = 3; //TODO: replace with screen size dynamic solution.
 
-	rendertarget->FillRectangle(D2D1::RectF(x, y, x + width + smudgeX, y + height + smudgeY), brush);
+	rendertarget->FillRectangle(D2D1::RectF(x, y, x + width, y + height), brush);
 }
 
 void Graphics::WriteDebugText(char* text, int length) {

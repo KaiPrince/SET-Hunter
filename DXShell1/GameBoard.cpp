@@ -485,7 +485,7 @@ void GameBoard::DrawLeftRoadMask(GameBoardTile* leftRoadSquare, GameBoardTile* l
 
 		const float smudgeY = 1.0f; //smudge down
 
-		GraphicsLocator::GetGraphics()->DrawTriangle(x1 + smudgeX, y1 + smudgeY, x2 + smudgeX, y2 + smudgeY, x3 + smudgeX, y3 + smudgeY, 0.0f, 0.0f, 0.0f, 1.0f); //TODO: move this out of gameboard.
+		GraphicsLocator::GetGraphics()->DrawTriangle(x1 + smudgeX, y1 + smudgeY, x2 + smudgeX, y2 + smudgeY, x3 + smudgeX, y3 + smudgeY, 0.14f, 0.14f, 0.14f, 1.0f); //TODO: move this out of gameboard.
 	}
 	else if (x1 > x2)
 	{
@@ -496,7 +496,7 @@ void GameBoard::DrawLeftRoadMask(GameBoardTile* leftRoadSquare, GameBoardTile* l
 
 		const float smudgeY = -1.0f; //smudge up
 
-		GraphicsLocator::GetGraphics()->DrawTriangle(x1 + smudgeX, y1 + smudgeY, x2 + smudgeX, y2 + smudgeY, x3 + smudgeX, y3 + smudgeY, 0.0f, 0.0f, 0.0f, 1.0f);
+		GraphicsLocator::GetGraphics()->DrawTriangle(x1 + smudgeX, y1 + smudgeY, x2 + smudgeX, y2 + smudgeY, x3 + smudgeX, y3 + smudgeY, 0.14f, 0.14f, 0.14f, 1.0f);
 	}
 	else {
 		//don't draw
@@ -525,7 +525,7 @@ void GameBoard::DrawRightRoadMask(GameBoardTile* rightRoadSquare, GameBoardTile*
 
 		const float smudgeY = -1.0f; //smudge up
 
-		GraphicsLocator::GetGraphics()->DrawTriangle(x1 + smudgeX, y1 + smudgeY, x2 + smudgeX, y2 + smudgeY, x3 + smudgeX, y3 + smudgeY, 0.0f, 0.0f, 0.0f, 1.0f); //TODO: move this out of gameboard.
+		GraphicsLocator::GetGraphics()->DrawTriangle(x1 + smudgeX, y1 + smudgeY, x2 + smudgeX, y2 + smudgeY, x3 + smudgeX, y3 + smudgeY, 0.14f, 0.14f, 0.14f, 1.0f); //TODO: move this out of gameboard.
 	}
 	else if (x1 > x2)
 	{
@@ -536,7 +536,7 @@ void GameBoard::DrawRightRoadMask(GameBoardTile* rightRoadSquare, GameBoardTile*
 
 		const float smudgeY = 1.0f; //smudge down
 
-		GraphicsLocator::GetGraphics()->DrawTriangle(x1 + smudgeX, y1 + smudgeY, x2 + smudgeX, y2 + smudgeY, x3 + smudgeX, y3 + smudgeY, 0.0f, 0.0f, 0.0f, 1.0f); //TODO: move this out of gameboard.
+		GraphicsLocator::GetGraphics()->DrawTriangle(x1 + smudgeX, y1 + smudgeY, x2 + smudgeX, y2 + smudgeY, x3 + smudgeX, y3 + smudgeY, 0.14f, 0.14f, 0.14f, 1.0f); //TODO: move this out of gameboard.
 	}
 	else {
 		//don't draw
