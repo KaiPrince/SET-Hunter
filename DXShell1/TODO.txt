@@ -65,3 +65,7 @@ For Fun:
 - Simplify SpriteSheet creation. Remove factory?
 
 - Add colour config to asset decorators.
+
+- Make Objects invalidate/remove themselves when they leave the screen
+
+- Add update pattern to Audio, give it an commandQueue

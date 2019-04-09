@@ -1,13 +1,10 @@
 #include "CollisionResolutionStrategy.h"
 #include "GameObject.h"
 #include "GameObjectState.h"
+#include "Command.h"
+#include "GameWorld.h"
 
 NullCollisionStrategy* NullCollisionStrategy::_singleton;
-
-void PlayerCollisionStrategy::CollideWith(GameObject* collidedObj)
-{
-	collidedObj->GetPhysicsComponent()->GetCollisionStrategy()->accept(this);
-}
 
 void PlayerCollisionStrategy::visit(DeathTouchCollisionStrategy* component)
 {
@@ -22,7 +19,12 @@ NullCollisionStrategy::NullCollisionStrategy() : CollisionResolutionStrategy(nul
 {
 }
 
-void DeathTouchCollisionStrategy::CollideWith(GameObject* collidedObj)
+void RocketCollisionStrategy::visit(PlayerCollisionStrategy* component)
+{
+	this->_obj->GetGameWorld()->QueueCommand(new RemoveGameObjectFromWorldCommand(this->_obj, this->_obj->GetGameWorld()));
+}
+
+void CollisionResolutionStrategy::CollideWith(GameObject* collidedObj)
 {
 	collidedObj->GetPhysicsComponent()->GetCollisionStrategy()->accept(this);
 }

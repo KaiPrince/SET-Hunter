@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include "GameBoard.h"
 #include "MainMenuLevel.h"
+#include "Constants.h"
 
 
 void Level1::Load()
@@ -53,7 +54,7 @@ void Level1::Update()
 	if (GameController::GetLives() <= 0) {
 		GameController::QueuedNextLevel = new MainMenuLevel();
 	}
-	else if (GameController::GetScore() >= 15000) {
+	else if (GameController::GetScore() >= kScoreToLevel2) {
 		GameController::QueuedNextLevel = new Level2();
 	}
 	else {

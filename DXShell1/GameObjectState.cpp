@@ -269,15 +269,38 @@ GameObjectState* ShootPlayerState::HandleInput()
 
 void ShootPlayerState::Enter()
 {
+	//Reset ScoreTimer
+	using namespace std::chrono;
+	time_point<steady_clock> currentTime = steady_clock::now();
+	timeOfRevival = currentTime;
+
+	invincibilityCountdown = duration<float, std::milli>(3000.0f);
 }
 
 GameObjectState* ShootPlayerState::Update()
 {
 	GameObject* player = _object->GetGameWorld()->GetPlayer();
 
-	//GameObject* newRocket = new GameObject(_object->GetXPos(), _object->GetYPos(), 20, 50, AssetFactory::GetAsset(DrawableAsset::ROCKET_SPRITE), _object->GetGameWorld(), 0.0f, -10.0f); //TODO: use prototype pattern.
-	//newRocket->SetPhysicsComponent(new CollidablePhysicsComponent(newRocket, _object->GetGameWorld()));
-	//_object->GetGameWorld()->AddGameObject(newRocket);
+	//Get delta time
+	using namespace std::chrono;
+	time_point<steady_clock> currentTime = steady_clock::now();
+	float elapsedTimeInMS = GameController::GetDeltaTime(); //duration<float, std::milli>(currentTime - timeOfRevival).count();
+
+
+	//Decrement invincibility timer
+	if (invincibilityCountdown.count() > 0) {
+
+		invincibilityCountdown -= duration<float, std::milli>(elapsedTimeInMS);
+	}
+
+	if (invincibilityCountdown.count() <= 0) {
+
+		_object->Notify(); //Notify level to shoot. TODO: replace with command pattern.
+
+		invincibilityCountdown = duration<float, std::milli>(3000.0f);
+
+	}
+
 
 	_object->GetPhysicsComponent()->Update();
 	return this;

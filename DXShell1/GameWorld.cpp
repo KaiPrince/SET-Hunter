@@ -10,7 +10,6 @@
 #include "PhysicsComponent.h"
 
 
-
 GameWorld::GameWorld(AssetFactory* assetFactory)
 {
 
@@ -32,7 +31,7 @@ GameWorld::GameWorld(AssetFactory* assetFactory)
 
 GameWorld::~GameWorld()
 {
-	for each (GameObject* gameObject in _gameObjects)
+	for each (GameObject * gameObject in _gameObjects)
 	{
 		delete gameObject;
 	}
@@ -40,7 +39,7 @@ GameWorld::~GameWorld()
 	delete _gameBoard;
 }
 
-void GameWorld::SetGameBoard(GameBoard * gameBoard)
+void GameWorld::SetGameBoard(GameBoard* gameBoard)
 {
 	if (gameBoard != nullptr) {
 		delete _gameBoard;
@@ -49,7 +48,7 @@ void GameWorld::SetGameBoard(GameBoard * gameBoard)
 	}
 }
 
-void GameWorld::SetPlayer(GameObject * player)
+void GameWorld::SetPlayer(GameObject* player)
 {
 
 	if (player != nullptr) {
@@ -62,28 +61,28 @@ void GameWorld::SetPlayer(GameObject * player)
 
 }
 
-void GameWorld::AddGameObject(GameObject * obj)
+void GameWorld::AddGameObject(GameObject* obj)
 {
 	if (obj != nullptr) {
 		_gameObjects.push_back(obj);
 	}
 }
 
-void GameWorld::RemoveGameObject(GameObject * obj)
+void GameWorld::RemoveGameObject(GameObject* obj)
 {
 	if (obj != nullptr) {
 		_gameObjects.erase(std::remove(_gameObjects.begin(), _gameObjects.end(), obj), _gameObjects.end());
 	}
 }
 
-void GameWorld::AddUIObject(GameObject * obj)
+void GameWorld::AddUIObject(GameObject* obj)
 {
 	if (obj != nullptr) {
 		_uiObjects.push_back(obj);
 	}
 }
 
-void GameWorld::RemoveUIObject(GameObject * obj)
+void GameWorld::RemoveUIObject(GameObject* obj)
 {
 	if (obj != nullptr) {
 		_uiObjects.erase(std::remove(_uiObjects.begin(), _uiObjects.end(), obj), _uiObjects.end());
@@ -120,6 +119,8 @@ void GameWorld::HandleInput()
 
 void GameWorld::Update()
 {
+	//Process all commands.
+	ProcessAllCommands();
 
 	for (GameObject* gameObject : _gameObjects) {
 		gameObject->Update();

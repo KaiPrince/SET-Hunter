@@ -1,11 +1,13 @@
 #pragma once
 #include "GameLevel.h"
-class Level2 :
-	public GameLevel, public Observer
+#include "Command.h"
+
+class Level2 : public GameLevel, public Observer, public CommandQueue
 {
 
 	bool continueRoadScolling; //TODO: move this to GameBoard class?
 
+	std::vector<GameObject*> _enemies;
 
 
 public:

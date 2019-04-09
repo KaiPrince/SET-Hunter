@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include "Command.h"
 //#include "GameObject.h"
 //#include "GameBoard.h"
 
@@ -14,12 +15,14 @@ Purpose: This class aggregates all GameObjects in the world, plus the gameboard.
 	When the GameLoop runs, this class will call process input, update, and draw on all its objects.
 	This class will be used by the PhysicsComponent for the purposes of collision detection.
 */
-class GameWorld
+class GameWorld : public CommandQueue
 {
 	std::vector<GameObject*> _gameObjects;
 	std::vector<GameObject*> _uiObjects;
 	GameBoard* _gameBoard;
 	GameObject* _player;
+
+
 public:
 	GameWorld(AssetFactory* assetFactory);
 	~GameWorld();
