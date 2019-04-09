@@ -271,7 +271,9 @@ void ShootPlayerState::Enter()
 
 GameObjectState* ShootPlayerState::Update()
 {
-	
+	GameObject* player = _object->GetGameWorld()->GetPlayer();
+
+	//GameObject* newRocket = new GameObject(_object->GetXPos(), _object->GetYPos(), 20, 50, ) //TODO: use prototype pattern.
 	return this;
 }
 
