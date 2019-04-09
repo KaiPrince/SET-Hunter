@@ -27,7 +27,7 @@ public:
 
 	enum ActorStates
 	{
-		ALIVE_STATE, DEAD_STATE, NULL_STATE, INVINCIBLE_STATE
+		ALIVE_STATE, DEAD_STATE, NULL_STATE, INVINCIBLE_STATE, SHOOT_PLAYER_STATE
 	};
 
 public:
@@ -153,5 +153,33 @@ public:
 
 	// Inherited via GameObjectState
 	virtual GameObjectState * Draw() override;
+
+};
+
+class ShootPlayerState : public GameObjectState
+{
+public:
+	ShootPlayerState(GameObject* object) : GameObjectState(object) {}
+	virtual ~ShootPlayerState() {}
+
+	virtual GameObjectState::ActorStates GetType() { return GameObjectState::SHOOT_PLAYER_STATE; }
+
+	//Transition states
+	virtual GameObjectState* HandleInput() override;
+
+	//Set up
+	virtual void Enter() override;
+
+	//Update player properties
+	virtual GameObjectState* Update() override;
+
+	//On transition out..
+	virtual void Leave() override;
+
+
+	// Inherited via GameObjectState
+	virtual GameObjectState* Draw() override;
+
+private:
 
 };

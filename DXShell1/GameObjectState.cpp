@@ -258,3 +258,28 @@ GameObjectState* InvincibleState::Draw()
 
 	return this;
 }
+
+GameObjectState* ShootPlayerState::HandleInput()
+{
+	_object->HandleInput();
+	return this;
+}
+
+void ShootPlayerState::Enter()
+{
+}
+
+GameObjectState* ShootPlayerState::Update()
+{
+	
+	return this;
+}
+
+void ShootPlayerState::Leave()
+{
+}
+
+GameObjectState* ShootPlayerState::Draw()
+{
+	return nullptr;
+}
