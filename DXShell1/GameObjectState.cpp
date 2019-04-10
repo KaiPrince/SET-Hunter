@@ -257,7 +257,7 @@ GameObjectState* InvincibleState::Draw()
 			_object->GetXPos() + (_object->GetWidth() / 2),
 			_object->GetYPos() + (_object->GetHeight() / 2), 
 			_object->GetHeight() / 2,
-			1.0f, 1.0f, 0.0f, 0.8f);
+			1.0f, 1.0f, 0.0f, 0.5f);
 
 	}
 	else
