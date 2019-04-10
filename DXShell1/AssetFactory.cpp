@@ -12,6 +12,7 @@ SpriteSheet* AssetFactory::_enemyCar;
 SpriteSheet* AssetFactory::_rocket;
 SpriteSheet* AssetFactory::_road;
 SpriteSheet* AssetFactory::_grass;
+SpriteSheet* AssetFactory::_coin;
 
 DrawableAsset* AssetFactory::_nullAsset = new NullAsset(); //TODO: delete?
 
@@ -30,6 +31,7 @@ void AssetFactory::Init(Graphics* graphics)
 	_rocket = new SpriteSheet(L"Assets\\rocket.bmp", gfx);
 	_road = new SpriteSheet(L"Assets\\road.bmp", gfx);
 	_grass = new SpriteSheet(L"Assets\\grass.bmp", gfx);
+	_coin = new SpriteSheet(L"Assets\\coin.bmp", gfx);
 }
 
 AssetFactory::~AssetFactory()
@@ -44,6 +46,7 @@ AssetFactory::~AssetFactory()
 	if (_rocket) delete _rocket;
 	if (_road) delete _road;
 	if (_grass) delete _grass;
+	if (_coin) delete _coin;
 }
 
 DrawableAsset* AssetFactory::GetAsset(DrawableAsset::AssetTypes assetType)
@@ -94,6 +97,9 @@ DrawableAsset* AssetFactory::GetAsset(DrawableAsset::AssetTypes assetType)
 		break;
 	case DrawableAsset::ROCKET_SPRITE:
 		asset = new SpriteSheetAsset(_rocket, assetType);
+		break;
+	case DrawableAsset::COIN_SPRITE:
+		asset = new SpriteSheetAsset(_coin, assetType);
 		break;
 	default:
 		asset = _nullAsset;
