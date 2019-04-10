@@ -27,6 +27,7 @@ public:
 	virtual void visit(class DeathTouchCollisionStrategy* component) = 0;
 	virtual void visit(class PlayerCollisionStrategy* component) = 0;
 	virtual void visit(class NullCollisionStrategy* component) = 0;
+	virtual void visit(class CoinCollisionStrategy* component) {}
 	//virtual void visit(class CollisionResolutionStrategy* component) = 0;
 
 
@@ -86,6 +87,7 @@ public:
 	virtual void visit(DeathTouchCollisionStrategy* component);
 	virtual void visit(PlayerCollisionStrategy* component) override {}
 	virtual void visit(NullCollisionStrategy* component) override {}
+	virtual void visit(CoinCollisionStrategy* component) override;
 
 
 	// Inherited via VisitorComponent
@@ -125,6 +127,23 @@ class RocketCollisionStrategy : public DeathTouchCollisionStrategy
 public:
 	RocketCollisionStrategy(GameObject* obj) : DeathTouchCollisionStrategy(obj) {}
 	~RocketCollisionStrategy() {}
+
+
+
+	// Inherited via Visitor
+	virtual void visit(DeathTouchCollisionStrategy* component) override {}
+	virtual void visit(NullCollisionStrategy* component) override {}
+	virtual void visit(PlayerCollisionStrategy* component) override;
+
+	// Inherited via VisitorComponent
+	virtual void accept(CollisionResolutionStrategy* visitor) override { visitor->visit(this); }
+};
+
+class CoinCollisionStrategy : public CollisionResolutionStrategy {
+
+public:
+	CoinCollisionStrategy(GameObject* obj) : CollisionResolutionStrategy(obj) {}
+	~CoinCollisionStrategy() {}
 
 
 

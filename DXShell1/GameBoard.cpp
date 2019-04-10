@@ -361,6 +361,29 @@ void GameBoard::placePlants(int row)
 			}
 
 		}
+		else if (thisSquare->GetTerrain()->GetType() == DrawableAsset::ROAD_TERRAIN) {
+			//Place coin with 1 in 20 chance
+
+			//random 1 in 20 chance to have plant asset
+			if (dice_containsPlantAsset(generator) == 1) {
+				DrawableAsset::AssetTypes coinAssetType = DrawableAsset::COIN_SPRITE;
+
+				GameBoardTile* newCoin = _squareFactory->CreateSquare(column, row, thisSquare->GetWidth(), thisSquare->GetHeight());
+				newCoin->SetTerrain(AssetFactory::GetNullAsset());
+
+				newCoin->SetPhysicsComponent(new CollidablePhysicsComponent(newCoin, _world));
+				newCoin->GetPhysicsComponent()->SetCollisionStrategy(new CoinCollisionStrategy(newCoin));
+
+
+				newCoin->GetPhysicsComponent()->ChangeHitbox(newCoin->GetWidth() / 3, newCoin->GetHeight() / 5, newCoin->GetWidth() / 3, newCoin->GetHeight() / 3);
+				newCoin->SetAssets(_assetFactory->GetAsset(coinAssetType));
+
+
+				AddObstacle(newCoin);
+
+			}
+
+		}
 	}
 }
 
