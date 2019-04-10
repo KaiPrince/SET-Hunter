@@ -40,8 +40,8 @@ void SplashScreenLevel::Load()
 	textAsset->SetUseFancyFont(true);
 	textAsset->SetFontSize(20);
 
-	GameObject* SongTitle = new GameObject(pseudoPixelWidth * 3, ScreenHeight - (pseudoPixelHeight * 1.75),
-		4 * pseudoPixelWidth, 1 * pseudoPixelHeight,
+	GameObject* SongTitle = new GameObject(pseudoPixelWidth * 3.0f, ScreenHeight - (pseudoPixelHeight * 1.75f),
+		4.0f * pseudoPixelWidth, 1.0f * pseudoPixelHeight,
 		textAsset, world);
 
 	UIObjects.push_back(SongTitle);
