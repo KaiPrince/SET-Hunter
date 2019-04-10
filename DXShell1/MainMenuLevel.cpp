@@ -216,25 +216,24 @@ void MainMenuLevel::Notify(Observable * subject)
 		GameController::QueueExitGame = true;
 	}
 	else if (subject == world->GetPlayer()) {
-		//TODO: use visitor pattern on playerstate?
 
-		if (!isPlayerDead) {
-			isPlayerDead = true;
+		//if (!isPlayerDead) {
+		//	isPlayerDead = true;
 
-			//Player probably died.
-			//continue road scrolling. Wait 2 seconds and then create a new car.
-			//hide player
-			world->GetPlayer()->SetPhysicsComponent(new NullPhysicsComponent()); //disable collision detection
-			world->GetPlayer()->SetYPos(static_cast<float>(GraphicsLocator::GetGraphics()->Window_Height * 2)); //move off screen
-		}
-		else {
-			isPlayerDead = false;
-			//Player probably revived.
+		//	//Player probably died.
+		//	//continue road scrolling. Wait 2 seconds and then create a new car.
+		//	//hide player
+		//	//world->GetPlayer()->SetPhysicsComponent(new NullPhysicsComponent()); //disable collision detection
+		//	world->GetPlayer()->SetYPos(static_cast<float>(GraphicsLocator::GetGraphics()->Window_Height * 2)); //move off screen
+		//}
+		//else {
+		//	isPlayerDead = false;
+		//	//Player probably revived.
 
-			world->GetPlayer()->SetYVelocity(-(world->GetGameBoard()->squareHeight / 4));
-			world->GetPlayer()->SetPhysicsComponent(new PlayerPhysicsComponent(world->GetPlayer(), world));
+		//	world->GetPlayer()->SetYVelocity(-(world->GetGameBoard()->squareHeight / 4));
+		//	world->GetPlayer()->SetPhysicsComponent(new PlayerPhysicsComponent(world->GetPlayer(), world));
 
-		}
+		//}
 
 	}
 }
