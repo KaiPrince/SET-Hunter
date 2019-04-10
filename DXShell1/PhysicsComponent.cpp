@@ -19,11 +19,7 @@ PhysicsComponent::PhysicsComponent(GameObject* obj, GameWorld* world)
 	this->_collisionStrategy = new NullCollisionStrategy();
 
 	//non-collidable by default.
-	this->_hitbox = new NullGameObject(obj->GetXPos(), obj->GetYPos(), obj->GetWidth(), obj->GetHeight());
-
-	//DEBUG TODO: remove.
-	/*this->_hitbox = new GameObject(0.0f, 0.0f, 0.0f, 0.0f, new AssetOutlineDecorator(AssetFactory::GetNullAsset()), world);
-	world->AddUIObject(this->_hitbox);*/
+	this->_hitbox = new NullGameObject(0, 0, obj->GetWidth(), obj->GetHeight());
 }
 
 PhysicsComponent::PhysicsComponent(GameObject* obj, GameWorld* world, GameObject* hitbox, CollisionResolutionStrategy* collisionStrategy)
@@ -38,16 +34,20 @@ PhysicsComponent::PhysicsComponent(GameObject* obj, GameWorld* world, GameObject
 PhysicsComponent::~PhysicsComponent()
 {
 
-	//DEBUG TODO: remove.
-	//this->_world->RemoveUIObject(_hitbox);
-
 	delete _hitbox;
 
 }
 
 void PhysicsComponent::DetectCollisions()
 {
-	DetectCollisionsAs(_obj);
+	GameObject* hitboxInWorld = new NullGameObject(
+		_obj->GetXPos() + _hitbox->GetXPos(),
+		_obj->GetYPos() + _hitbox->GetYPos(),
+		_hitbox->GetWidth(),
+		_hitbox->GetHeight()
+	);
+
+	DetectCollisionsAs(hitboxInWorld);
 }
 
 /*
@@ -60,23 +60,9 @@ void PhysicsComponent::DetectCollisionsAs(GameObject* obj) {
 
 	//Collision detection
 
-	//GameBoard* gb = _world->GetGameBoard();
-	//for (int column = 0; column < gb->boardWidth; column++)
-	//{
-	//	for (int row = 0; row < gb->boardHeight; row++)
-	//	{
-	//		GameBoardTile* thisSquare = gb->squares[column][row];
-	//		if (thisSquare->GetPhysicsComponent()->IsCollidable() && CheckIntersection(obj, thisSquare)) {
-
-	//			//Set collision flag
-	//			this->_collisionObjects.push_back(thisSquare);
-	//		}
-	//	}
-	//}
-
 	for each (GameObject* objectInGameWorld in _world->GetGameObjects())
 	{
-		if (objectInGameWorld != _obj && objectInGameWorld->GetPhysicsComponent()->IsCollidable() && CheckIntersection(obj, objectInGameWorld)) {
+		if (objectInGameWorld != _obj && objectInGameWorld->GetPhysicsComponent()->IsCollidable() && Intersects(obj, objectInGameWorld)) {
 			//Set collision flag
 			this->_collisionObjects.push_back(objectInGameWorld);
 
@@ -84,7 +70,7 @@ void PhysicsComponent::DetectCollisionsAs(GameObject* obj) {
 	}
 }
 
-bool PhysicsComponent::CheckIntersection(GameObject * obj1, GameObject * obj2)
+bool PhysicsComponent::Intersects(GameObject * obj1, GameObject * obj2)
 {
 	if (obj1->GetXPos() < obj2->GetXPos() + obj2->GetWidth() &&
 		obj1->GetXPos() + obj1->GetWidth() > obj2->GetXPos() &&
@@ -108,36 +94,33 @@ PlayerPhysicsComponent::~PlayerPhysicsComponent()
 
 void PlayerPhysicsComponent::Update() {
 
-	float newXPos = _obj->GetXPos() + _obj->GetXVelocity();
-	float newYPos = _obj->GetYPos() - _obj->GetYVelocity(); // Because y axis is inverted.
-
-
-	//Create clone gameObject with altered hitbox.
-	//float oneThirdWidth = _obj->GetWidth() / 3;
-	//float heightDifference = _obj->GetHeight() / 5;
-	//ChangeHitbox(_obj->GetXPos() + oneThirdWidth, _obj->GetYPos() + heightDifference, oneThirdWidth, _obj->GetHeight() - heightDifference);
-
-	//CollidablePhysicsComponent::Update();
-	ResetHitbox();
-	DetectCollisionsAs(_hitbox);
+	CollidablePhysicsComponent::Update();
 
 
 	//... In this case, we advance the object regardless of its collision status.
 
+	float newXPos = _obj->GetXPos();
+	float newYPos = _obj->GetYPos();
+
 	//Check X Bounds
-	if (newXPos <= (_world->GetGameBoard()->boardWidth * _world->GetGameBoard()->squareWidth) - _obj->GetWidth() && newXPos >= 0) {
-		//Advance position
-		_obj->SetXPos(newXPos);
+	const float maxXPos = (_world->GetGameBoard()->boardWidth * _world->GetGameBoard()->squareWidth) - _obj->GetWidth();
+	const float minXPos = 0;
+
+	if (newXPos > maxXPos) {
+		_obj->SetXPos(maxXPos);
+	}
+	else if (newXPos < minXPos) {
+		_obj->SetXPos(minXPos);
+	}
+	else {
+		//Object is within acceptable range.
 	}
 
 	//Check Y Bounds
 	const float maxheight = (_world->GetGameBoard()->boardHeight * _world->GetGameBoard()->squareHeight) - (_obj->GetHeight() * 2);
 	const float minheight = (_world->GetGameBoard()->boardHeight * _world->GetGameBoard()->squareHeight) / 2;
 
-	if (newYPos <= maxheight && newYPos >= minheight) {
-		_obj->SetYPos(newYPos);
-	}
-	else if (newYPos > maxheight) {
+	if (newYPos > maxheight) {
 		_obj->SetYPos(maxheight);
 	}
 	else if (newYPos < minheight)
@@ -146,7 +129,7 @@ void PlayerPhysicsComponent::Update() {
 	}
 	else
 	{
-		//Out of bounds. Refuse to set.
+		//Object is within acceptable range.
 	}
 
 
@@ -155,7 +138,7 @@ void PlayerPhysicsComponent::Update() {
 
 CollidablePhysicsComponent::CollidablePhysicsComponent(GameObject * obj, GameWorld * world) : PhysicsComponent(obj, world)
 {
-	this->ChangeHitbox(obj->GetXPos(), obj->GetYPos(), obj->GetWidth(), obj->GetHeight());
+	this->ChangeHitbox(0, 0, obj->GetWidth(), obj->GetHeight());
 }
 
 void PhysicsComponent::ChangeHitbox(float x, float y, float width, float height)
@@ -168,8 +151,7 @@ void PhysicsComponent::ChangeHitbox(float x, float y, float width, float height)
 
 void CollidablePhysicsComponent::Update()
 {
-	ResetHitbox();
-	DetectCollisionsAs(_hitbox);
+	DetectCollisions();
 
 	float newXPos = _obj->GetXPos() + _obj->GetXVelocity();
 	float newYPos = _obj->GetYPos() - _obj->GetYVelocity(); // Because y axis is inverted.
@@ -193,20 +175,11 @@ bool CollidablePhysicsComponent::ObjectOffScreen(GameObject* obj)
 void CollidablePhysicsComponent::ResetHitbox()
 {
 	this->ChangeHitbox(
-		_obj->GetXPos(), 
-		_obj->GetYPos(), 
+		0, 
+		0, 
 		_obj->GetWidth(), 
 		_obj->GetHeight()
 	);
-}
-
-Hitbox::Hitbox(GameObject& obj)
-{
-	this->x = obj.GetXPos();
-	this->y = obj.GetYPos();
-	this->width = obj.GetWidth();
-	this->height = obj.GetHeight();
-
 }
 
 NullPhysicsComponent::NullPhysicsComponent() : 

@@ -327,10 +327,18 @@ void GameBoard::placePlants(int row)
 			//random 1 in 20 chance to have plant asset
 			if (dice_containsPlantAsset(generator) == 1) {
 				DrawableAsset::AssetTypes plantAssetType;
+
+				GameBoardTile* newPlant = _squareFactory->CreateSquare(column, row, thisSquare->GetWidth(), thisSquare->GetHeight());
+				newPlant->SetTerrain(AssetFactory::GetNullAsset());
+
+				newPlant->SetPhysicsComponent(new CollidablePhysicsComponent(newPlant, _world));
+				newPlant->GetPhysicsComponent()->SetCollisionStrategy(new DeathTouchCollisionStrategy(newPlant));
+
 				switch (dice_typeOfPlantAsset(generator))
 				{
 				case 1:
 					plantAssetType = DrawableAsset::TREE_SPRITE;
+					newPlant->GetPhysicsComponent()->ChangeHitbox(newPlant->GetWidth() / 3, newPlant->GetHeight() / 5, newPlant->GetWidth() / 3, newPlant->GetHeight() / 3);
 					break;
 				case 2:
 					plantAssetType = DrawableAsset::TREE2_SPRITE;
@@ -340,16 +348,12 @@ void GameBoard::placePlants(int row)
 					break;
 				default:
 					//ERROR! random number out of expected range!
-					plantAssetType = DrawableAsset::CAR_SPRITE; //TODO: actual error handling
+					throw;
 					break;
 				}
-				//thisSquare->SetAssets(_assetFactory->GetAsset(plantAssetType));
 
-				GameBoardTile* newPlant = _squareFactory->CreateSquare(column, row, thisSquare->GetWidth(), thisSquare->GetHeight());
-				newPlant->SetTerrain(AssetFactory::GetNullAsset());
+				newPlant->GetPhysicsComponent()->ChangeHitbox(newPlant->GetWidth() / 3, newPlant->GetHeight() / 5, newPlant->GetWidth() / 3, newPlant->GetHeight() / 3);
 				newPlant->SetAssets(_assetFactory->GetAsset(plantAssetType));
-				newPlant->SetPhysicsComponent(new CollidablePhysicsComponent(newPlant, _world));
-				newPlant->GetPhysicsComponent()->SetCollisionStrategy(new DeathTouchCollisionStrategy(newPlant));
 
 
 				AddObstacle(newPlant);

@@ -24,7 +24,7 @@ protected:
 
 	void DetectCollisions();
 	void DetectCollisionsAs(GameObject* obj);
-	bool CheckIntersection(GameObject* obj1, GameObject* obj2);
+	bool Intersects(GameObject* obj1, GameObject* obj2);
 
 public:
 	PhysicsComponent(GameObject* obj, GameWorld* world);
@@ -118,45 +118,6 @@ public:
 	virtual ~PlayerPhysicsComponent();
 
 	virtual void Update();
-
-private:
-
-};
-
-/*
-Class Name: Hitbox
-Purpose: This class literally is just a rectangle. 
-GameObject could no longer be reused for this purpose, because of a circular instantiation that developed between
-NullPhysicsComponent and NullGameObject.
-*/
-class Hitbox
-{
-
-	float x;
-	float y;
-	float width;
-	float height;
-public:
-	Hitbox(float x, float y, float width, float height) {
-		this->x = x;
-		this->y = y;
-		this->width = width;
-		this->height = height;
-	}
-	Hitbox(GameObject& obj);
-	~Hitbox() {}
-
-
-	//------- Getters and Setters for Properties ------------
-	float GetXPos() { return x; }
-	float GetYPos() { return y; }
-	float GetWidth() { return width; }
-	float GetHeight() { return height; }
-
-	virtual void SetXPos(float x) { this->x = x; }
-	virtual void SetYPos(float y) { this->y = y; }
-	void SetWidth(float width) { this->width = width; }
-	void SetHeight(float height) { this->height = height; }
 
 private:
 
