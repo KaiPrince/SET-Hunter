@@ -1,17 +1,10 @@
 TODO:
 Assignment:
-- Make score update based on time.
-- Add score lockout for 3 seconds after leaving road.
-- Prevent player from getting stuck in death loop in bottom middle of screen.
-	- Make player invincible for 3 seconds after dying.
 - Add a delay before returning to the main menu after dying 3 times.
-- Move isCollidable() to physics component
-	- fixed access violation bug in actorstate.
 
 For Fun:
 - Cleanup terrain classes by using type object pattern.
 - Use prototypes pattern to create enemies.
-- Smooth road flow.
 - Implement Visitor or strategy pattern to player or level.
 	- Remove GetType() method and enums
 - Move collision detection and score accumulation out of PlayerState
@@ -22,7 +15,6 @@ For Fun:
 - Replace all nullptr assets with _emptyAsset
 	- rename to nullAsset?
 - Convert collisionObject to a vector array. Handle more than one collision at once.
-- Change trees and shrubs to be GameObjects instead of squares
 - Change Gameboard->FindSquare function to search by column and then row, rather than looping.
 - Change DrawableAssets to not use an assetfactory. Just let assets be singletons/flyweights and create with new.
 - Change all GameBoard references to World or World->GetGameBoard();
