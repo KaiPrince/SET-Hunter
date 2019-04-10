@@ -252,6 +252,13 @@ GameObjectState* InvincibleState::Draw()
 
 		}
 
+		//Draw a shield around the player
+		GraphicsLocator::GetGraphics()->DrawCircle(
+			_object->GetXPos() + (_object->GetWidth() / 2),
+			_object->GetYPos() + (_object->GetHeight() / 2), 
+			_object->GetHeight() / 2,
+			1.0f, 1.0f, 0.0f, 0.8f);
+
 	}
 	else
 	{
