@@ -13,11 +13,14 @@ Purpose: This class encapsulates the physics of a game object.
 */
 class PhysicsComponent
 {
+private:
+	GameObject* _hitboxInWorld; //Where the hitbox would appear in the world.
 protected:
 	GameObject* _obj; 
 	GameWorld* _world;
 
-	GameObject* _hitbox;
+	GameObject* _hitbox; //In relative terms, starting from (0,0).
+
 	CollisionResolutionStrategy* _collisionStrategy;
 	
 	std::vector<GameObject*> _collisionObjects;
@@ -49,7 +52,7 @@ public:
 		}
 	}
 
-	virtual GameObject* GetHitbox() { return _hitbox; }
+	virtual GameObject* GetHitboxInWorld();
 	virtual void ChangeHitbox(float x, float y, float width, float height);
 
 	virtual void Update() = 0; //NOTE: all derived classes must call on their decorated component.

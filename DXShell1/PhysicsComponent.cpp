@@ -20,6 +20,14 @@ PhysicsComponent::PhysicsComponent(GameObject* obj, GameWorld* world)
 
 	//non-collidable by default.
 	this->_hitbox = new NullGameObject(0, 0, obj->GetWidth(), obj->GetHeight());
+
+	this->_hitboxInWorld = new NullGameObject(
+		_obj->GetXPos() + _hitbox->GetXPos(),
+		_obj->GetYPos() + _hitbox->GetYPos(),
+		_hitbox->GetWidth(),
+		_hitbox->GetHeight()
+	);
+	this->_hitboxInWorld->SetSprite(new AssetOutlineDecorator(_hitboxInWorld->GetSprite())); //DEBUG
 }
 
 PhysicsComponent::PhysicsComponent(GameObject* obj, GameWorld* world, GameObject* hitbox, CollisionResolutionStrategy* collisionStrategy)
@@ -28,6 +36,8 @@ PhysicsComponent::PhysicsComponent(GameObject* obj, GameWorld* world, GameObject
 	this->_world = world;
 	this->_hitbox = hitbox;
 	this->_collisionStrategy = collisionStrategy;
+
+	this->_hitboxInWorld = nullptr;
 }
 
 
@@ -35,21 +45,15 @@ PhysicsComponent::~PhysicsComponent()
 {
 
 	delete _hitbox;
+	delete _hitboxInWorld;
 
 }
 
 void PhysicsComponent::DetectCollisions()
 {
-	GameObject* hitboxInWorld = new NullGameObject(
-		_obj->GetXPos() + _hitbox->GetXPos(),
-		_obj->GetYPos() + _hitbox->GetYPos(),
-		_hitbox->GetWidth(),
-		_hitbox->GetHeight()
-	);
-	hitboxInWorld->SetSprite(new AssetOutlineDecorator(hitboxInWorld->GetSprite())); //DEBUG
-	hitboxInWorld->Draw();
+	GetHitboxInWorld()->Draw(); //DEBUG
 
-	DetectCollisionsAs(hitboxInWorld);
+	DetectCollisionsAs(GetHitboxInWorld());
 }
 
 /*
@@ -64,7 +68,7 @@ void PhysicsComponent::DetectCollisionsAs(GameObject* obj) {
 
 	for each (GameObject* objectInGameWorld in _world->GetGameObjects())
 	{
-		if (objectInGameWorld != _obj && objectInGameWorld->GetPhysicsComponent()->IsCollidable() && Intersects(obj, objectInGameWorld)) {
+		if (objectInGameWorld != _obj && objectInGameWorld->GetPhysicsComponent()->IsCollidable() && Intersects(obj, objectInGameWorld->GetPhysicsComponent()->GetHitboxInWorld())) {
 			//Set collision flag
 			this->_collisionObjects.push_back(objectInGameWorld);
 
@@ -141,6 +145,26 @@ void PlayerPhysicsComponent::Update() {
 CollidablePhysicsComponent::CollidablePhysicsComponent(GameObject * obj, GameWorld * world) : PhysicsComponent(obj, world)
 {
 	this->ChangeHitbox(0, 0, obj->GetWidth(), obj->GetHeight());
+}
+
+GameObject* PhysicsComponent::GetHitboxInWorld()
+{
+	if (_hitboxInWorld == nullptr) {
+		//Lazy initialization.
+		this->_hitboxInWorld = new NullGameObject(
+			_obj->GetXPos() + _hitbox->GetXPos(),
+			_obj->GetYPos() + _hitbox->GetYPos(),
+			_hitbox->GetWidth(),
+			_hitbox->GetHeight()
+		);
+
+	}
+	_hitboxInWorld->SetXPos(_obj->GetXPos() + _hitbox->GetXPos());
+	_hitboxInWorld->SetYPos(_obj->GetYPos() + _hitbox->GetYPos());
+	_hitboxInWorld->SetWidth(_hitbox->GetWidth());
+	_hitboxInWorld->SetHeight(_hitbox->GetHeight());
+
+	return _hitboxInWorld;
 }
 
 void PhysicsComponent::ChangeHitbox(float x, float y, float width, float height)

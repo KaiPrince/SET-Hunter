@@ -131,7 +131,8 @@ void GameWorld::Update()
 
 		if (gameObject->GetPhysicsComponent()->IsCollidable() && gameObject->GetPhysicsComponent()->IsCollisionDetected())
 		{
-			for (GameObject* collidedGameObject : gameObject->GetPhysicsComponent()->GetCollisionObjects())
+			auto test = gameObject->GetPhysicsComponent()->GetCollisionObjects();
+			for (GameObject* collidedGameObject : test)
 			{
 				//This safeguard is added for the edge case when the collidedObject is not found in the game world.
 				if (std::find(this->_gameObjects.begin(), this->_gameObjects.end(), collidedGameObject) != this->_gameObjects.end()) {
