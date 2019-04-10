@@ -24,11 +24,7 @@ class CommandQueue
 {
 
 	std::queue<Command*> _commandQueue; //TODO: make std::sharedptr
-public:
-
-	void QueueCommand(Command* command) {
-		_commandQueue.push(command);
-	}
+protected:
 
 	void ProcessAllCommands()
 	{
@@ -40,6 +36,13 @@ public:
 			delete nextCommand; //TODO: replace with shared+ptr
 		}
 	}
+
+public:
+
+	void QueueCommand(Command* command) {
+		_commandQueue.push(command);
+	}
+
 
 };
 

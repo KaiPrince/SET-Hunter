@@ -176,6 +176,18 @@ void CollidablePhysicsComponent::Update()
 
 	_obj->SetXPos(newXPos);
 	_obj->SetYPos(newYPos);
+
+	//Remove myself if I leave the screen.
+	if (ObjectOffScreen(_obj))
+	{
+		_world->QueueCommand(new RemoveGameObjectFromWorldCommand(_obj, _world));
+	}
+}
+
+bool CollidablePhysicsComponent::ObjectOffScreen(GameObject* obj)
+{
+	return obj->GetXPos() < 0 - obj->GetWidth() || obj->GetXPos() > GraphicsLocator::GetGraphics()->Window_Width
+		|| obj->GetYPos() < 0 - obj->GetHeight() || obj->GetYPos() > GraphicsLocator::GetGraphics()->Window_Height;
 }
 
 void CollidablePhysicsComponent::ResetHitbox()

@@ -53,7 +53,6 @@ void Level2::Unload()
 
 void Level2::Update()
 {
-	//Process All commands
 	ProcessAllCommands();
 
 	if (continueRoadScolling) {
@@ -76,8 +75,8 @@ void Level2::Render()
 	world->Draw();
 
 	char ScoreMessage[500] = "";
-	gfx->WriteText(0, 0, 200.0f, 100.0f, 10.0f, ScoreMessage, sprintf_s(ScoreMessage, 500, "Score: %u\n Lives %d\n",
-		GameController::GetScore(), GameController::GetLives()));
+	gfx->WriteText(0, 0, 200.0f, 100.0f, 10.0f, ScoreMessage, sprintf_s(ScoreMessage, 500, "Score: %u\n Lives %d\n NumObjects: %zd\n",
+		GameController::GetScore(), GameController::GetLives(), world->GetGameObjects().size()));
 }
 
 void Level2::HandleInput()

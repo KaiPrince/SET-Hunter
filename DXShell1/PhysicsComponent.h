@@ -89,6 +89,7 @@ Purpose: This component will detect collisions with all gameObjects in the world
 class CollidablePhysicsComponent : public PhysicsComponent
 {
 
+	inline bool ObjectOffScreen(GameObject* obj);
 public:
 	CollidablePhysicsComponent(GameObject* obj, GameWorld* world);
 	virtual ~CollidablePhysicsComponent() { }
@@ -97,6 +98,7 @@ public:
 	virtual bool IsCollidable() override { return true; }
 
 	virtual void Update();
+
 
 protected:
 	virtual void ResetHitbox();
