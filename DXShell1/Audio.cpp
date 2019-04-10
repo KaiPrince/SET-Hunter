@@ -1,5 +1,6 @@
 #include "Audio.h"
 #include <cassert>
+#include "GameController.h"
 
 
 Audio* AudioLocator::_audio;
@@ -84,6 +85,11 @@ long AudioSprite::GetVolume()
 
 void AudioSprite::SetVolume(long vol)
 {
+	if (vol < DSBVOLUME_MIN) { vol = DSBVOLUME_MIN; }
+	else if (vol > DSBVOLUME_MAX) { vol = DSBVOLUME_MAX; }
+	else {/* Volume in safe range. */ }
+
+
 	HRESULT result = _sound->SetVolume(vol);
 	assert(result == DS_OK);
 }
@@ -97,30 +103,48 @@ void DirectXAudio::stopAllSounds()
 
 void DirectXAudio::Update()
 {
-	//Cross-fade sounds if necessary.
-	if (_crossfadeIn != nullptr) {
 
-		if (_crossfadeIn->GetVolume() < kCrossFadeMax) {
+	//Get delta time
+	using namespace std::chrono;
+	time_point<steady_clock> currentTime = steady_clock::now();
+	float elapsedTimeInMS = GameController::GetDeltaTime(); //duration<float, std::milli>(currentTime - timeOfRevival).count();
 
-			_crossfadeIn->SetVolume(_crossfadeIn->GetVolume() + kCrossFadeInStep);
 
-		}
-		else {
-			_crossfadeIn = nullptr;
-		}
+	//Decrement crossfade countdown timer
+	if (crossFadeCountdown.count() > 0) {
+
+		crossFadeCountdown -= duration<float, std::milli>(elapsedTimeInMS);
 	}
 
-	if (_crossfadeOut != nullptr) {
+	if (crossFadeCountdown.count() <= 0) {
 
-		if (_crossfadeOut->GetVolume() > kCrossFadeMin) {
 
-			_crossfadeOut->SetVolume(_crossfadeOut->GetVolume() - kCrossFadeOutStep);
+		//Cross-fade sounds if necessary.
+		if (_crossfadeIn != nullptr) {
 
+			if (_crossfadeIn->GetVolume() < kCrossFadeMax) {
+
+				_crossfadeIn->SetVolume(_crossfadeIn->GetVolume() + kCrossFadeInStep);
+
+			}
+			else {
+				_crossfadeIn = nullptr;
+			}
 		}
-		else {
-			_crossfadeOut->Stop();
-			_crossfadeOut = nullptr;
+
+		if (_crossfadeOut != nullptr) {
+
+			if (_crossfadeOut->GetVolume() > kCrossFadeMin) {
+
+				_crossfadeOut->SetVolume(_crossfadeOut->GetVolume() - kCrossFadeOutStep);
+
+			}
+			else {
+				_crossfadeOut->Stop();
+				_crossfadeOut = nullptr;
+			}
 		}
+
 	}
 }
 
@@ -156,44 +180,23 @@ void DirectXAudio::changeSound(Sounds stopSound, Sounds startSound)
 	this->_crossfadeIn = getSpriteFromType(startSound);
 
 	this->_crossfadeIn->Play();
+
+
+	//Reset CrossfadeTimer
+	using namespace std::chrono;
+	time_point<steady_clock> currentTime = steady_clock::now();
+	crossFadeStartTime = currentTime;
+
+	crossFadeCountdown = duration<float, std::milli>(kCrossFadeDurationInMS);
 }
 
 
 void DirectXAudio::playSound(Sounds soundType)
 {
-	switch (soundType)
-	{
-	case Audio::MAIN_THEME:
-		_mainThemeSprite->Play();
-		break;
-	case Audio::EXPLOSION:
-		_explosionSprite->Play();
-		break;
-	case Audio::LASER:
-		_laserSprite->Play();
-		break;
-	case Audio::LEVEL2_THEME:
-		_level2Theme->Play();
-		break;
-	default:
-		break;
-	}
+	getSpriteFromType(soundType)->Play();
 }
 
 void DirectXAudio::stopSound(Sounds soundType)
 {
-	switch (soundType)
-	{
-	case Audio::MAIN_THEME:
-		_mainThemeSprite->Stop();
-		break;
-	case Audio::EXPLOSION:
-		_explosionSprite->Stop();
-		break;
-	case Audio::LASER:
-		_laserSprite->Stop();
-		break;
-	default:
-		break;
-	}
+	getSpriteFromType(soundType)->Stop();
 }

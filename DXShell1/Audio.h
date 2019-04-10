@@ -1,11 +1,11 @@
 #pragma once
 #include <Windows.h>
 #include <Mmsystem.h>
+#include <chrono>
 
 #pragma comment(lib, "Winmm.lib")
 
 #include "soundclass.h"
-#include "Command.h"
 
 /*
 Class Name: Audio
@@ -83,11 +83,16 @@ Purpose: This is a concrete implementation of the audio interface, using DirectX
 */
 class DirectXAudio : public Audio
 {
-	const int kCrossFadeDurationInMS = 3000;
-	const long kCrossFadeInStep = 100;
-	const long kCrossFadeOutStep = 100;
+
+	std::chrono::time_point<std::chrono::steady_clock> crossFadeStartTime;
+	std::chrono::duration<float, std::milli> crossFadeCountdown;
+
 	const long kCrossFadeMax = DSBVOLUME_MAX;
 	const long kCrossFadeMin = DSBVOLUME_MIN;
+
+	const float kCrossFadeDurationInMS = 3000.0f;
+	const long kCrossFadeInStep = (kCrossFadeMax - kCrossFadeMin) / kCrossFadeDurationInMS; //per MS
+	const long kCrossFadeOutStep = kCrossFadeInStep;
 
 	SoundClass* _soundClass;
 
