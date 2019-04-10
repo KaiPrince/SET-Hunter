@@ -11,6 +11,9 @@ class SplashScreenLevel :
 	double opacity;
 
 	DrawableAsset* artwork;
+	TextAsset* textAsset;
+
+	std::vector<GameObject*> UIObjects;
 public:
 	SplashScreenLevel();
 	virtual ~SplashScreenLevel();
