@@ -7,7 +7,7 @@ SpriteSheet* AssetFactory::_treeSprite;
 SpriteSheet* AssetFactory::_tree2Sprite;
 SpriteSheet* AssetFactory::_shrubSprite;
 SpriteSheet* AssetFactory::_explosionSprite;
-SpriteSheet* AssetFactory::_spyHunterArt;
+SpriteSheet* AssetFactory::_splashScreenArt;
 SpriteSheet* AssetFactory::_enemyCar;
 SpriteSheet* AssetFactory::_rocket;
 SpriteSheet* AssetFactory::_road;
@@ -25,7 +25,7 @@ void AssetFactory::Init(Graphics* graphics)
 	_tree2Sprite = new SpriteSheet(L"Assets\\tree2.bmp", gfx);
 	_shrubSprite = new SpriteSheet(L"Assets\\shrub1.bmp", gfx);
 	_explosionSprite = new SpriteSheet(L"Assets\\explosion.bmp", gfx);
-	_spyHunterArt = new SpriteSheet(L"Assets\\spy_hunter_artwork.bmp", gfx);
+	_splashScreenArt = new SpriteSheet(L"Assets\\splashScreen.bmp", gfx);
 	_enemyCar = new SpriteSheet(L"Assets\\enemycar.bmp", gfx);
 	_rocket = new SpriteSheet(L"Assets\\rocket.bmp", gfx);
 	_road = new SpriteSheet(L"Assets\\road.bmp", gfx);
@@ -39,7 +39,7 @@ AssetFactory::~AssetFactory()
 	if (_tree2Sprite) delete _tree2Sprite;
 	if (_shrubSprite) delete _shrubSprite;
 	if (_explosionSprite) delete _explosionSprite;
-	if (_spyHunterArt) delete _spyHunterArt;
+	if (_splashScreenArt) delete _splashScreenArt;
 	if (_enemyCar) delete _enemyCar;
 	if (_rocket) delete _rocket;
 	if (_road) delete _road;
@@ -81,12 +81,12 @@ DrawableAsset* AssetFactory::GetAsset(DrawableAsset::AssetTypes assetType)
 	case DrawableAsset::TEXT_ASSET:
 		asset = new TextAsset();
 		break;
-	case DrawableAsset::SPY_HUNTER_ART:
+	case DrawableAsset::SPLASH_SCREEN_ART:
 	{ //Scope brackets added to prevent error C2361
-		SpriteSheetAsset* spyHunterAsset = new SpriteSheetAsset(_spyHunterArt, assetType);
-		spyHunterAsset->SetUseChromaKey(false);
+		SpriteSheetAsset* splashScreenAsset = new SpriteSheetAsset(_splashScreenArt, assetType);
+		splashScreenAsset->SetUseChromaKey(false);
 
-		asset = spyHunterAsset;
+		asset = splashScreenAsset;
 		break;
 	}
 	case DrawableAsset::ENEMY_CAR:

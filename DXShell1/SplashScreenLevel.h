@@ -1,5 +1,6 @@
 #pragma once
 #include "GameLevel.h"
+#include "DrawableAsset.h"
 
 #include <chrono>
 
@@ -9,7 +10,7 @@ class SplashScreenLevel :
 	std::chrono::steady_clock::time_point startupTime;
 	double opacity;
 
-	SpriteSheet* artwork;
+	DrawableAsset* artwork;
 public:
 	SplashScreenLevel();
 	virtual ~SplashScreenLevel();

@@ -16,7 +16,7 @@ class AssetFactory
 	static SpriteSheet* _tree2Sprite;
 	static SpriteSheet* _shrubSprite;
 	static SpriteSheet* _explosionSprite;
-	static SpriteSheet* _spyHunterArt;
+	static SpriteSheet* _splashScreenArt;
 	static SpriteSheet* _enemyCar;
 	static SpriteSheet* _rocket;
 	static SpriteSheet* _road;
