@@ -61,11 +61,13 @@ class AudioSprite
 
 	IDirectSoundBuffer8* _sound;
 
+	bool playOnLoop;
+
 	bool LoadWaveFile(char* filename);
 	void ShutdownWaveFile(IDirectSoundBuffer8**);
 
 public:
-	AudioSprite(char* filename, SoundClass* soundClass);
+	AudioSprite(char* filename, SoundClass* soundClass, bool playOnLoop = false);
 	~AudioSprite();
 
 	void Play();
@@ -73,6 +75,8 @@ public:
 
 	long GetVolume();
 	void SetVolume(long vol);
+
+	bool IsPlaying();
 
 };
 

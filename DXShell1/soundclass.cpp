@@ -319,6 +319,37 @@ bool SoundClass::PlayWaveFile(IDirectSoundBuffer8* sound)
 	return true;
 }
 
+bool SoundClass::PlayWaveFileOnLoop(IDirectSoundBuffer8* sound)
+{
+	HRESULT result;
+
+
+	// Set position at the beginning of the sound buffer.
+	result = sound->SetCurrentPosition(0);
+	if (FAILED(result))
+	{
+		return false;
+	}
+
+	// Set volume of the buffer to 100%.
+	result = sound->SetVolume(DSBVOLUME_MAX);
+	if (FAILED(result))
+	{
+		return false;
+	}
+
+	// Play the contents of the sound buffer.
+	result = sound->Play(0, 0, DSBPLAY_LOOPING);
+	if (FAILED(result))
+	{
+		return false;
+	}
+
+	return true;
+}
+
+
+
 bool SoundClass::StopWaveFile(IDirectSoundBuffer8* sound)
 {
 	HRESULT result;

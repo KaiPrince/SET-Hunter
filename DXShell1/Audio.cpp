@@ -13,10 +13,10 @@ DirectXAudio::DirectXAudio(HWND windowHandle)
 	_crossfadeIn = nullptr;
 	_crossfadeOut = nullptr;
 
-	_mainThemeSprite = new AudioSprite("Sounds/main_theme.wav", _soundClass);
+	_mainThemeSprite = new AudioSprite("Sounds/main_theme.wav", _soundClass, true);
 	_explosionSprite = new AudioSprite("Sounds/explosion.wav", _soundClass);
 	_laserSprite = new AudioSprite("Sounds/shoot.wav", _soundClass);
-	_level2Theme = new AudioSprite("Sounds/old_friends_theme.wav", _soundClass);
+	_level2Theme = new AudioSprite("Sounds/old_friends_theme.wav", _soundClass, true);
 }
 
 DirectXAudio::~DirectXAudio()
@@ -49,13 +49,15 @@ void AudioSprite::ShutdownWaveFile(IDirectSoundBuffer8** secondaryBuffer)
 	return;
 }
 
-AudioSprite::AudioSprite(char* filename, SoundClass* soundClass)
+AudioSprite::AudioSprite(char* filename, SoundClass* soundClass, bool playOnLoop)
 {
 	this->_soundClass = soundClass;
 
 	this->_sound = nullptr;
 	bool soundLoadedSuccessfully = _soundClass->LoadWaveFile(filename, &_sound);
 	if (!soundLoadedSuccessfully) throw; //... make sure the .wav file is in proper format. Try re-converting using VLC
+
+	this->playOnLoop = playOnLoop;
 }
 
 AudioSprite::~AudioSprite()
@@ -65,7 +67,13 @@ AudioSprite::~AudioSprite()
 
 void AudioSprite::Play()
 {
-	_soundClass->PlayWaveFile(_sound);
+	if (this->playOnLoop) {
+		_soundClass->PlayWaveFileOnLoop(_sound);
+	}
+	else {
+		_soundClass->PlayWaveFile(_sound);
+	}
+
 }
 
 void AudioSprite::Stop()
@@ -94,11 +102,24 @@ void AudioSprite::SetVolume(long vol)
 	assert(result == DS_OK);
 }
 
+bool AudioSprite::IsPlaying()
+{
+	LPDWORD status = new DWORD;
+	_sound->GetStatus(status);
+
+	bool output = status && DSBSTATUS_PLAYING;
+
+	delete status;
+
+	return output;
+}
+
 void DirectXAudio::stopAllSounds()
 {
 	_mainThemeSprite->Stop();
 	_explosionSprite->Stop();
 	_laserSprite->Stop();
+	_level2Theme->Stop();
 }
 
 void DirectXAudio::Update()
