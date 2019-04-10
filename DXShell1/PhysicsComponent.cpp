@@ -16,7 +16,7 @@ PhysicsComponent::PhysicsComponent(GameObject* obj, GameWorld* world)
 {
 	this->_obj = obj;
 	this->_world = world;
-	this->_collisionStrategy = new NullCollisionStrategy();
+	this->_collisionStrategy = NullCollisionStrategy::GetInstance();
 
 	//non-collidable by default.
 	this->_hitbox = new NullGameObject(0, 0, obj->GetWidth(), obj->GetHeight());
@@ -46,6 +46,8 @@ void PhysicsComponent::DetectCollisions()
 		_hitbox->GetWidth(),
 		_hitbox->GetHeight()
 	);
+	hitboxInWorld->SetSprite(new AssetOutlineDecorator(hitboxInWorld->GetSprite())); //DEBUG
+	hitboxInWorld->Draw();
 
 	DetectCollisionsAs(hitboxInWorld);
 }

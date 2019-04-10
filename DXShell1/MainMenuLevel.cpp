@@ -37,8 +37,8 @@ void MainMenuLevel::Load()
 			gb->squareWidth / 2, gb->squareHeight, _assetFactory->GetAsset(DrawableAsset::CAR_SPRITE), world);
 		player->UpdateState(new AliveState(player));
 		player->SetPhysicsComponent(new PlayerPhysicsComponent(player, world));
-		player->SetInputComponent(new StayOnRoadInputComponent(player));
 		player->GetPhysicsComponent()->SetCollisionStrategy(new PlayerCollisionStrategy(player));
+		player->SetInputComponent(new StayOnRoadInputComponent(player));
 
 		player->AddObserver(this);
 

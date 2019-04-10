@@ -121,9 +121,13 @@ void GameWorld::Update()
 {
 	ProcessAllCommands();
 
+
 	for (GameObject* gameObject : _gameObjects) {
 		gameObject->Update();
 
+	}
+
+	for (GameObject* gameObject : _gameObjects) {
 
 		if (gameObject->GetPhysicsComponent()->IsCollidable() && gameObject->GetPhysicsComponent()->IsCollisionDetected())
 		{
