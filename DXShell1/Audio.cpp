@@ -21,7 +21,7 @@ DirectXAudio::DirectXAudio(HWND windowHandle)
 	registerEffect(&_soundEffects, _laserSprite);
 
 	//Theme Songs
-	_mainThemeSprite = new AudioSprite("Sounds/main_theme.wav", _soundClass, true);
+	_mainThemeSprite = new AudioSprite("Sounds/copyright_free_theme.wav", _soundClass, true);
 	_level2Theme = new AudioSprite("Sounds/old_friends_theme.wav", _soundClass, true);
 
 	registerSong(&_songs, _mainThemeSprite);
