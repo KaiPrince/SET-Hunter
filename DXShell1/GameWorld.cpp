@@ -119,7 +119,6 @@ void GameWorld::HandleInput()
 
 void GameWorld::Update()
 {
-	//Process all commands.
 	ProcessAllCommands();
 
 	for (GameObject* gameObject : _gameObjects) {

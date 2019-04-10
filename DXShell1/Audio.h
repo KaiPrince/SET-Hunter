@@ -88,10 +88,10 @@ class DirectXAudio : public Audio
 	std::chrono::duration<float, std::milli> crossFadeCountdown;
 
 	const long kCrossFadeMax = DSBVOLUME_MAX;
-	const long kCrossFadeMin = DSBVOLUME_MIN;
+	const long kCrossFadeMin = DSBVOLUME_MIN / 3;
 
-	const float kCrossFadeDurationInMS = 3000.0f;
-	const long kCrossFadeInStep = (kCrossFadeMax - kCrossFadeMin) / kCrossFadeDurationInMS; //per MS
+	const float kCrossFadeDurationInMS = 2000.0f;
+	const long kCrossFadeInStep = (kCrossFadeMax - kCrossFadeMin) / static_cast<long>(kCrossFadeDurationInMS); //per MS
 	const long kCrossFadeOutStep = kCrossFadeInStep;
 
 	SoundClass* _soundClass;

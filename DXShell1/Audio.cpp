@@ -104,27 +104,22 @@ void DirectXAudio::stopAllSounds()
 void DirectXAudio::Update()
 {
 
-	//Get delta time
-	using namespace std::chrono;
-	time_point<steady_clock> currentTime = steady_clock::now();
-	float elapsedTimeInMS = GameController::GetDeltaTime(); //duration<float, std::milli>(currentTime - timeOfRevival).count();
+
+	//Cross-fade sounds if necessary.
+	if (_crossfadeIn != nullptr || _crossfadeOut != nullptr) {
+
+		//Get delta time
+		using namespace std::chrono;
+		time_point<steady_clock> currentTime = steady_clock::now();
+		float elapsedTimeInMS = GameController::GetDeltaTime(); //duration<float, std::milli>(currentTime - timeOfRevival).count();
 
 
-	//Decrement crossfade countdown timer
-	if (crossFadeCountdown.count() > 0) {
 
-		crossFadeCountdown -= duration<float, std::milli>(elapsedTimeInMS);
-	}
-
-	if (crossFadeCountdown.count() <= 0) {
-
-
-		//Cross-fade sounds if necessary.
 		if (_crossfadeIn != nullptr) {
 
-			if (_crossfadeIn->GetVolume() < kCrossFadeMax) {
+			if (_crossfadeIn->GetVolume() <= kCrossFadeMax) {
 
-				_crossfadeIn->SetVolume(_crossfadeIn->GetVolume() + kCrossFadeInStep);
+				_crossfadeIn->SetVolume(_crossfadeIn->GetVolume() + static_cast<long>(kCrossFadeInStep * elapsedTimeInMS));
 
 			}
 			else {
@@ -134,9 +129,9 @@ void DirectXAudio::Update()
 
 		if (_crossfadeOut != nullptr) {
 
-			if (_crossfadeOut->GetVolume() > kCrossFadeMin) {
+			if (_crossfadeOut->GetVolume() >= kCrossFadeMin) {
 
-				_crossfadeOut->SetVolume(_crossfadeOut->GetVolume() - kCrossFadeOutStep);
+				_crossfadeOut->SetVolume(_crossfadeOut->GetVolume() - static_cast<long>(kCrossFadeOutStep * elapsedTimeInMS));
 
 			}
 			else {
@@ -180,6 +175,7 @@ void DirectXAudio::changeSound(Sounds stopSound, Sounds startSound)
 	this->_crossfadeIn = getSpriteFromType(startSound);
 
 	this->_crossfadeIn->Play();
+	this->_crossfadeIn->SetVolume(kCrossFadeMin);
 
 
 	//Reset CrossfadeTimer
