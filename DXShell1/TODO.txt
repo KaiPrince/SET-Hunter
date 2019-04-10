@@ -67,3 +67,5 @@ For Fun:
 - Add colour config to asset decorators.
 
 - Make Objects invalidate/remove themselves when they leave the screen
+
+- Add title to theme songs.
