@@ -2,6 +2,7 @@
 #include <Windows.h>
 #include <Mmsystem.h>
 #include <chrono>
+#include <vector>
 
 #pragma comment(lib, "Winmm.lib")
 
@@ -23,6 +24,7 @@ public:
 
 	//Note: must be camel case, because of naming conflict with DirectX
 	virtual void playSound(Sounds soundType) = 0;
+	virtual void restartSound(Sounds soundType) = 0;
 	virtual void stopSound(Sounds soundType) = 0;
 	virtual void changeSound(Sounds stopSound, Sounds startSound) = 0;
 	virtual void stopAllSounds() = 0;
@@ -89,7 +91,6 @@ class DirectXAudio : public Audio
 {
 
 	std::chrono::time_point<std::chrono::steady_clock> crossFadeStartTime;
-	std::chrono::duration<float, std::milli> crossFadeCountdown;
 
 	const long kCrossFadeMax = DSBVOLUME_MAX;
 	const long kCrossFadeMin = DSBVOLUME_MIN / 3;
@@ -103,6 +104,9 @@ class DirectXAudio : public Audio
 	AudioSprite* _crossfadeOut;
 	AudioSprite* _crossfadeIn;
 
+	std::vector<AudioSprite*> _songs;
+	std::vector<AudioSprite*> _soundEffects;
+
 	AudioSprite* _mainThemeSprite;
 	AudioSprite* _explosionSprite;
 	AudioSprite* _laserSprite;
@@ -110,8 +114,9 @@ class DirectXAudio : public Audio
 
 	AudioSprite* getSpriteFromType(Sounds soundType);
 
-	// Inherited via Audio
-	virtual void changeSound(Sounds stopSound, Sounds startSound) override;
+
+	static void registerSong(std::vector<AudioSprite*>* songsList, AudioSprite* sound);
+	static void registerEffect(std::vector<AudioSprite*>* effectsList, AudioSprite* effect);
 
 
 public:
@@ -126,5 +131,12 @@ public:
 	virtual void stopAllSounds() override;
 
 	virtual void Update() override;
+
+
+	// Inherited via Audio
+	virtual void changeSound(Sounds stopSound, Sounds startSound) override;
+	virtual void changeSound(AudioSprite* stopSound, AudioSprite* startSound);
+	// Inherited via Audio
+	virtual void restartSound(Sounds soundType) override;
 
 };

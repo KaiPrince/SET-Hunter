@@ -3,6 +3,7 @@
 #include "GameController.h"
 #include "Level1.h"
 #include "CollisionResolutionStrategy.h"
+#include "Audio.h"
 
 
 
@@ -22,6 +23,9 @@ void MainMenuLevel::Load()
 {
 	//Create World
 	world = new GameWorld(_assetFactory);
+
+	//Play main theme
+	AudioLocator::GetAudio()->PlayThemeSong();
 
 	{
 		//Player starts at bottom middle of screen.

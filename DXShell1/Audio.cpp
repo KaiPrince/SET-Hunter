@@ -13,20 +13,32 @@ DirectXAudio::DirectXAudio(HWND windowHandle)
 	_crossfadeIn = nullptr;
 	_crossfadeOut = nullptr;
 
-	_mainThemeSprite = new AudioSprite("Sounds/main_theme.wav", _soundClass, true);
+	//Effects
 	_explosionSprite = new AudioSprite("Sounds/explosion.wav", _soundClass);
 	_laserSprite = new AudioSprite("Sounds/shoot.wav", _soundClass);
+
+	registerEffect(&_soundEffects, _explosionSprite);
+	registerEffect(&_soundEffects, _laserSprite);
+
+	//Theme Songs
+	_mainThemeSprite = new AudioSprite("Sounds/main_theme.wav", _soundClass, true);
 	_level2Theme = new AudioSprite("Sounds/old_friends_theme.wav", _soundClass, true);
+
+	registerSong(&_songs, _mainThemeSprite);
+	registerSong(&_songs, _level2Theme);
 }
 
 DirectXAudio::~DirectXAudio()
 {
 	stopAllSounds();
 
-	if (_mainThemeSprite) { delete _mainThemeSprite; }
-	if (_explosionSprite) { delete _explosionSprite; }
-	if (_laserSprite) { delete _laserSprite; }
-	if (_level2Theme) { delete _level2Theme; }
+	for (AudioSprite* sprite : _songs) {
+		delete sprite;
+	}
+
+	for (AudioSprite* sprite : _soundEffects) {
+		delete sprite;
+	}
 
 	_soundClass->Shutdown();
 
@@ -107,7 +119,7 @@ bool AudioSprite::IsPlaying()
 	LPDWORD status = new DWORD;
 	_sound->GetStatus(status);
 
-	bool output = status && DSBSTATUS_PLAYING;
+	bool output = ((*status) & DSBSTATUS_PLAYING) == 1;
 
 	delete status;
 
@@ -116,10 +128,13 @@ bool AudioSprite::IsPlaying()
 
 void DirectXAudio::stopAllSounds()
 {
-	_mainThemeSprite->Stop();
-	_explosionSprite->Stop();
-	_laserSprite->Stop();
-	_level2Theme->Stop();
+	for (AudioSprite* sprite : _songs) {
+		sprite->Stop();
+	}
+
+	for (AudioSprite* sprite : _soundEffects) {
+		sprite->Stop();
+	}
 }
 
 void DirectXAudio::Update()
@@ -164,6 +179,11 @@ void DirectXAudio::Update()
 	}
 }
 
+void DirectXAudio::restartSound(Sounds soundType)
+{
+	getSpriteFromType(soundType)->Play();
+}
+
 AudioSprite* DirectXAudio::getSpriteFromType(Sounds soundType)
 {
 	AudioSprite* output = nullptr;
@@ -190,10 +210,30 @@ AudioSprite* DirectXAudio::getSpriteFromType(Sounds soundType)
 	return output;
 }
 
-void DirectXAudio::changeSound(Sounds stopSound, Sounds startSound)
+void DirectXAudio::registerSong(std::vector<AudioSprite*> * songsList, AudioSprite * sound)
 {
-	this->_crossfadeOut = getSpriteFromType(stopSound);
-	this->_crossfadeIn = getSpriteFromType(startSound);
+	songsList->push_back(sound);
+}
+
+void DirectXAudio::registerEffect(std::vector<AudioSprite*> * effectsList, AudioSprite * effect)
+{
+	effectsList->push_back(effect);
+}
+
+void DirectXAudio::changeSound(Sounds stopSound, Sounds startSound) {
+	changeSound(getSpriteFromType(stopSound), getSpriteFromType(startSound));
+}
+
+void DirectXAudio::changeSound(AudioSprite * stopSound, AudioSprite * startSound)
+{
+
+	//If we're already trying to crossfade out a song, just stop it abruptly.
+	if (this->_crossfadeOut != nullptr) {
+		this->_crossfadeOut->Stop();
+	}
+
+	this->_crossfadeOut = stopSound; //TODO: change this to use a vector, so multiple songs can be faded out at once.
+	this->_crossfadeIn = startSound;
 
 	this->_crossfadeIn->Play();
 	this->_crossfadeIn->SetVolume(kCrossFadeMin);
@@ -203,14 +243,37 @@ void DirectXAudio::changeSound(Sounds stopSound, Sounds startSound)
 	using namespace std::chrono;
 	time_point<steady_clock> currentTime = steady_clock::now();
 	crossFadeStartTime = currentTime;
-
-	crossFadeCountdown = duration<float, std::milli>(kCrossFadeDurationInMS);
 }
 
 
 void DirectXAudio::playSound(Sounds soundType)
 {
-	getSpriteFromType(soundType)->Play();
+	AudioSprite* sound = getSpriteFromType(soundType);
+
+	if (sound->IsPlaying()) {
+		//Do nothing.
+	}
+	else {
+
+		if (std::find(this->_songs.begin(), this->_songs.end(), sound) != this->_songs.end()) {
+			//It's a theme song. Crossfade instead.
+
+			bool foundAPlayingSong = false;
+			for (AudioSprite* nextSong : _songs) {
+				if (nextSong != sound && nextSong->IsPlaying()) {
+					foundAPlayingSong = true;
+					changeSound(nextSong, sound);
+				}
+			}
+
+			if (!foundAPlayingSong) {
+				sound->Play();
+			}
+		}
+		else {
+			sound->Play(); // Will reset sound to beginning and max volume.
+		}
+	}
 }
 
 void DirectXAudio::stopSound(Sounds soundType)
