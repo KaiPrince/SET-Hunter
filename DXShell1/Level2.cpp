@@ -55,7 +55,7 @@ void Level2::Update()
 
 		float randomXPos = 400.0f; //TODO
 		const float screenHeight = static_cast<float>(GraphicsLocator::GetGraphics()->Window_Height);
-		GameObject* enemy = new GameObject(randomXPos, screenHeight - 1, kEnemyCarWidth, kEnemyCarHeight, _assetFactory->GetAsset(DrawableAsset::ENEMY_CAR), world, 0.0f, kEnemyYVelocity);
+		GameObject* enemy = new GameObject(randomXPos, screenHeight - 1, kEnemyCarWidth, kEnemyCarHeight, _assetFactory->GetAsset(DrawableAsset::ENEMY_CAR), world, 0.0f, kEnemyCarYVelocity);
 		enemy->SetInputComponent(new StayOnRoadInputComponent(enemy));
 		enemy->SetPhysicsComponent(new CollidablePhysicsComponent(enemy, world));
 		enemy->UpdateState(new ShootPlayerState(enemy));
