@@ -3,6 +3,7 @@
 #include "GameController.h"
 #include "MainMenuLevel.h"
 #include "Constants.h"
+#include "Audio.h"
 
 Graphics* GameLevel::gfx;
 AssetFactory* GameLevel::_assetFactory;
@@ -36,6 +37,7 @@ void GameLevel::ReturnToMainMenu_Detect()
 
 	if (GameController::GetLives() <= 0 && _returnToMainMenu == false) {
 		//TODO: Add edgar ramone "Game Over"
+		AudioLocator::GetAudio()->playSound(Audio::GAME_OVER_EFFECT);
 
 		_returnToMainMenu = true;
 

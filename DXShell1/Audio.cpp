@@ -17,10 +17,12 @@ DirectXAudio::DirectXAudio(HWND windowHandle)
 	_explosionSprite = new AudioSprite("Sounds/explosion.wav", _soundClass);
 	_laserSprite = new AudioSprite("Sounds/shoot.wav", _soundClass);
 	_coin = new AudioSprite("Sounds/score.wav", _soundClass);
+	_gameOverEffect = new AudioSprite("Sounds/game_over_effect.wav", _soundClass);
 
 	registerEffect(&_soundEffects, _explosionSprite);
 	registerEffect(&_soundEffects, _laserSprite);
 	registerEffect(&_soundEffects, _coin);
+	registerEffect(&_soundEffects, _gameOverEffect);
 
 	//Theme Songs
 	_mainThemeSprite = new AudioSprite("Sounds/copyright_free_theme.wav", _soundClass, true);
@@ -207,6 +209,9 @@ AudioSprite* DirectXAudio::getSpriteFromType(Sounds soundType)
 		break;
 	case COIN:
 		output = _coin;
+		break;
+	case GAME_OVER_EFFECT:
+		output = _gameOverEffect;
 		break;
 	default:
 		throw; //ERROR: Unexpected/Invalid Enum

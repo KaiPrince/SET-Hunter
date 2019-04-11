@@ -61,3 +61,5 @@ For Fun:
 - Make Objects invalidate/remove themselves when they leave the screen
 
 - Add title to theme songs.
+
+- Fix bug: When player dies near bottom of screen and presses down arrow key, the player spawns slightly off-screen, causing it to be removed from the game world.
