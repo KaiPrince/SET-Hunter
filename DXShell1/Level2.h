@@ -4,10 +4,6 @@
 
 class Level2 : public GameLevel, public Observer, public CommandQueue
 {
-
-
-	bool continueRoadScolling; //TODO: move this to GameBoard class?
-
 	std::vector<GameObject*> _enemies;
 
 

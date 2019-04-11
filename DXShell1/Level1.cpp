@@ -19,11 +19,7 @@ void Level1::Load()
 	player = world->GetPlayer();
 	player->AddObserver(this);
 
-	scoreAsset = static_cast<TextAsset*>(_assetFactory->GetAsset(DrawableAsset::TEXT_ASSET));
-	DrawableAsset* backgroundDecoratedAsset = new AssetBackgroundRectangleDecorator(scoreAsset);
-
-	this->scoreHUD = new GameObject(0, 0, 100.0f, 50.0f, backgroundDecoratedAsset, world);
-	world->AddUIObject(this->scoreHUD);
+	InitScoreHUD();
 
 }
 
@@ -65,11 +61,7 @@ void Level1::Render()
 
 	world->Draw();
 
-	char ScoreMessage[500] = "";
-	sprintf_s(ScoreMessage, 500, "Score: %u\n Lives %d\n",
-		GameController::GetScore(), GameController::GetLives());
-
-	this->scoreAsset->SetText(ScoreMessage);
+	RefreshScoreHUDText();
 
 	ReturnToMainMenu_Render();
 
@@ -89,6 +81,7 @@ void Level1::Render()
 	gfx->WriteText(0, 0, 200.0f, 100.0f, 10.0f, msg, sprintf_s(msg, 500, "X Velocity: %2.2g\nY Velocity: %2.2f", player->GetXVelocity(), player->GetYVelocity()));
 	*/
 }
+
 
 void Level1::HandleInput()
 {

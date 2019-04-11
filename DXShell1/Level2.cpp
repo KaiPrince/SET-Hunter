@@ -14,9 +14,6 @@
 
 Level2::Level2()
 {
-	this->continueRoadScolling = true;
-	this->_returnToMainMenu = false;
-	this->_returnToMainMenuCountdown = std::chrono::duration<float, std::milli>(0.0f);
 }
 
 
@@ -31,6 +28,8 @@ void Level2::Load()
 
 	player = world->GetPlayer();
 	player->AddObserver(this);
+
+	InitScoreHUD();
 
 	//Spawn 5 enemies.
 	for (size_t i = 0; i < 1; i++)
@@ -78,9 +77,7 @@ void Level2::Render()
 
 	world->Draw();
 
-	char ScoreMessage[500] = "";
-	gfx->WriteText(0, 0, 200.0f, 100.0f, 10.0f, ScoreMessage, sprintf_s(ScoreMessage, 500, "Score: %u\n Lives %d\n NumObjects: %zd\n",
-		GameController::GetScore(), GameController::GetLives(), world->GetGameObjects().size()));
+	RefreshScoreHUDText();
 
 	ReturnToMainMenu_Render();
 }

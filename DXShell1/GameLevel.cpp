@@ -11,6 +11,24 @@ GameWorld* GameLevel::world;
 GameObject* GameLevel::player;
 
 
+GameLevel::GameLevel()
+{
+	this->continueRoadScolling = true;
+
+	this->_returnToMainMenu = false;
+	this->_returnToMainMenuCountdown = std::chrono::duration<float, std::milli>(0.0f);
+}
+
+void GameLevel::InitScoreHUD()
+{
+
+	scoreAsset = static_cast<TextAsset*>(_assetFactory->GetAsset(DrawableAsset::TEXT_ASSET));
+	DrawableAsset* backgroundDecoratedAsset = new AssetBackgroundRectangleDecorator(scoreAsset);
+
+	this->scoreHUD = new GameObject(0, 0, 100.0f, 50.0f, backgroundDecoratedAsset, world);
+	world->AddUIObject(this->scoreHUD);
+}
+
 void GameLevel::ReturnToMainMenu_Update()
 {
 
@@ -63,4 +81,14 @@ void GameLevel::ReturnToMainMenu_Render()
 		GraphicsLocator::GetGraphics()->FillRect(0.0f, 0.0f, screenW, screenH, 1.0f, 1.0f, 1.0f, opacity);
 
 	}
+}
+
+void GameLevel::RefreshScoreHUDText()
+{
+
+	char ScoreMessage[500] = "";
+	sprintf_s(ScoreMessage, 500, "Score: %u\nLives %d\n",
+		GameController::GetScore(), GameController::GetLives());
+
+	this->scoreAsset->SetText(ScoreMessage);
 }

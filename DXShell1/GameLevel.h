@@ -6,6 +6,9 @@
 #include "InputComponent.h"
 #include "GameWorld.h"
 
+class GameObject;
+class TextAsset;
+
 /*
 Class Name: GameLevel
 Purpose: This class represents the base for each level in the game.
@@ -23,11 +26,20 @@ protected:
 	bool _returnToMainMenu; //Player ran out of lives
 	std::chrono::duration<float, std::milli> _returnToMainMenuCountdown;
 
-protected:
+	GameObject* scoreHUD;
+	TextAsset* scoreAsset;
+
+	bool continueRoadScolling;
+
+	GameLevel();
+
+	void InitScoreHUD();
 
 	void ReturnToMainMenu_Update();
 	void ReturnToMainMenu_Detect();
 	void ReturnToMainMenu_Render();
+
+	void RefreshScoreHUDText();
 
 public:
 	static void Init(Graphics* graphics)
