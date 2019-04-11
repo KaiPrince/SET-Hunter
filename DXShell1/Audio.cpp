@@ -27,9 +27,11 @@ DirectXAudio::DirectXAudio(HWND windowHandle)
 	//Theme Songs
 	_mainThemeSprite = new AudioSprite("Sounds/copyright_free_theme.wav", _soundClass, true);
 	_level2Theme = new AudioSprite("Sounds/old_friends_theme.wav", _soundClass, true);
+	_gameOverTheme = new AudioSprite("Sounds/back.wav", _soundClass, true);
 
 	registerSong(&_songs, _mainThemeSprite);
 	registerSong(&_songs, _level2Theme);
+	registerSong(&_songs, _gameOverTheme);
 }
 
 DirectXAudio::~DirectXAudio()
@@ -212,6 +214,9 @@ AudioSprite* DirectXAudio::getSpriteFromType(Sounds soundType)
 		break;
 	case GAME_OVER_EFFECT:
 		output = _gameOverEffect;
+		break;
+	case GAME_OVER_THEME:
+		output = _gameOverTheme;
 		break;
 	default:
 		throw; //ERROR: Unexpected/Invalid Enum

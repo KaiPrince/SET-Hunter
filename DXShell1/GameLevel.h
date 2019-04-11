@@ -23,6 +23,12 @@ protected:
 	bool _returnToMainMenu; //Player ran out of lives
 	std::chrono::duration<float, std::milli> _returnToMainMenuCountdown;
 
+protected:
+
+	void ReturnToMainMenu_Update();
+	void ReturnToMainMenu_Detect();
+	void ReturnToMainMenu_Render();
+
 public:
 	static void Init(Graphics* graphics)
 	{
@@ -37,10 +43,6 @@ public:
 	virtual void Render() = 0;
 	virtual void HandleInput() = 0;
 
-
-	void ReturnToMainMenu_Update();
-	void ReturnToMainMenu_Detect();
-	void ReturnToMainMenu_Render();
 
 
 	

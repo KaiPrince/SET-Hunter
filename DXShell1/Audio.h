@@ -19,7 +19,7 @@ public:
 
 	enum Sounds
 	{
-		MAIN_THEME, EXPLOSION, LASER, LEVEL2_THEME, COIN, GAME_OVER_EFFECT
+		MAIN_THEME, EXPLOSION, LASER, LEVEL2_THEME, COIN, GAME_OVER_EFFECT, GAME_OVER_THEME
 	};
 
 	//Note: must be camel case, because of naming conflict with DirectX
@@ -109,6 +109,7 @@ class DirectXAudio : public Audio
 
 	AudioSprite* _mainThemeSprite;
 	AudioSprite* _level2Theme;
+	AudioSprite* _gameOverTheme;
 
 	AudioSprite* _explosionSprite;
 	AudioSprite* _laserSprite;

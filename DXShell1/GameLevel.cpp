@@ -36,7 +36,8 @@ void GameLevel::ReturnToMainMenu_Detect()
 {
 
 	if (GameController::GetLives() <= 0 && _returnToMainMenu == false) {
-		//TODO: Add edgar ramone "Game Over"
+
+		AudioLocator::GetAudio()->playSound(Audio::GAME_OVER_THEME);
 		AudioLocator::GetAudio()->playSound(Audio::GAME_OVER_EFFECT);
 
 		_returnToMainMenu = true;
