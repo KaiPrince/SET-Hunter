@@ -304,6 +304,7 @@ GameObjectState* ShootPlayerState::Update()
 		if (player->GetYPos() < _object->GetYPos() && //Player is above me
 			fabs(player->GetXPos() - _object->GetXPos()) < _object->GetWidth()) //Player is near me	
 		{
+			AudioLocator::GetAudio()->playSound(Audio::LASER);
 			_object->Notify(); //Notify level to shoot. TODO: replace with command pattern.
 			shootDelayCountdown = duration<float, std::milli>(3000.0f);
 		}
