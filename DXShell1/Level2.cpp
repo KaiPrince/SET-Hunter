@@ -9,11 +9,14 @@
 #include "GameObjectState.h"
 #include "CollisionResolutionStrategy.h"
 #include <algorithm>
+#include "Constants.h"
 
 
 Level2::Level2()
 {
 	this->continueRoadScolling = true;
+	this->_returnToMainMenu = false;
+	this->_returnToMainMenuCountdown = std::chrono::duration<float, std::milli>(0.0f);
 }
 
 
@@ -62,9 +65,30 @@ void Level2::Update()
 
 	world->Update();
 
-	if (GameController::GetLives() <= 0) {
+	if (GameController::GetLives() <= 0 && _returnToMainMenu == false) {
 		//TODO: Add edgar ramone "Game Over"
-		GameController::QueuedNextLevel = new MainMenuLevel();
+
+		_returnToMainMenu = true;
+
+		using namespace std::chrono;
+		_returnToMainMenuCountdown = duration<float, std::milli>(kReturnToMainMenuCountdownTime);
+
+	}
+
+	if (_returnToMainMenu) {
+
+		if (_returnToMainMenuCountdown.count() > 0) {
+
+			//Decrement countdown
+			using namespace std::chrono;
+			float elapsedTimeInMS = GameController::GetDeltaTime();
+			_returnToMainMenuCountdown -= duration<float, std::milli>(elapsedTimeInMS);
+
+		}
+		else {
+			//Transition to main menu.
+			GameController::QueuedNextLevel = new MainMenuLevel();
+		}
 	}
 }
 
@@ -78,6 +102,19 @@ void Level2::Render()
 	char ScoreMessage[500] = "";
 	gfx->WriteText(0, 0, 200.0f, 100.0f, 10.0f, ScoreMessage, sprintf_s(ScoreMessage, 500, "Score: %u\n Lives %d\n NumObjects: %zd\n",
 		GameController::GetScore(), GameController::GetLives(), world->GetGameObjects().size()));
+
+	if (_returnToMainMenuCountdown.count() > 0) {
+
+
+		const float screenH = static_cast<float>(GraphicsLocator::GetGraphics()->Window_Height);
+		const float screenW = static_cast<float>(GraphicsLocator::GetGraphics()->Window_Width);
+
+		float opacity = (1.0f - 0.0f) * ((kReturnToMainMenuCountdownTime - _returnToMainMenuCountdown.count()) / kReturnToMainMenuCountdownTime);
+
+		//Draw white filter
+		GraphicsLocator::GetGraphics()->FillRect(0.0f, 0.0f, screenW, screenH, 1.0f, 1.0f, 1.0f, opacity);
+
+	}
 }
 
 void Level2::HandleInput()
@@ -85,7 +122,7 @@ void Level2::HandleInput()
 	world->HandleInput();
 }
 
-void Level2::Notify(Observable* subject)
+void Level2::Notify(Observable * subject)
 {
 	if (subject == player) {
 

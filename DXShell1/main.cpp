@@ -63,7 +63,7 @@ int WINAPI wWinMain(
 	// The factory returns the current system DPI. This is also the value it will use
 	// to create its own windows.
 	FLOAT dpiX, dpiY;
-	ID2D1Factory* m_pDirect2dFactory;
+	ID2D1Factory * m_pDirect2dFactory;
 	D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &m_pDirect2dFactory);
 	m_pDirect2dFactory->GetDesktopDpi(&dpiX, &dpiY);
 	m_pDirect2dFactory->Release();
@@ -152,6 +152,12 @@ int WINAPI wWinMain(
 
 				lag -= MS_PER_UPDATE;
 				++updateLoopCounter;
+
+				//Switch level if queued.
+				if (GameController::QueuedNextLevel != nullptr) {
+					GameController::SwitchLevel(GameController::QueuedNextLevel);
+					GameController::QueuedNextLevel = nullptr;
+				}
 			}
 
 			//Render Routine... This is very modular. GameController now handles the rendering
@@ -159,11 +165,6 @@ int WINAPI wWinMain(
 			GameController::Render();
 			graphics->EndDraw();
 
-			//Switch level if queued.
-			if (GameController::QueuedNextLevel != nullptr) {
-				GameController::SwitchLevel(GameController::QueuedNextLevel);
-				GameController::QueuedNextLevel = nullptr;
-			}
 		}
 	}
 

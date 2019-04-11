@@ -7,6 +7,9 @@ class TextAsset;
 
 class Level1 : public GameLevel, public Observer
 {
+
+	std::chrono::steady_clock::time_point playerLostLastLife_Time;
+
 	bool continueRoadScolling; //TODO: move this to GameBoard class?
 	GameObject* scoreHUD;
 	TextAsset* scoreAsset;
