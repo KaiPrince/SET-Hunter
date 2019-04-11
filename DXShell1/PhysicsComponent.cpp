@@ -108,9 +108,12 @@ void PlayerPhysicsComponent::Update() {
 	float newXPos = _obj->GetXPos();
 	float newYPos = _obj->GetYPos();
 
+	float smudgeX = 3.0f; //These numbers account for edge case errors with pixel math.
+	float smudgeY = 3.0f;
+
 	//Check X Bounds
-	const float maxXPos = (_world->GetGameBoard()->boardWidth * _world->GetGameBoard()->squareWidth) - _obj->GetWidth();
-	const float minXPos = 0;
+	const float maxXPos = GraphicsLocator::GetGraphics()->Window_Width - _obj->GetWidth() - smudgeX;
+	const float minXPos = 0 + smudgeX;
 
 	if (newXPos > maxXPos) {
 		_obj->SetXPos(maxXPos);
@@ -123,8 +126,8 @@ void PlayerPhysicsComponent::Update() {
 	}
 
 	//Check Y Bounds
-	const float maxheight = (_world->GetGameBoard()->boardHeight * _world->GetGameBoard()->squareHeight) - (_obj->GetHeight() * 2);
-	const float minheight = (_world->GetGameBoard()->boardHeight * _world->GetGameBoard()->squareHeight) / 2;
+	const float maxheight = GraphicsLocator::GetGraphics()->Window_Height - (_obj->GetHeight() * 2) - smudgeY;
+	const float minheight = GraphicsLocator::GetGraphics()->Window_Height / 2;
 
 	if (newYPos > maxheight) {
 		_obj->SetYPos(maxheight);
