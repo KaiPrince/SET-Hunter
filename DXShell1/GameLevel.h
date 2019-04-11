@@ -19,6 +19,10 @@ protected:
 	static GameObject* player; //TODO: delete in destructor
 	static AssetFactory* _assetFactory;
 
+
+	bool _returnToMainMenu; //Player ran out of lives
+	std::chrono::duration<float, std::milli> _returnToMainMenuCountdown;
+
 public:
 	static void Init(Graphics* graphics)
 	{
@@ -32,6 +36,11 @@ public:
 	virtual void Update() = 0;
 	virtual void Render() = 0;
 	virtual void HandleInput() = 0;
+
+
+	void ReturnToMainMenu_Update();
+	void ReturnToMainMenu_Detect();
+	void ReturnToMainMenu_Render();
 
 
 	

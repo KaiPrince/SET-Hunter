@@ -5,8 +5,6 @@
 class Level2 : public GameLevel, public Observer, public CommandQueue
 {
 
-	bool _returnToMainMenu; //Player ran out of lives
-	std::chrono::duration<float, std::milli> _returnToMainMenuCountdown; 
 
 	bool continueRoadScolling; //TODO: move this to GameBoard class?
 

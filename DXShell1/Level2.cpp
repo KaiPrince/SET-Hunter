@@ -65,32 +65,11 @@ void Level2::Update()
 
 	world->Update();
 
-	if (GameController::GetLives() <= 0 && _returnToMainMenu == false) {
-		//TODO: Add edgar ramone "Game Over"
+	ReturnToMainMenu_Detect();
 
-		_returnToMainMenu = true;
-
-		using namespace std::chrono;
-		_returnToMainMenuCountdown = duration<float, std::milli>(kReturnToMainMenuCountdownTime);
-
-	}
-
-	if (_returnToMainMenu) {
-
-		if (_returnToMainMenuCountdown.count() > 0) {
-
-			//Decrement countdown
-			using namespace std::chrono;
-			float elapsedTimeInMS = GameController::GetDeltaTime();
-			_returnToMainMenuCountdown -= duration<float, std::milli>(elapsedTimeInMS);
-
-		}
-		else {
-			//Transition to main menu.
-			GameController::QueuedNextLevel = new MainMenuLevel();
-		}
-	}
+	ReturnToMainMenu_Update();
 }
+
 
 
 void Level2::Render()
@@ -103,19 +82,9 @@ void Level2::Render()
 	gfx->WriteText(0, 0, 200.0f, 100.0f, 10.0f, ScoreMessage, sprintf_s(ScoreMessage, 500, "Score: %u\n Lives %d\n NumObjects: %zd\n",
 		GameController::GetScore(), GameController::GetLives(), world->GetGameObjects().size()));
 
-	if (_returnToMainMenuCountdown.count() > 0) {
-
-
-		const float screenH = static_cast<float>(GraphicsLocator::GetGraphics()->Window_Height);
-		const float screenW = static_cast<float>(GraphicsLocator::GetGraphics()->Window_Width);
-
-		float opacity = (1.0f - 0.0f) * ((kReturnToMainMenuCountdownTime - _returnToMainMenuCountdown.count()) / kReturnToMainMenuCountdownTime);
-
-		//Draw white filter
-		GraphicsLocator::GetGraphics()->FillRect(0.0f, 0.0f, screenW, screenH, 1.0f, 1.0f, 1.0f, opacity);
-
-	}
+	ReturnToMainMenu_Render();
 }
+
 
 void Level2::HandleInput()
 {

@@ -35,7 +35,7 @@ void Level1::Unload()
 	world->RemoveUIObject(this->scoreHUD);
 
 	delete this->scoreHUD;
-	
+
 	//Delete World
 	//delete world;
 }
@@ -51,15 +51,12 @@ void Level1::Update()
 
 	world->Update();
 
-	if (GameController::GetLives() <= 0) {
-		GameController::QueuedNextLevel = new MainMenuLevel();
-	}
-	else if (GameController::GetScore() >= kScoreToLevel2) {
+	if (GameController::GetScore() >= kScoreToLevel2) {
 		GameController::QueuedNextLevel = new Level2();
 	}
-	else {
-		//No level change needed.
-	}
+
+	ReturnToMainMenu_Detect();
+	ReturnToMainMenu_Update();
 }
 
 void Level1::Render()
@@ -74,6 +71,7 @@ void Level1::Render()
 
 	this->scoreAsset->SetText(ScoreMessage);
 
+	ReturnToMainMenu_Render();
 
 	//DEBUG
 	/*int sX = 0;
@@ -90,7 +88,7 @@ void Level1::Render()
 	char msg[500] = "";
 	gfx->WriteText(0, 0, 200.0f, 100.0f, 10.0f, msg, sprintf_s(msg, 500, "X Velocity: %2.2g\nY Velocity: %2.2f", player->GetXVelocity(), player->GetYVelocity()));
 	*/
-	}
+}
 
 void Level1::HandleInput()
 {
