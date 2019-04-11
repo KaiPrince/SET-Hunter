@@ -1,7 +1,7 @@
 #include "GameBoard.h"
 #include "GameWorld.h"
 #include "Graphics.h"
-
+#include "Constants.h"
 #include "CollisionResolutionStrategy.h"
 
 #include <random>
@@ -123,8 +123,6 @@ void GameBoard::ScrollBoard() {
 	using namespace std::chrono;
 	time_point<std::chrono::steady_clock> currentTime = steady_clock::now();
 	double elapsedTimeInMS = duration<double, std::milli>(currentTime - roadTimer).count();
-	const double roadScrollingDelayInMS = 1;
-	const float roadScrollingSpeed = squareHeight / 5;
 
 	//Scroll roadway
 	if (elapsedTimeInMS >= roadScrollingDelayInMS) {

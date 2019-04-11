@@ -1,5 +1,10 @@
 #pragma once
 
+
+constexpr auto roadScrollingDelayInMS = 1;
+constexpr auto roadScrollingSpeed = 10;
+
+
 constexpr auto kScoreToLevel2 = 5000;
 
 constexpr auto kPointsForCoin = 500;
