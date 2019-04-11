@@ -75,6 +75,12 @@ void GameWorld::RemoveGameObject(GameObject* obj)
 	}
 }
 
+void GameWorld::RemoveAndDeleteGameObject(GameObject* obj)
+{
+	RemoveGameObject(obj); 
+	delete obj;
+}
+
 void GameWorld::AddUIObject(GameObject* obj)
 {
 	if (obj != nullptr) {
@@ -87,6 +93,12 @@ void GameWorld::RemoveUIObject(GameObject* obj)
 	if (obj != nullptr) {
 		_uiObjects.erase(std::remove(_uiObjects.begin(), _uiObjects.end(), obj), _uiObjects.end());
 	}
+}
+
+void GameWorld::RemoveAndDeleteUIObject(GameObject* obj)
+{
+	RemoveUIObject(obj); 
+	delete obj;
 }
 
 void GameWorld::Draw() {

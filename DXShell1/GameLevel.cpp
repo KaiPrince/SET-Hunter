@@ -92,3 +92,11 @@ void GameLevel::RefreshScoreHUDText()
 
 	this->scoreAsset->SetText(ScoreMessage);
 }
+
+void GameLevel::DeleteScoreHUD()
+{
+
+	world->RemoveUIObject(this->scoreHUD);
+
+	delete this->scoreHUD;
+}

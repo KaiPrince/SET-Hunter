@@ -28,12 +28,7 @@ void Level1::Unload()
 {
 	player->RemoveObserver(this);
 
-	world->RemoveUIObject(this->scoreHUD);
-
-	delete this->scoreHUD;
-
-	//Delete World
-	//delete world;
+	DeleteScoreHUD();
 }
 
 

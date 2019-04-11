@@ -33,15 +33,18 @@ protected:
 
 	GameLevel();
 
-	void InitScoreHUD();
 
 	void ReturnToMainMenu_Update();
 	void ReturnToMainMenu_Detect();
 	void ReturnToMainMenu_Render();
 
+	void InitScoreHUD();
 	void RefreshScoreHUDText();
+	void DeleteScoreHUD();
 
 public:
+	virtual ~GameLevel() { /*DeleteScoreHUD();*/ }
+
 	static void Init(Graphics* graphics)
 	{
 		gfx = graphics;

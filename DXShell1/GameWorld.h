@@ -36,9 +36,11 @@ public:
 	std::vector<GameObject*>& GetGameObjects() { return _gameObjects; }
 	void AddGameObject(GameObject* obj);
 	void RemoveGameObject(GameObject* obj);
+	void RemoveAndDeleteGameObject(GameObject* obj);
 
 	void AddUIObject(GameObject * obj);
 	void RemoveUIObject(GameObject * obj);
+	void RemoveAndDeleteUIObject(GameObject* obj);
 
 	void HandleInput();
 	void Update();

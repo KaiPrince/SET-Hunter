@@ -12,15 +12,6 @@
 #include "Constants.h"
 
 
-Level2::Level2()
-{
-}
-
-
-Level2::~Level2()
-{
-}
-
 void Level2::Load()
 {
 	//Change Theme
@@ -51,6 +42,8 @@ void Level2::Load()
 void Level2::Unload()
 {
 	player->RemoveObserver(this);
+
+	DeleteScoreHUD();
 }
 
 void Level2::Update()
