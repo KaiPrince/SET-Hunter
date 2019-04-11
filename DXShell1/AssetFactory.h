@@ -22,6 +22,7 @@ class AssetFactory
 	static SpriteSheet* _road;
 	static SpriteSheet* _grass;
 	static SpriteSheet* _coin;
+	static SpriteSheet* _friendlyCar;
 
 
 	static DrawableAsset* _nullAsset;

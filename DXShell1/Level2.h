@@ -5,9 +5,9 @@
 
 class Level2 : public GameLevel, public Observer, public CommandQueue
 {
-	std::vector<GameObject*> _enemies;
+	std::vector<GameObject*> _actors;
 
-	std::chrono::duration<float, std::milli> _spawnEnemyCountdown;
+	std::chrono::duration<float, std::milli> _spawnActorsCountdown;
 
 public:
 	Level2() : GameLevel() {}

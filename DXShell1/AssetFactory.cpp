@@ -13,6 +13,7 @@ SpriteSheet* AssetFactory::_rocket;
 SpriteSheet* AssetFactory::_road;
 SpriteSheet* AssetFactory::_grass;
 SpriteSheet* AssetFactory::_coin;
+SpriteSheet* AssetFactory::_friendlyCar;
 
 DrawableAsset* AssetFactory::_nullAsset = new NullAsset(); //TODO: delete?
 
@@ -32,6 +33,7 @@ void AssetFactory::Init(Graphics* graphics)
 	_road = new SpriteSheet(L"Assets\\road.bmp", gfx);
 	_grass = new SpriteSheet(L"Assets\\grass.bmp", gfx);
 	_coin = new SpriteSheet(L"Assets\\coin.bmp", gfx);
+	_friendlyCar = new SpriteSheet(L"Assets\\friendlycar.bmp", gfx);
 }
 
 AssetFactory::~AssetFactory()
@@ -47,6 +49,7 @@ AssetFactory::~AssetFactory()
 	if (_road) delete _road;
 	if (_grass) delete _grass;
 	if (_coin) delete _coin;
+	if (_friendlyCar) delete _friendlyCar;
 }
 
 DrawableAsset* AssetFactory::GetAsset(DrawableAsset::AssetTypes assetType)
@@ -101,8 +104,11 @@ DrawableAsset* AssetFactory::GetAsset(DrawableAsset::AssetTypes assetType)
 	case DrawableAsset::COIN_SPRITE:
 		asset = new SpriteSheetAsset(_coin, assetType);
 		break;
+	case DrawableAsset::FRIENDLY_CAR:
+		asset = new SpriteSheetAsset(_friendlyCar, assetType);
+		break;
 	default:
-		asset = _nullAsset;
+		throw; //Unknown/Invalid enum! (Make sure to add all enums to this switch statement.)
 		break;
 	}
 	return asset;

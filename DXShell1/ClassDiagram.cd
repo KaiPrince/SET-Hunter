@@ -1,0 +1,410 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Audio" Collapsed="true">
+    <Position X="0.5" Y="14.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QIQAAAAAAAAAAAAAAAAAAAEABAAIAQAAAAAAAAAgAAA=</HashCode>
+      <FileName>Audio.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AudioLocator" Collapsed="true">
+    <Position X="23.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAQAAAAAAIAJAA=</HashCode>
+      <FileName>Audio.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AudioSprite" Collapsed="true">
+    <Position X="25.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAgQACADAqAAAAgBAQgA=</HashCode>
+      <FileName>Audio.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DirectXAudio" Collapsed="true">
+    <Position X="0.5" Y="15.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>YIQABCAAAAAoAACkAAKAAAIABACIACBAEAAACBAgDAA=</HashCode>
+      <FileName>Audio.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CollisionResolutionStrategy" Collapsed="true">
+    <Position X="16" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>hAAAAACAAAAAAAAAAAAEAAAAAQAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>CollisionResolutionStrategy.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NullCollisionStrategy" Collapsed="true">
+    <Position X="15" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAEAAAEEAAAAFAAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>CollisionResolutionStrategy.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayerCollisionStrategy" Collapsed="true">
+    <Position X="17.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAACAAAAAACAAAAAEAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CollisionResolutionStrategy.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DeathTouchCollisionStrategy" Collapsed="true">
+    <Position X="19.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAAgAEAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>CollisionResolutionStrategy.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RocketCollisionStrategy" Collapsed="true">
+    <Position X="19.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAAAQEAAAAIAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CollisionResolutionStrategy.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CoinCollisionStrategy" Collapsed="true">
+    <Position X="12.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAAAAEAAAIAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>CollisionResolutionStrategy.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DrawableAsset" Collapsed="true">
+    <Position X="10.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAgAAAAAggAAAAAAAACAAAAAAAEAAAAAAAgAAAA=</HashCode>
+      <FileName>DrawableAsset.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NullAsset" Collapsed="true">
+    <Position X="8" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAQAAAAAAAAAAEAAAAAAAABAAA=</HashCode>
+      <FileName>DrawableAsset.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MainMenuBackgroundAsset" Collapsed="true">
+    <Position X="12.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAAgAAAAAAgAAAAAAAAAEAAAAAAAAAAAA=</HashCode>
+      <FileName>DrawableAsset.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TextAsset" Collapsed="true">
+    <Position X="14.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAgAAAIAAAgAAAAAAAAEAAAQATAAAAAg=</HashCode>
+      <FileName>DrawableAsset.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AssetOutlineDecorator" Collapsed="true">
+    <Position X="17" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAgAAAAAAAAAAAAAAAAUAAAAAQAAAAAA=</HashCode>
+      <FileName>DrawableAsset.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AssetRoundedOutlineDecorator" Collapsed="true">
+    <Position X="19.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgBAAAAAAAAAAAAAAAUAAIAAAAAAAAA=</HashCode>
+      <FileName>DrawableAsset.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AssetBackgroundRectangleDecorator" Collapsed="true">
+    <Position X="1.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAgAAAAAAAAAAAAAAAAUAAAAAAAAgAAA=</HashCode>
+      <FileName>DrawableAsset.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RoadTerrain" Collapsed="true">
+    <Position X="3.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAgAAAAAAAAAAAAAAAAEEAAAAAAAAAAA=</HashCode>
+      <FileName>DrawableAsset.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GrassTerrain" Collapsed="true">
+    <Position X="5.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAgAAAAAAAAAAAAAAAAEAAAAAAAAAAAA=</HashCode>
+      <FileName>DrawableAsset.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SpriteSheetAsset" Collapsed="true">
+    <Position X="10.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAgAABABAAEIABAAAAAgAAA=</HashCode>
+      <FileName>DrawableAsset.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameBoard" Collapsed="true">
+    <Position X="27.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQCgUBgyIAABgEAIAQgMgABIBAEAIQQAAACEiAAQEA=</HashCode>
+      <FileName>GameBoard.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameController" Collapsed="true">
+    <Position X="22" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAACAABAABwQAAAAAAYAgAAAAIAAABhgCgAgAAAA=</HashCode>
+      <FileName>GameController.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameLevel" Collapsed="true">
+    <Position X="4" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAkACACEAAkAAEAACAEAAkAgAAwAQBABACAAAAEAE=</HashCode>
+      <FileName>GameLevel.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameObject" Collapsed="true">
+    <Position X="8.75" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABQAAECAQAAjEgwAwAEQCABBABwQgACAAQVwBEIAAhQ=</HashCode>
+      <FileName>GameObject.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NullGameObject" Collapsed="true">
+    <Position X="7.5" Y="15.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAhACAAEAAAAACAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameObject.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameWorld" Collapsed="true">
+    <Position X="1" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIRgQADAQAEAAhAAAAEBSEAACAAAAAAAQAQAAAAEAAA=</HashCode>
+      <FileName>GameWorld.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Graphics" Collapsed="true">
+    <Position X="23.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ggAABAAAIgQgAAgQYBEhQAAASAAAQBAAIEgCQAAAAAE=</HashCode>
+      <FileName>Graphics.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GraphicsLocator" Collapsed="true">
+    <Position X="25.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAAAABAAAAAAAAAAAAAAAASAABAAAAAAAA=</HashCode>
+      <FileName>Graphics.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InputComponent" Collapsed="true">
+    <Position X="4" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgACAACAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>InputComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NullInputComponent" Collapsed="true">
+    <Position X="3" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAAAAAgAAAAAAAAAAAAAgAAAAAAAA=</HashCode>
+      <FileName>InputComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayerInputComponent" Collapsed="true">
+    <Position X="5.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAABAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>InputComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StayOnRoadInputComponent" Collapsed="true">
+    <Position X="7.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAA=</HashCode>
+      <FileName>InputComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ClickableInputComponent" Collapsed="true">
+    <Position X="0.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAABCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>InputComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PhysicsComponent" Collapsed="true">
+    <Position X="13.75" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAQAEgAEgAAAQACAAggAACAEAAAAAAAgAAAAQQAAEMA=</HashCode>
+      <FileName>PhysicsComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NullPhysicsComponent" Collapsed="true">
+    <Position X="12.5" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAQAABAAAAEAAAAAAAACAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>PhysicsComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CollidablePhysicsComponent" Collapsed="true">
+    <Position X="14.75" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAQAAAABABAAAAAAAAAAAAAEAAAAAAQAAAAAA=</HashCode>
+      <FileName>PhysicsComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayerPhysicsComponent" Collapsed="true">
+    <Position X="14.75" Y="15.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAA=</HashCode>
+      <FileName>PhysicsComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameObjectState" Collapsed="true">
+    <Position X="5.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAACAAEAAAgAAAAAAAAAAAAEkAAEAAAAAAACAAAA=</HashCode>
+      <FileName>GameObjectState.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AliveState" Collapsed="true">
+    <Position X="7.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAQAAACAAAAQAgAAAAAAABAAAAEECAEAAAAAAAAAAAA=</HashCode>
+      <FileName>GameObjectState.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DeadState" Collapsed="true">
+    <Position X="9.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAACAQAAAAgACAAAAAAAAAAEEAAEAAgAAAAAAAAA=</HashCode>
+      <FileName>GameObjectState.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NullState" Collapsed="true">
+    <Position X="0.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>kAQAAACAAAAAAgAAAAAAAAAAAAEEAAEAAAAAAAAAAAA=</HashCode>
+      <FileName>GameObjectState.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InvincibleState" Collapsed="true">
+    <Position X="3" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAQSAAAAAAgAAACAACAAAAAEEAAEAAAAAAAAAAAA=</HashCode>
+      <FileName>GameObjectState.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ShootPlayerState" Collapsed="true">
+    <Position X="5.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAQCAAAAAAgAAAiAAAAAAAAEEAAEAACAAAAAAAAA=</HashCode>
+      <FileName>GameObjectState.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SoundClass" Collapsed="true">
+    <Position X="27.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAARCAAAAEARAAQAAAAAAEAAAAAAABQAA=</HashCode>
+      <FileName>soundclass.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SpriteSheet" Collapsed="true">
+    <Position X="22" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAggIAIAAAAEAEEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SpriteSheet.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameBoardTile" Collapsed="true">
+    <Position X="9.75" Y="15.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgggABAAAEAAAAABAACKAAAAAASAAAAAA=</HashCode>
+      <FileName>GameBoardTile.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TileFactory" Collapsed="true">
+    <Position X="23.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAgAQAAAAAgAABAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TileFactory.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AssetFactory" Collapsed="true">
+    <Position X="22" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABACAAYAAAgAQAAAAAAAAAIAQADIAAAAAiCwAAJAE=</HashCode>
+      <FileName>AssetFactory.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Level1" Collapsed="true">
+    <Position X="4" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAgACAAAAAAAAAAAAAAAABAAAAAABBABAAAAAAAAA=</HashCode>
+      <FileName>Level1.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Level2" Collapsed="true">
+    <Position X="4" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAgAiAAAAAAAAAAAAQACAAAAAAAABBABAAAAAAAAA=</HashCode>
+      <FileName>Level2.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MainMenuLevel" Collapsed="true">
+    <Position X="1" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAgACAAAAgAAAAAAAAAIgACAAAEBBAABAAAAAAAAA=</HashCode>
+      <FileName>MainMenuLevel.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SplashScreenLevel" Collapsed="true">
+    <Position X="10.75" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQggACAASAAAAAAAAAAAAAIACAABAAAABAAAAAAABA=</HashCode>
+      <FileName>SplashScreenLevel.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Command" Collapsed="true">
+    <Position X="11.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAABAAAAAAIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Command.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CommandQueue" Collapsed="true">
+    <Position X="7" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAgAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Command.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SpawnRocket" Collapsed="true">
+    <Position X="10.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAIgAAQAAAAAAAAAAAQAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>Command.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RemoveGameObjectFromWorldCommand" Collapsed="true">
+    <Position X="12.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAQAAAAAAAAAAAAAAAAAAAAAAACCAEA=</HashCode>
+      <FileName>Command.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Observer" Collapsed="true">
+    <Position X="1" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABAAAAAAAAAABAAAAAAAAACAA=</HashCode>
+      <FileName>Observer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Observable" Collapsed="true">
+    <Position X="8.75" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAhAAAAAAAAAAAQAAAAAAABAAAIAAAAACAA=</HashCode>
+      <FileName>Observer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
