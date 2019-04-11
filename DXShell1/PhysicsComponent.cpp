@@ -191,6 +191,9 @@ void CollidablePhysicsComponent::Update()
 	//Remove myself if I leave the screen.
 	if (ObjectOffScreen(_obj))
 	{
+		//Temp fix for player being removed by this rule: (TODO fix)
+		if (_obj == _obj->GetGameWorld()->GetPlayer()) return;
+
 		_world->QueueCommand(new RemoveGameObjectFromWorldCommand(_obj, _world));
 	}
 }
