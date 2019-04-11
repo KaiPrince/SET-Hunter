@@ -1,6 +1,6 @@
 #pragma once
 
-constexpr auto kScoreToLevel2 = 15000;
+constexpr auto kScoreToLevel2 = 5000;
 
 constexpr auto kPointsForCoin = 500;
 

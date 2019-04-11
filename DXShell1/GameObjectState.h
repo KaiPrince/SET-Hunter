@@ -160,7 +160,7 @@ class ShootPlayerState : public GameObjectState
 {
 private:
 	std::chrono::time_point<std::chrono::steady_clock> timeOfRevival;
-	std::chrono::duration<float, std::milli> invincibilityCountdown; //Can't die
+	std::chrono::duration<float, std::milli> shootDelayCountdown; //Can't die
 public:
 	ShootPlayerState(GameObject* object) : GameObjectState(object) {}
 	virtual ~ShootPlayerState() {}

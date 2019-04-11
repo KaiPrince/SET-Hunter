@@ -2,8 +2,7 @@
 #include "GameObject.h"
 #include "GameController.h"
 #include "Audio.h"
-
-#include "AssetFactory.h" //TODO: remove
+#include <math.h>
 
 
 
@@ -255,7 +254,7 @@ GameObjectState* InvincibleState::Draw()
 		//Draw a shield around the player
 		GraphicsLocator::GetGraphics()->DrawCircle(
 			_object->GetXPos() + (_object->GetWidth() / 2),
-			_object->GetYPos() + (_object->GetHeight() / 2), 
+			_object->GetYPos() + (_object->GetHeight() / 2),
 			_object->GetHeight() / 2,
 			1.0f, 1.0f, 0.0f, 0.5f);
 
@@ -281,7 +280,7 @@ void ShootPlayerState::Enter()
 	time_point<steady_clock> currentTime = steady_clock::now();
 	timeOfRevival = currentTime;
 
-	invincibilityCountdown = duration<float, std::milli>(3000.0f);
+	shootDelayCountdown = duration<float, std::milli>(3000.0f);
 }
 
 GameObjectState* ShootPlayerState::Update()
@@ -291,20 +290,24 @@ GameObjectState* ShootPlayerState::Update()
 	//Get delta time
 	using namespace std::chrono;
 	time_point<steady_clock> currentTime = steady_clock::now();
-	float elapsedTimeInMS = GameController::GetDeltaTime(); //duration<float, std::milli>(currentTime - timeOfRevival).count();
+	float elapsedTimeInMS = GameController::GetDeltaTime();
 
 
 	//Decrement invincibility timer
-	if (invincibilityCountdown.count() > 0) {
+	if (shootDelayCountdown.count() > 0) {
 
-		invincibilityCountdown -= duration<float, std::milli>(elapsedTimeInMS);
+		shootDelayCountdown -= duration<float, std::milli>(elapsedTimeInMS);
 	}
 
-	if (invincibilityCountdown.count() <= 0) {
+	if (shootDelayCountdown.count() <= 0) {
 
-		_object->Notify(); //Notify level to shoot. TODO: replace with command pattern.
+		if (player->GetYPos() < _object->GetYPos() && //Player is above me
+			fabs(player->GetXPos() - _object->GetXPos()) < _object->GetWidth()) //Player is near me	
+		{
+			_object->Notify(); //Notify level to shoot. TODO: replace with command pattern.
+			shootDelayCountdown = duration<float, std::milli>(3000.0f);
+		}
 
-		invincibilityCountdown = duration<float, std::milli>(3000.0f);
 
 	}
 
