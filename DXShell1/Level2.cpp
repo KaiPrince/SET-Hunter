@@ -22,21 +22,9 @@ void Level2::Load()
 
 	InitScoreHUD();
 
-	//Spawn 5 enemies.
-	for (size_t i = 0; i < 1; i++)
-	{
-
-		GameObject* enemy = new GameObject(400, 500, 50, 100, _assetFactory->GetAsset(DrawableAsset::ENEMY_CAR), world);
-		enemy->SetInputComponent(new StayOnRoadInputComponent(enemy));
-		enemy->SetPhysicsComponent(new CollidablePhysicsComponent(enemy, world));
-		enemy->UpdateState(new ShootPlayerState(enemy));
-		enemy->GetPhysicsComponent()->SetCollisionStrategy(new DeathTouchCollisionStrategy(enemy));
-
-		enemy->AddObserver(this);
-
-		world->AddGameObject(enemy);
-		_enemies.push_back(enemy);
-	}
+	//Reset countdown
+	using namespace std::chrono;
+	_spawnEnemyCountdown = duration<float, std::milli>(kLevel2SpawnEnemyCarsDelay);
 }
 
 void Level2::Unload()
@@ -49,6 +37,39 @@ void Level2::Unload()
 void Level2::Update()
 {
 	ProcessAllCommands();
+
+
+	//Get delta time
+	using namespace std::chrono;
+	time_point<steady_clock> currentTime = steady_clock::now();
+	float elapsedTimeInMS = GameController::GetDeltaTime();
+
+	//Decrement invincibility timer
+	if (_spawnEnemyCountdown.count() > 0) {
+
+		_spawnEnemyCountdown -= duration<float, std::milli>(elapsedTimeInMS);
+	}
+
+	//Spawn enemies.
+	if (_spawnEnemyCountdown.count() <= 0) {
+
+		float randomXPos = 400.0f; //TODO
+		const float screenHeight = static_cast<float>(GraphicsLocator::GetGraphics()->Window_Height);
+		GameObject* enemy = new GameObject(randomXPos, screenHeight - 1, kEnemyCarWidth, kEnemyCarHeight, _assetFactory->GetAsset(DrawableAsset::ENEMY_CAR), world, 0.0f, kEnemyYVelocity);
+		enemy->SetInputComponent(new StayOnRoadInputComponent(enemy));
+		enemy->SetPhysicsComponent(new CollidablePhysicsComponent(enemy, world));
+		enemy->UpdateState(new ShootPlayerState(enemy));
+		enemy->GetPhysicsComponent()->SetCollisionStrategy(new DeathTouchCollisionStrategy(enemy));
+
+		enemy->AddObserver(this);
+
+		world->AddGameObject(enemy);
+		_enemies.push_back(enemy);
+
+		//Reset countdown
+		_spawnEnemyCountdown = duration<float, std::milli>(kLevel2SpawnEnemyCarsDelay);
+
+	}
 
 	if (continueRoadScolling) {
 
@@ -81,7 +102,7 @@ void Level2::HandleInput()
 	world->HandleInput();
 }
 
-void Level2::Notify(Observable * subject)
+void Level2::Notify(Observable* subject)
 {
 	if (subject == player) {
 

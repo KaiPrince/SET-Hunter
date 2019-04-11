@@ -200,8 +200,10 @@ void CollidablePhysicsComponent::Update()
 
 bool CollidablePhysicsComponent::ObjectOffScreen(GameObject* obj)
 {
-	return obj->GetXPos() < 0 - obj->GetWidth() || obj->GetXPos() > GraphicsLocator::GetGraphics()->Window_Width
-		|| obj->GetYPos() < 0 - obj->GetHeight() || obj->GetYPos() > GraphicsLocator::GetGraphics()->Window_Height;
+	const float fudgeFactorX = 50.0f; //These give a small safe zone around the screen
+	const float fudgeFactorY = 50.0f;
+	return obj->GetXPos() < 0 - obj->GetWidth() - fudgeFactorX || obj->GetXPos() > GraphicsLocator::GetGraphics()->Window_Width + fudgeFactorX
+		|| obj->GetYPos() < 0 - obj->GetHeight() - fudgeFactorY || obj->GetYPos() > GraphicsLocator::GetGraphics()->Window_Height + fudgeFactorY;
 }
 
 void CollidablePhysicsComponent::ResetHitbox()

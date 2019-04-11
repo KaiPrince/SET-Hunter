@@ -293,7 +293,7 @@ GameObjectState* ShootPlayerState::Update()
 	float elapsedTimeInMS = GameController::GetDeltaTime();
 
 
-	//Decrement invincibility timer
+	//Decrement shootDelay timer
 	if (shootDelayCountdown.count() > 0) {
 
 		shootDelayCountdown -= duration<float, std::milli>(elapsedTimeInMS);
@@ -306,6 +306,7 @@ GameObjectState* ShootPlayerState::Update()
 		{
 			AudioLocator::GetAudio()->playSound(Audio::LASER);
 			_object->Notify(); //Notify level to shoot. TODO: replace with command pattern.
+			
 			shootDelayCountdown = duration<float, std::milli>(3000.0f);
 		}
 
