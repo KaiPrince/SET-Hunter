@@ -34,17 +34,17 @@ void SplashScreenLevel::Load()
 	const float pseudoPixelWidth = ScreenWidth / 10;
 	const float pseudoPixelHeight = ScreenHeight / 10;
 
-	//Song Title
-	textAsset = (TextAsset*)_assetFactory->GetAsset(DrawableAsset::TEXT_ASSET);
-	textAsset->SetText("Song: Copyright Free, by Kai Prince.");
-	textAsset->SetUseFancyFont(true);
-	textAsset->SetFontSize(20);
+	////Song Title
+	//textAsset = (TextAsset*)_assetFactory->GetAsset(DrawableAsset::TEXT_ASSET);
+	//textAsset->SetText("Song: Copyright Free, by Kai Prince.");
+	//textAsset->SetUseFancyFont(true);
+	//textAsset->SetFontSize(20);
 
-	GameObject* SongTitle = new GameObject(pseudoPixelWidth * 3.0f, ScreenHeight - (pseudoPixelHeight * 1.75f),
-		4.0f * pseudoPixelWidth, 1.0f * pseudoPixelHeight,
-		textAsset, world);
+	//GameObject* SongTitle = new GameObject(pseudoPixelWidth * 3.0f, ScreenHeight - (pseudoPixelHeight * 1.75f),
+	//	4.0f * pseudoPixelWidth, 1.0f * pseudoPixelHeight,
+	//	textAsset, world);
 
-	UIObjects.push_back(SongTitle);
+	//UIObjects.push_back(SongTitle);
 }
 
 void SplashScreenLevel::Unload()

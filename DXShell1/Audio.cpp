@@ -26,7 +26,7 @@ DirectXAudio::DirectXAudio(HWND windowHandle)
 
 	//Theme Songs
 	_mainThemeSprite = new AudioSprite("Sounds/copyright_free_theme.wav", _soundClass, true);
-	_level2Theme = new AudioSprite("Sounds/old_friends_theme.wav", _soundClass, true);
+	_level2Theme = new AudioSprite("Sounds/level2_theme.wav", _soundClass, true);
 	_gameOverTheme = new AudioSprite("Sounds/back.wav", _soundClass, true);
 
 	registerSong(&_songs, _mainThemeSprite);

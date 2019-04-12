@@ -27,13 +27,13 @@ void AssetFactory::Init(Graphics* graphics)
 	_tree2Sprite = new SpriteSheet(L"Assets\\tree2.bmp", gfx);
 	_shrubSprite = new SpriteSheet(L"Assets\\shrub1.bmp", gfx);
 	_explosionSprite = new SpriteSheet(L"Assets\\explosion.bmp", gfx);
-	_splashScreenArt = new SpriteSheet(L"Assets\\splashScreen.bmp", gfx);
+	_splashScreenArt = new SpriteSheet(L"Assets\\spy_hunter_artwork.bmp", gfx);
 	_enemyCar = new SpriteSheet(L"Assets\\enemycar.bmp", gfx);
 	_rocket = new SpriteSheet(L"Assets\\rocket.bmp", gfx);
 	_road = new SpriteSheet(L"Assets\\road.bmp", gfx);
 	_grass = new SpriteSheet(L"Assets\\grass.bmp", gfx);
-	_coin = new SpriteSheet(L"Assets\\coin.bmp", gfx);
-	_friendlyCar = new SpriteSheet(L"Assets\\friendlycar.bmp", gfx);
+	_coin = new SpriteSheet(L"Assets\\gas.bmp", gfx);
+	_friendlyCar = new SpriteSheet(L"Assets\\friendlymotorcycle.bmp", gfx);
 }
 
 AssetFactory::~AssetFactory()
@@ -106,6 +106,7 @@ DrawableAsset* AssetFactory::GetAsset(DrawableAsset::AssetTypes assetType)
 		break;
 	case DrawableAsset::FRIENDLY_CAR:
 		asset = new SpriteSheetAsset(_friendlyCar, assetType);
+
 		break;
 	default:
 		throw; //Unknown/Invalid enum! (Make sure to add all enums to this switch statement.)
